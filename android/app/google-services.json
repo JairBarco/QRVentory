@@ -1,0 +1,91 @@
+{
+  "project_info": {
+    "project_number": "645767332319",
+    "firebase_url": "https://ship-driver-app-default-rtdb.firebaseio.com",
+    "project_id": "ship-driver-app",
+    "storage_bucket": "ship-driver-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:645767332319:android:28fc30c986e1b3efc6846a",
+        "android_client_info": {
+          "package_name": "com.jbarco.drivers_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "645767332319-ar57p78p09sfsrc9vugg2ct6s7r61oc7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jbarco.drivers_app",
+            "certificate_hash": "3e24b8e26ecbf3690ca1c70a74140d910bded4d9"
+          }
+        },
+        {
+          "client_id": "645767332319-f8o61313nteujk9pf1e0i08n1qqf3ua8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdtDD5t6nF2eg6-8PnjoS6ysgiDSJeY08"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "645767332319-f8o61313nteujk9pf1e0i08n1qqf3ua8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "645767332319-g9mabrpdmdrvfr7vfpq1cjrhlgful9ja.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.jbarco.driversApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:645767332319:android:9df3c49b4c79beabc6846a",
+        "android_client_info": {
+          "package_name": "com.jbarco.usersapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "645767332319-f8o61313nteujk9pf1e0i08n1qqf3ua8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdtDD5t6nF2eg6-8PnjoS6ysgiDSJeY08"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "645767332319-f8o61313nteujk9pf1e0i08n1qqf3ua8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "645767332319-g9mabrpdmdrvfr7vfpq1cjrhlgful9ja.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.jbarco.driversApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
