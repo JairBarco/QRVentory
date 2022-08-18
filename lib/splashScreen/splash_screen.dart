@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:users_app/authentication/login_screen.dart';
 
 import '../global/global.dart';
 import '../mainScreens/main_screen.dart';
@@ -20,7 +21,8 @@ class _MySplashScreenState extends State<MySplashScreen> {
         Navigator.push(context, MaterialPageRoute(builder: (c)=> MainScreen()));
       } else {
         //send user to main screen
-        //Navigator.push(context, MaterialPageRoute(builder: (c)=> LoginScreen()));
+        Navigator.push(context, MaterialPageRoute(builder: (c)=> LoginScreen()));
+
       }
     });
   }
