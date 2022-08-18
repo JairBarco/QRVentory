@@ -29,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     }
 
-    if(!emailTextEditingController.text.contains("@")){
+    if(!emailTextEditingController.text.contains("@") || emailTextEditingController.text.isEmpty){
       validateEmail(emailTextEditingController.text);
     }
     if(passwordTextEditingController.text.isEmpty){
