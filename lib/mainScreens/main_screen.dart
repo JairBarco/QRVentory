@@ -22,11 +22,13 @@ class _MainScreenState extends State<MainScreen> {
 
   GlobalKey<ScaffoldState> sKey = GlobalKey<ScaffoldState>();
   double searchLocationContainerHeight = 220.0;
+
   Position? userCurrentPosition;
   var geoLocator = Geolocator();
 
   LocationPermission? _locationPermission;
   double topPaddingOfMap = 0.0;
+  double bottomPaddingOfMap = 0.0;
 
   blackThemeGoogleMap(){
     newGoogleMapController!.setMapStyle('''
@@ -206,9 +208,9 @@ class _MainScreenState extends State<MainScreen> {
     Position cPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     userCurrentPosition = cPosition;
 
-    LatLng latLngPosition = LatLng(userCurrentPosition!.altitude, userCurrentPosition!.longitude);
+    LatLng latLngPosition = LatLng(userCurrentPosition!.latitude, userCurrentPosition!.longitude);
     CameraPosition cameraPosition = CameraPosition(target: latLngPosition, zoom: 14.4746);
-    newGoogleMapController!.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+    newGoogleMapController?.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
   }
 
   @override
@@ -236,7 +238,7 @@ class _MainScreenState extends State<MainScreen> {
       body: Stack(
         children: [
             GoogleMap(
-              padding: EdgeInsets.only(top: topPaddingOfMap),
+              padding: EdgeInsets.only(top: topPaddingOfMap, bottom: bottomPaddingOfMap),
               mapType: MapType.normal,
               myLocationEnabled: true,
               zoomControlsEnabled: false,
@@ -249,7 +251,8 @@ class _MainScreenState extends State<MainScreen> {
                blackThemeGoogleMap();
 
                setState(() {
-                 topPaddingOfMap = 500;
+                 topPaddingOfMap = 70;
+                 bottomPaddingOfMap = 220;
                });
 
                locateUserPosition();
@@ -273,7 +276,6 @@ class _MainScreenState extends State<MainScreen> {
               ),
             ),
           ),
-
           //UI search location
           Positioned(
             bottom: 0,
