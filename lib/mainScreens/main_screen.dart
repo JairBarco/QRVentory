@@ -19,6 +19,9 @@ class _MainScreenState extends State<MainScreen> {
     zoom: 14.4746,
   );
 
+  GlobalKey<ScaffoldState> sKey = GlobalKey<ScaffoldState>();
+  double searchLocationContainerHeight = 220.0;
+
   blackThemeGoogleMap(){
     newGoogleMapController!.setMapStyle('''
                     [
@@ -193,10 +196,18 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      drawer: MyDrawer(
-        name: userModelCurrentInfo!.name,
-        email: userModelCurrentInfo!.email,
+      key: sKey,
+      drawer: Container(
+        width: 265,
+        child: Theme(
+          data: Theme.of(context).copyWith(
+            canvasColor: Colors.black,
+          ),
+          child: MyDrawer(
+            name: userModelCurrentInfo!.name,
+            email: userModelCurrentInfo!.email,
+          ),
+        ),
       ),
       body: Stack(
         children: [
@@ -210,8 +221,114 @@ class _MainScreenState extends State<MainScreen> {
               //Black theme Google Map
              blackThemeGoogleMap();
             },
-          )
-        ]
+          ),
+
+          //Custom hamburger button
+          Positioned(
+            top: 70,
+            left: 18,
+            child: GestureDetector(
+              onTap: (){
+                sKey.currentState!.openDrawer();
+              },
+              child:const CircleAvatar(
+                backgroundColor: Colors.black54,
+                child: Icon(
+                  Icons.menu,
+                  color: Colors.white,
+                  size: 33,
+                ),
+              ),
+            ),
+          ),
+
+          //UI search location
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: AnimatedSize(
+              curve: Curves.easeIn,
+              duration: const Duration(milliseconds: 120),
+              child: Container(
+                height: searchLocationContainerHeight,
+                decoration: const BoxDecoration(
+                  color: Colors.black54,
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(20),
+                    topLeft: Radius.circular(20),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
+                  child: Column(
+                    children: [
+                      //Origin Location
+                      Row(
+                        children: [
+                          const Icon(Icons.add_location_alt_outlined, color: Colors.grey,),
+                          const SizedBox(width: 12.0,),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text("From", style: TextStyle(color: Colors.grey, fontSize: 14),),
+                              Text("Your Current Location", style: const TextStyle(color: Colors.grey, fontSize: 16),),
+                            ],
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 10.0,),
+                      const Divider(
+                        height: 1,
+                        thickness: 1,
+                        color: Colors.grey,
+                      ),
+                      const SizedBox(height: 16.0,),
+
+                      //Destination Location
+                      Row(
+                        children: [
+                          const Icon(Icons.add_location_alt_outlined, color: Colors.grey,),
+                          const SizedBox(width: 12.0,),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text("To", style: TextStyle(color: Colors.grey, fontSize: 14),),
+                              Text("Serach Dropoff Location ", style: const TextStyle(color: Colors.grey, fontSize: 16),),
+                            ],
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 10.0,),
+                      const Divider(
+                        height: 1,
+                        thickness: 1,
+                        color: Colors.grey,
+                      ),
+                      const SizedBox(height: 16.0,),
+
+                      ElevatedButton(
+                        onPressed: (){
+
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.deepPurple,
+                          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        child: const Text(
+                          "Request a Ride"
+                        ),
+                      ),
+
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
