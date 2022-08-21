@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:users_app/global/global.dart';
 import 'package:users_app/widgets/my_drawer.dart';
@@ -21,6 +22,11 @@ class _MainScreenState extends State<MainScreen> {
 
   GlobalKey<ScaffoldState> sKey = GlobalKey<ScaffoldState>();
   double searchLocationContainerHeight = 220.0;
+  Position? userCurrentPosition;
+  var geoLocator = Geolocator();
+
+  LocationPermission? _locationPermission;
+  double topPaddingOfMap = 0.0;
 
   blackThemeGoogleMap(){
     newGoogleMapController!.setMapStyle('''
@@ -188,8 +194,26 @@ class _MainScreenState extends State<MainScreen> {
                 ''');
   }
 
+  checkIfPermissionLocationAllowed() async{
+    _locationPermission = await Geolocator.requestPermission();
+
+    if(_locationPermission == LocationPermission.denied){
+      _locationPermission = await Geolocator.requestPermission();
+    }
+  }
+
+  locateUserPosition() async{
+    Position cPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    userCurrentPosition = cPosition;
+
+    LatLng latLngPosition = LatLng(userCurrentPosition!.altitude, userCurrentPosition!.longitude);
+    CameraPosition cameraPosition = CameraPosition(target: latLngPosition, zoom: 14.4746);
+    newGoogleMapController!.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+  }
+
   @override
   void initState() {
+    checkIfPermissionLocationAllowed();
     super.initState();
   }
 
@@ -211,18 +235,26 @@ class _MainScreenState extends State<MainScreen> {
       ),
       body: Stack(
         children: [
-          GoogleMap(
-            mapType: MapType.normal,
-            myLocationEnabled: true,
-            initialCameraPosition: _kGooglePlex,
-            onMapCreated: (GoogleMapController controller){
-              _controllerGoogleMap.complete(controller);
-              newGoogleMapController = controller;
-              //Black theme Google Map
-             blackThemeGoogleMap();
-            },
-          ),
+            GoogleMap(
+              padding: EdgeInsets.only(top: topPaddingOfMap),
+              mapType: MapType.normal,
+              myLocationEnabled: true,
+              zoomControlsEnabled: false,
+              zoomGesturesEnabled: true,
+              initialCameraPosition: _kGooglePlex,
+              onMapCreated: (GoogleMapController controller){
+                _controllerGoogleMap.complete(controller);
+                newGoogleMapController = controller;
+                //Black theme Google Map
+               blackThemeGoogleMap();
 
+               setState(() {
+                 topPaddingOfMap = 500;
+               });
+
+               locateUserPosition();
+              },
+            ),
           //Custom hamburger button
           Positioned(
             top: 70,
