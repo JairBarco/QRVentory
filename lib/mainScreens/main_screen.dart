@@ -287,7 +287,7 @@ class _MainScreenState extends State<MainScreen> {
               child: Container(
                 height: searchLocationContainerHeight,
                 decoration: const BoxDecoration(
-                  color: Colors.black54,
+                  color: Colors.black87,
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(20),
                     topLeft: Radius.circular(20),
@@ -355,7 +355,6 @@ class _MainScreenState extends State<MainScreen> {
                           "Request a Ride"
                         ),
                       ),
-
                     ],
                   ),
                 ),
