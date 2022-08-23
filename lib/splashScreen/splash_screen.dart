@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:users_app/authentication/login_screen.dart';
 
 import '../assistants/assistant_methods.dart';
@@ -15,12 +16,22 @@ class MySplashScreen extends StatefulWidget {
 
 class _MySplashScreenState extends State<MySplashScreen> {
 
+  LocationPermission? _locationPermission;
+
+  checkIfPermissionLocationAllowed() async{
+    _locationPermission = await Geolocator.requestPermission();
+
+    if(_locationPermission == LocationPermission.denied){
+      _locationPermission = await Geolocator.requestPermission();
+    }
+  }
+
   startTimer(){
     fAuth.currentUser != null ? AssistantMethods.readCurrentOnlineUserInfo() : null;
     Timer(const Duration(seconds:3),() async {
       if(fAuth.currentUser !=null){
         currentFirebaseUser = fAuth.currentUser;
-        Navigator.push(context, MaterialPageRoute(builder: (c)=> MainScreen()));
+          Navigator.push(context, MaterialPageRoute(builder: (c)=> MainScreen()));
       } else {
         //send user to main screen
         Navigator.push(context, MaterialPageRoute(builder: (c)=> LoginScreen()));
@@ -32,8 +43,8 @@ class _MySplashScreenState extends State<MySplashScreen> {
   @override
   void initState() {
     // TODO: implement initState
+    checkIfPermissionLocationAllowed();
     super.initState();
-
     startTimer();
   }
 

@@ -6,6 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:users_app/assistants/assistant_methods.dart';
 import 'package:users_app/global/global.dart';
+import 'package:users_app/mainScreens/search_places_screen.dart';
 import 'package:users_app/widgets/my_drawer.dart';
 
 import '../infoHandler/app_info.dart';
@@ -30,7 +31,6 @@ class _MainScreenState extends State<MainScreen> {
   Position? userCurrentPosition;
   var geoLocator = Geolocator();
 
-  LocationPermission? _locationPermission;
   double topPaddingOfMap = 0.0;
   double bottomPaddingOfMap = 0.0;
 
@@ -200,14 +200,6 @@ class _MainScreenState extends State<MainScreen> {
                 ''');
   }
 
-  checkIfPermissionLocationAllowed() async{
-    _locationPermission = await Geolocator.requestPermission();
-
-    if(_locationPermission == LocationPermission.denied){
-      _locationPermission = await Geolocator.requestPermission();
-    }
-  }
-
   locateUserPosition() async{
     Position cPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     userCurrentPosition = cPosition;
@@ -223,7 +215,6 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   void initState() {
-    checkIfPermissionLocationAllowed();
     super.initState();
   }
 
@@ -238,8 +229,8 @@ class _MainScreenState extends State<MainScreen> {
             canvasColor: Colors.black,
           ),
           child: MyDrawer(
-            name: userModelCurrentInfo!.name,
-            email: userModelCurrentInfo!.email,
+            name: userModelCurrentInfo != null ? userModelCurrentInfo!.name: "Your Name",
+            email: userModelCurrentInfo != null ? userModelCurrentInfo!.email: "Your e-mail",
           ),
         ),
       ),
@@ -333,18 +324,23 @@ class _MainScreenState extends State<MainScreen> {
                       const SizedBox(height: 16.0,),
 
                       //Destination Location
-                      Row(
-                        children: [
-                          const Icon(Icons.add_location_alt_outlined, color: Colors.grey,),
-                          const SizedBox(width: 12.0,),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text("To", style: TextStyle(color: Colors.grey, fontSize: 14),),
-                              Text("Serach Dropoff Location ", style: const TextStyle(color: Colors.grey, fontSize: 16),),
-                            ],
-                          ),
-                        ],
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (c) => SearchPlacesScreen()));
+                        },
+                        child: Row(
+                          children: [
+                            const Icon(Icons.add_location_alt_outlined, color: Colors.grey,),
+                            const SizedBox(width: 12.0,),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text("To", style: TextStyle(color: Colors.grey, fontSize: 14),),
+                                Text("Serach Dropoff Location ", style: const TextStyle(color: Colors.grey, fontSize: 16),),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
 
                       const SizedBox(height: 10.0,),
