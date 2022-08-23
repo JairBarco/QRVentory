@@ -3,8 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:users_app/assistants/assistant_methods.dart';
 import 'package:users_app/global/global.dart';
 import 'package:users_app/widgets/my_drawer.dart';
+
+import '../infoHandler/app_info.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -210,7 +214,11 @@ class _MainScreenState extends State<MainScreen> {
 
     LatLng latLngPosition = LatLng(userCurrentPosition!.latitude, userCurrentPosition!.longitude);
     CameraPosition cameraPosition = CameraPosition(target: latLngPosition, zoom: 14.4746);
-    newGoogleMapController?.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+    newGoogleMapController!.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+
+    if (!mounted) return;
+    String humanReadableAddress = await AssistantMethods.searchAddressForGeographicCoOrdinates(userCurrentPosition!, context);
+    print("Address = $humanReadableAddress");
   }
 
   @override
@@ -251,7 +259,7 @@ class _MainScreenState extends State<MainScreen> {
                blackThemeGoogleMap();
 
                setState(() {
-                 topPaddingOfMap = 70;
+                 topPaddingOfMap = 60;
                  bottomPaddingOfMap = 220;
                });
 
@@ -306,7 +314,11 @@ class _MainScreenState extends State<MainScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Text("From", style: TextStyle(color: Colors.grey, fontSize: 14),),
-                              Text("Your Current Location", style: const TextStyle(color: Colors.grey, fontSize: 16),),
+                              Text(Provider.of<AppInfo>(context).userPickUpLocation != null
+                                  ? "${(Provider.of<AppInfo>(context).userPickUpLocation!.locationName!).substring(0,30)}..."
+                                  : "Not getting address",
+                                style: const TextStyle(color: Colors.grey, fontSize: 16),
+                              ),
                             ],
                           ),
                         ],
