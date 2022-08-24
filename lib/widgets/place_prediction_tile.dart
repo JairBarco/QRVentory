@@ -1,16 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:users_app/global/map_key.dart';
+import 'package:users_app/models/directions.dart';
 import 'package:users_app/models/predicted_places.dart';
+import 'package:users_app/widgets/progress_dialog.dart';
+
+import '../assistants/request_assistant.dart';
+import '../infoHandler/app_info.dart';
 
 class PlacePredictionTileDesign extends StatelessWidget {
   final PredictedPlaces? predictedPlaces;
 
   PlacePredictionTileDesign({this.predictedPlaces});
 
+  getPlaceDirectionDetails(String? placeId, context) async{
+    showDialog(
+        context: context,
+        builder: (BuildContext context) => ProgressDialog(
+          message: "Setting DropOff, please wait...",
+        ));
+
+    String placeDirectionDetails = "https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=$mapKeyAndroid";
+
+    var responseAPI = await RequestAssistant.receiveRequest(placeDirectionDetails);
+
+    Navigator.pop(context);
+
+    if(responseAPI == "Error Occurred, Failed. No Response."){
+      return;
+    }
+
+    if(responseAPI["status"] == "OK"){
+      Directions directions = Directions();
+      directions.locationName = responseAPI["result"]["name"];
+      directions.humanReadableAddress = responseAPI["result"]["formatted_address"];
+      directions.locationId = placeId;
+      directions.locationLatitude =  responseAPI["result"]["geometry"]["location"]["lat"];
+      directions.locationLongitude =  responseAPI["result"]["geometry"]["location"]["lng"];
+
+      Provider.of<AppInfo>(context, listen: false).updateDropOffLocationAddress(directions);
+      Navigator.pop(context, "obtainedDropOff");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: (){
-
+        getPlaceDirectionDetails(predictedPlaces!.place_id, context);
       },
       style: ElevatedButton.styleFrom(
         primary: Colors.black87,

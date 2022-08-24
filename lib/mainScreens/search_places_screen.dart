@@ -122,11 +122,12 @@ class _SearchPlacesScreenState extends State<SearchPlacesScreen> {
                         ),
                       ),
                     ],
-                  ),
+                  )
                 ],
               ),
             ),
           ),
+
           //Display place predictions result
           (placesPredictedList.isNotEmpty)
               ? Expanded(

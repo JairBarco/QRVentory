@@ -306,7 +306,7 @@ class _MainScreenState extends State<MainScreen> {
                             children: [
                               const Text("From", style: TextStyle(color: Colors.grey, fontSize: 14),),
                               Text(Provider.of<AppInfo>(context).userPickUpLocation != null
-                                  ? "${(Provider.of<AppInfo>(context).userPickUpLocation!.locationName!).substring(0,30)}..."
+                                  ? "${(Provider.of<AppInfo>(context).userPickUpLocation!.locationName!).substring(0,35)}..."
                                   : "Not getting address",
                                 style: const TextStyle(color: Colors.grey, fontSize: 16),
                               ),
@@ -326,7 +326,11 @@ class _MainScreenState extends State<MainScreen> {
                       //Destination Location
                       GestureDetector(
                         onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (c) => SearchPlacesScreen()));
+                          var responseFromSearchScreen = Navigator.push(context, MaterialPageRoute(builder: (c) => SearchPlacesScreen()));
+
+                          if(responseFromSearchScreen == "obtainedDropOff"){
+                            //Draw routes - draw polyline
+                          }
                         },
                         child: Row(
                           children: [
@@ -336,7 +340,11 @@ class _MainScreenState extends State<MainScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Text("To", style: TextStyle(color: Colors.grey, fontSize: 14),),
-                                Text("Serach Dropoff Location ", style: const TextStyle(color: Colors.grey, fontSize: 16),),
+                                Text(
+                                  Provider.of<AppInfo>(context).userDropOffLocation != null
+                                      ? "${("${Provider.of<AppInfo>(context).userDropOffLocation!.locationName!}, ${Provider.of<AppInfo>(context).userDropOffLocation!.humanReadableAddress!}").substring(0, 35)}..."
+                                    : "Serach Dropoff Location ",
+                                  style: const TextStyle(color: Colors.grey, fontSize: 16),),
                               ],
                             ),
                           ],
