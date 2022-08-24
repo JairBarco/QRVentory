@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:users_app/assistants/request_assistant.dart';
 import 'package:users_app/global/map_key.dart';
+import 'package:users_app/models/predicted_places.dart';
+import 'package:users_app/widgets/place_prediction_tile.dart';
 
 class SearchPlacesScreen extends StatefulWidget {
 
@@ -9,18 +11,27 @@ class SearchPlacesScreen extends StatefulWidget {
 }
 
 class _SearchPlacesScreenState extends State<SearchPlacesScreen> {
+  List<PredictedPlaces> placesPredictedList = [];
 
-  void findPlaceAutocompleteSearch(String inputText) async{
+  void findPlaceAutoCompleteSearch(String inputText) async {
     if(inputText.length > 1){
       String urlAutoCompleteSearch = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$inputText&key=$mapKeyAndroid&components=country:MX";
 
       var responseAutoCompleteSearch = await RequestAssistant.receiveRequest(urlAutoCompleteSearch);
 
-      if(responseAutoCompleteSearch == "Error Occurred, Failed. No Response."){
+      if(responseAutoCompleteSearch == "Error Occurred, Failed. No Response.") {
         return;
       }
-      print("This is response/result: ");
-      print(responseAutoCompleteSearch);
+
+      if(responseAutoCompleteSearch["status"] == "OK") {
+        var placePredictions = responseAutoCompleteSearch["predictions"];
+
+        var placePredictionsList = (placePredictions as List).map((jsonData) => PredictedPlaces.fromJson(jsonData)).toList();
+
+        setState(() {
+          placesPredictedList = placePredictionsList;
+        });
+      }
     }
   }
 
@@ -30,6 +41,7 @@ class _SearchPlacesScreenState extends State<SearchPlacesScreen> {
       backgroundColor: Colors.black,
       body: Column(
         children: [
+          //Search place UI
           Container(
             height: 180,
             decoration: const BoxDecoration(
@@ -93,7 +105,7 @@ class _SearchPlacesScreenState extends State<SearchPlacesScreen> {
                           padding: const EdgeInsets.all(8.0),
                           child: TextField(
                             onChanged: (valueTyped){
-                              findPlaceAutocompleteSearch(valueTyped);
+                              findPlaceAutoCompleteSearch(valueTyped);
                             },
                             decoration: const InputDecoration(
                               hintText: "Search here...",
@@ -110,11 +122,32 @@ class _SearchPlacesScreenState extends State<SearchPlacesScreen> {
                         ),
                       ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),
           ),
+          //Display place predictions result
+          (placesPredictedList.isNotEmpty)
+              ? Expanded(
+            child: ListView.separated(
+              itemCount: placesPredictedList.length,
+              physics: const ClampingScrollPhysics(),
+              itemBuilder: (context, index){
+                return PlacePredictionTileDesign(
+                  predictedPlaces: placesPredictedList[index],
+                );
+              },
+              separatorBuilder: (BuildContext context, int index){
+                return const Divider(
+                  height: 2,
+                  color: Colors.white,
+                  thickness: 2,
+                );
+              },
+            ),
+          )
+              : Container(),
         ],
       ),
     );
