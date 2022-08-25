@@ -17,7 +17,7 @@ class PlacePredictionTileDesign extends StatelessWidget {
     showDialog(
         context: context,
         builder: (BuildContext context) => ProgressDialog(
-          message: "Setting DropOff, please wait...",
+          message: "Please wait...",
         ));
 
     String placeDirectionDetails = "https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=$mapKeyAndroid";
