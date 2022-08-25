@@ -250,7 +250,7 @@ class _MainScreenState extends State<MainScreen> {
               padding: EdgeInsets.only(top: topPaddingOfMap, bottom: bottomPaddingOfMap),
               mapType: MapType.normal,
               myLocationEnabled: true,
-              zoomControlsEnabled: true,
+              zoomControlsEnabled: false,
               zoomGesturesEnabled: true,
               initialCameraPosition: _kGooglePlex,
               polylines: polyLineSet,
@@ -364,7 +364,7 @@ class _MainScreenState extends State<MainScreen> {
                                 Text(
                                   Provider.of<AppInfo>(context).userDropOffLocation != null
                                       ? "${Provider.of<AppInfo>(context).userDropOffLocation!.humanReadableAddress!.substring(0, 35)}..."
-                                    : "Serach Dropoff Location ",
+                                    : "Search Dropoff Locations",
                                   style: const TextStyle(color: Colors.grey, fontSize: 16),),
                               ],
                             ),
