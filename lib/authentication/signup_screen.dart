@@ -77,7 +77,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
       currentFirebaseUser = firebaseUser;
       firebaseUser.sendEmailVerification();
-      Fluttertoast.showToast(msg: "Account has been created");
+      Fluttertoast.showToast(msg: "Account has been created successfully");
       navigatorPush;
     } else {
       navigator.pop();
