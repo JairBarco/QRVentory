@@ -3,8 +3,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:users_app/authentication/login_screen.dart';
-import 'package:users_app/splashScreen/splash_screen.dart';
-
 import '../global/global.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -54,7 +52,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   saveUserInfoNow() async {
     final navigator = Navigator.of(context);
-    final navigatorPush = Navigator.push(context, MaterialPageRoute(builder: (c) =>const MySplashScreen()));
+    final navigatorPush = Navigator.push(context, MaterialPageRoute(builder: (c) => LoginScreen()));
 
     final User? firebaseUser = (
          await fAuth.createUserWithEmailAndPassword(
@@ -78,6 +76,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       usersRef.child(firebaseUser.uid).set(userMap);
 
       currentFirebaseUser = firebaseUser;
+      firebaseUser.sendEmailVerification();
       Fluttertoast.showToast(msg: "Account has been created");
       navigatorPush;
     } else {

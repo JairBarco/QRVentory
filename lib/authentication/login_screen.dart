@@ -66,12 +66,20 @@ class _LoginScreenState extends State<LoginScreen> {
       DatabaseReference driversRef = FirebaseDatabase.instance.ref().child("users");
       driversRef.child(firebaseUser.uid).once().then((driverKey) {
         final snap = driverKey.snapshot;
-        if(snap.value != null){
-          currentFirebaseUser = firebaseUser;
-          Fluttertoast.showToast(msg: "Login Successful.");
-          navigatorPush;
-        } else {
-          Fluttertoast.showToast(msg: "No record exist with this email.");
+        if(firebaseUser.emailVerified == true){
+          if(snap.value != null){
+            currentFirebaseUser = firebaseUser;
+            Fluttertoast.showToast(msg: "Login Successful.");
+            navigatorPush;
+          }
+        } else if(firebaseUser.emailVerified == false){
+          Fluttertoast.showToast(msg: "Email not verified");
+
+          if(snap.value == null){
+            Fluttertoast.showToast(msg: "No record exist with this email");
+            fAuth.signOut();
+            navigatorPush;
+          }
           fAuth.signOut();
           navigatorPush;
         }
