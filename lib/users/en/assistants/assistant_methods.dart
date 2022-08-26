@@ -2,11 +2,11 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:users_app/assistants/request_assistant.dart';
-import 'package:users_app/global/global.dart';
-import 'package:users_app/models/direction_details_info.dart';
+import 'package:users_app/users/en/assistants/request_assistant.dart';
+import '../global/global.dart';
 import '../global/map_key.dart';
 import '../infoHandler/app_info.dart';
+import '../models/direction_details_info.dart';
 import '../models/directions.dart';
 import '../models/user_model.dart';
 

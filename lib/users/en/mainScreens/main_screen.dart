@@ -5,13 +5,12 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:users_app/assistants/assistant_methods.dart';
-import 'package:users_app/global/global.dart';
-import 'package:users_app/mainScreens/search_places_screen.dart';
-import 'package:users_app/widgets/my_drawer.dart';
-import 'package:users_app/widgets/progress_dialog.dart';
-
+import 'package:users_app/users/en/mainScreens/search_places_screen.dart';
+import '../assistants/assistant_methods.dart';
+import '../global/global.dart';
 import '../infoHandler/app_info.dart';
+import '../widgets/my_drawer.dart';
+import '../widgets/progress_dialog.dart';
 
 class MainScreen extends StatefulWidget {
   @override

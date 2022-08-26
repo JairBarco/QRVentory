@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:users_app/global/global.dart';
-import 'package:users_app/splashScreen/splash_screen.dart';
+import 'package:users_app/drivers/en/splashScreen/splash_screen.dart';
+
+import '../global/global.dart';
+import '../splashScreen/splash_screen.dart';
 
 class MyDrawer extends StatefulWidget {
   String? name;
@@ -40,7 +42,7 @@ class _MyDrawerState extends State<MyDrawer> {
                        Text(
                         widget.name.toString(),
                         style: const TextStyle(
-                          fontSize: 16,
+                          fontSize: 13,
                           color: Colors.grey,
                           fontWeight: FontWeight.bold,
                         ),
@@ -51,7 +53,7 @@ class _MyDrawerState extends State<MyDrawer> {
                       Text(
                         widget.email.toString(),
                         style: const TextStyle(
-                          fontSize: 14,
+                          fontSize: 11,
                           color: Colors.grey,
                         ),
                       ),
@@ -97,12 +99,43 @@ class _MyDrawerState extends State<MyDrawer> {
 
           GestureDetector(
             onTap: (){
+              fAuth.signOut();
+              Navigator.push(context, MaterialPageRoute(builder: (c) => const DriversSplashScreen()));
+            },
+            child: const ListTile(
+              leading: Icon(Icons.drive_eta, color: Colors.white54,),
+              title: Text(
+                "Driver",
+                style: TextStyle(
+                  color: Colors.white54,
+                ),
+              ),
+            ),
+          ),
+
+          GestureDetector(
+            onTap: (){
 
             },
             child: const ListTile(
-              leading: Icon(Icons.info, color: Colors.white54,),
+              leading: Icon(Icons.language, color: Colors.white54,),
               title: Text(
-                "About",
+                "Language",
+                style: TextStyle(
+                  color: Colors.white54,
+                ),
+              ),
+            ),
+          ),
+
+          GestureDetector(
+            onTap: (){
+
+            },
+            child: const ListTile(
+              leading: Icon(Icons.help_rounded, color: Colors.white54,),
+              title: Text(
+                "Help",
                 style: TextStyle(
                   color: Colors.white54,
                 ),

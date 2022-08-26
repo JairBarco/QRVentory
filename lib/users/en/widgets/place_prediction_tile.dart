@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:users_app/global/map_key.dart';
-import 'package:users_app/models/directions.dart';
-import 'package:users_app/models/predicted_places.dart';
-import 'package:users_app/widgets/progress_dialog.dart';
+import 'package:users_app/users/en/widgets/progress_dialog.dart';
 
 import '../assistants/request_assistant.dart';
+import '../global/map_key.dart';
 import '../infoHandler/app_info.dart';
+import '../models/directions.dart';
+import '../models/predicted_places.dart';
 
 class PlacePredictionTileDesign extends StatelessWidget {
   final PredictedPlaces? predictedPlaces;

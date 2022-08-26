@@ -1,20 +1,21 @@
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:users_app/authentication/signup_screen.dart';
-import 'package:users_app/splashScreen/splash_screen.dart';
+import 'package:users_app/drivers/en/authentication/signup_screen.dart';
+import 'package:users_app/users/en/authentication/login_screen.dart';
+import '../../../drivers/en/global/global.dart';
+import '../../../users/en/widgets/progress_dialog.dart';
+import '../splashScreen/splash_screen.dart';
 
-import '../global/global.dart';
-import '../widgets/progress_dialog.dart';
-
-class LoginScreen extends StatefulWidget {
+class DriversLoginScreen extends StatefulWidget {
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<DriversLoginScreen> createState() => _DriversLoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _DriversLoginScreenState extends State<DriversLoginScreen> {
   TextEditingController emailTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
 
@@ -36,13 +37,13 @@ class _LoginScreenState extends State<LoginScreen> {
     if(passwordTextEditingController.text.isEmpty){
       Fluttertoast.showToast(msg: "Password is required");
     }else{
-      loginUserNow();
+      loginDriverNow();
     }
   }
 
-  loginUserNow() async {
+  loginDriverNow() async {
     final navigator = Navigator.of(context);
-    final navigatorPush = Navigator.push(context, MaterialPageRoute(builder: (c) =>const MySplashScreen()));
+    final navigatorPush = Navigator.push(context, MaterialPageRoute(builder: (c) =>const DriversSplashScreen()));
 
     showDialog(
         context: context,
@@ -52,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
         }
     );
 
-    final User? firebaseUser = (
+    final User? firebaseDriver = (
         await fAuth.signInWithEmailAndPassword(
           email: emailTextEditingController.text.trim(),
           password: passwordTextEditingController.text.trim(),
@@ -62,24 +63,16 @@ class _LoginScreenState extends State<LoginScreen> {
         })
     ).user;
 
-    if(firebaseUser !=null){
-      DatabaseReference driversRef = FirebaseDatabase.instance.ref().child("users");
-      driversRef.child(firebaseUser.uid).once().then((driverKey) {
+    if(firebaseDriver !=null){
+      DatabaseReference driversRef = FirebaseDatabase.instance.ref().child("drivers");
+      driversRef.child(firebaseDriver.uid).once().then((driverKey) {
         final snap = driverKey.snapshot;
-        if(firebaseUser.emailVerified == true){
-          if(snap.value != null){
-            currentFirebaseUser = firebaseUser;
-            Fluttertoast.showToast(msg: "Login Successful.");
-            navigatorPush;
-          }
-        } else if(firebaseUser.emailVerified == false){
-          Fluttertoast.showToast(msg: "Email not verified");
-
-          if(snap.value == null){
-            Fluttertoast.showToast(msg: "No record exist with this email");
-            fAuth.signOut();
-            navigatorPush;
-          }
+        if(snap.value != null){
+        currentFirebaseDriver = firebaseDriver;
+        Fluttertoast.showToast(msg: "Login Successful.");
+        navigatorPush;
+      } else {
+          Fluttertoast.showToast(msg: "No record exist with this email.");
           fAuth.signOut();
           navigatorPush;
         }
@@ -102,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 10,),
               Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: Image.asset("img/logo.png"),
+                child: Image.asset("img/logo1.png"),
               ),
 
               const SizedBox(height: 10,),
@@ -189,9 +182,18 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: TextStyle(color: Colors.grey),
                 ),
                  onPressed: (){
-                   Navigator.push(context, MaterialPageRoute(builder: (c) => const SignUpScreen()));
+                   Navigator.push(context, MaterialPageRoute(builder: (c) => const DriversSignUpScreen()));
                  },
-              ), 
+              ),
+
+              TextButton(
+                child: const Text("LogIn as User",
+                  style: TextStyle(color: Colors.grey),
+                ),
+                onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (c) => LoginScreen()));
+                },
+              ),
             ],
           ),
         ),

@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:users_app/authentication/login_screen.dart';
 
 import '../assistants/assistant_methods.dart';
+import '../authentication/login_screen.dart';
 import '../global/global.dart';
 import '../mainScreens/main_screen.dart';
 
