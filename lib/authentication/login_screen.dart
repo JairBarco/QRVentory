@@ -73,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
             navigatorPush;
           }
         } else if(firebaseUser.emailVerified == false){
-          Fluttertoast.showToast(msg: "Email not verified, please check your inbox");
+          Fluttertoast.showToast(msg: "Email not verified");
 
           if(snap.value == null){
             Fluttertoast.showToast(msg: "No record exist with this email");
