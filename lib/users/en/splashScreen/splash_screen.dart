@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-
 import '../assistants/assistant_methods.dart';
 import '../authentication/login_screen.dart';
 import '../global/global.dart';
@@ -27,15 +26,14 @@ class _MySplashScreenState extends State<MySplashScreen> {
   }
 
   startTimer(){
-    fAuth.currentUser != null ? AssistantMethods.readCurrentOnlineUserInfo() : null;
+    fAuthUser.currentUser != null ? AssistantMethods.readCurrentOnlineUserInfo() : null;
     Timer(const Duration(seconds:3),() async {
-      if(fAuth.currentUser !=null){
-        currentFirebaseUser = fAuth.currentUser;
+      if(fAuthUser.currentUser !=null){
+        currentFirebaseUser = fAuthUser.currentUser;
           Navigator.push(context, MaterialPageRoute(builder: (c)=> MainScreen()));
       } else {
         //send user to main screen
         Navigator.push(context, MaterialPageRoute(builder: (c)=> LoginScreen()));
-
       }
     });
   }

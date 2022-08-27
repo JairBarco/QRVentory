@@ -99,7 +99,7 @@ class _MyDrawerState extends State<MyDrawer> {
 
           GestureDetector(
             onTap: (){
-              fAuth.signOut();
+              fAuthUser.signOut();
               Navigator.push(context, MaterialPageRoute(builder: (c) => const DriversSplashScreen()));
             },
             child: const ListTile(
@@ -145,7 +145,7 @@ class _MyDrawerState extends State<MyDrawer> {
 
           GestureDetector(
             onTap: (){
-              fAuth.signOut();
+              fAuthUser.signOut();
               Navigator.push(context, MaterialPageRoute(builder: (c) => const MySplashScreen()));
             },
             child: const ListTile(

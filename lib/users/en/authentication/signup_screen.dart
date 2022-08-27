@@ -55,7 +55,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     final navigatorPush = Navigator.push(context, MaterialPageRoute(builder: (c) => LoginScreen()));
 
     final User? firebaseUser = (
-         await fAuth.createUserWithEmailAndPassword(
+         await fAuthUser.createUserWithEmailAndPassword(
           email: emailTextEditingController.text.trim(),
           password: passwordTextEditingController.text.trim(),
         ).catchError((msg){

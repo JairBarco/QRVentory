@@ -34,7 +34,7 @@ class AssistantMethods{
   }
 
   static void readCurrentOnlineUserInfo() async{
-    currentFirebaseUser = fAuth.currentUser;
+    currentFirebaseUser = fAuthUser.currentUser;
     DatabaseReference userRef = FirebaseDatabase.instance.ref().child("users").child(currentFirebaseUser!.uid);
     userRef.once().then((snap){
       if(snap.snapshot.value  != null){

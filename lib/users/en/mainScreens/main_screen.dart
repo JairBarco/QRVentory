@@ -238,8 +238,8 @@ class _MainScreenState extends State<MainScreen> {
             canvasColor: Colors.black,
           ),
           child: MyDrawer(
-            name: userModelCurrentInfo != null ? userModelCurrentInfo!.name: "Your Name",
-            email: userModelCurrentInfo != null ? userModelCurrentInfo!.email: "Your e-mail",
+            name: userModelCurrentInfo != null ? userModelCurrentInfo!.name : "Your Name",
+            email: userModelCurrentInfo != null ? userModelCurrentInfo!.email : "Your e-mail",
           ),
         ),
       ),

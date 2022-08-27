@@ -4,9 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:users_app/drivers/en/authentication/login_screen.dart';
 import 'package:users_app/users/en/authentication/signup_screen.dart';
-
-
-
 import '../global/global.dart';
 import '../splashScreen/splash_screen.dart';
 import '../widgets/progress_dialog.dart';
@@ -45,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   loginUserNow() async {
     final navigator = Navigator.of(context);
-    final navigatorPush = Navigator.push(context, MaterialPageRoute(builder: (c) =>const MySplashScreen()));
+    final navigatorPush = Navigator.push(context, MaterialPageRoute(builder: (c) => const MySplashScreen()));
 
     showDialog(
         context: context,
@@ -56,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     final User? firebaseUser = (
-        await fAuth.signInWithEmailAndPassword(
+        await fAuthUser.signInWithEmailAndPassword(
           email: emailTextEditingController.text.trim(),
           password: passwordTextEditingController.text.trim(),
         ).catchError((msg){
@@ -80,10 +77,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
           if(snap.value == null){
             Fluttertoast.showToast(msg: "No record exist with this email");
-            fAuth.signOut();
+            fAuthUser.signOut();
             navigatorPush;
           }
-          fAuth.signOut();
+          fAuthUser.signOut();
           navigatorPush;
         }
       });

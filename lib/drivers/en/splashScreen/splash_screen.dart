@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:users_app/users/en/global/global.dart';
 import '../../../drivers/en/global/global.dart';
 import '../authentication/login_screen.dart';
 import '../mainScreens/main_screen.dart';
@@ -28,6 +29,7 @@ class _DriversSplashScreenState extends State<DriversSplashScreen> {
 
   startTimer(){
     Timer(const Duration(seconds:3),() async {
+      fAuthUser.signOut();
       if(fAuth.currentUser !=null){
         currentFirebaseDriver = fAuth.currentUser;
         Navigator.push(context, MaterialPageRoute(builder: (c)=> DriversMainScreen()));

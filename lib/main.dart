@@ -13,7 +13,7 @@ void main() async {
         create: (context) => AppInfo(),
 
         child: MaterialApp(
-          title: 'Drivers App',
+          title: 'Ship Driver',
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
