@@ -1,0 +1,18 @@
+{
+  "login": "Login",
+  "From": "From",
+  "To": "To",
+  "originLocation": "Origin Location",
+  "notGettingAddressWarning": "Not Getting Address",
+  "dropOffLocation": "Search DropOff Locations",
+  "requestRideButton": "Request a Ride",
+  "yourName": "Your Name",
+  "yourEmail": "Your e-mail",
+  "history": "History",
+  "profile": "Profile",
+  "driver": "Driver",
+  "language": "Language",
+  "help": "Help",
+  "logOut": "Log Out",
+  "progressDialog": "Please Wait..."
+}

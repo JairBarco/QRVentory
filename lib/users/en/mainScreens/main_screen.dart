@@ -5,6 +5,7 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:users_app/users/en/app_localization/app_localization.dart';
 import 'package:users_app/users/en/mainScreens/search_places_screen.dart';
 import '../assistants/assistant_methods.dart';
 import '../global/global.dart';
@@ -238,8 +239,8 @@ class _MainScreenState extends State<MainScreen> {
             canvasColor: Colors.black,
           ),
           child: MyDrawer(
-            name: userModelCurrentInfo != null ? userModelCurrentInfo!.name : "Your Name",
-            email: userModelCurrentInfo != null ? userModelCurrentInfo!.email : "Your e-mail",
+            name: userModelCurrentInfo != null ? userModelCurrentInfo!.name : AppLocalization.of(context)!.yourName,
+            email: userModelCurrentInfo != null ? userModelCurrentInfo!.email : AppLocalization.of(context)!.yourEmail,
           ),
         ),
       ),
@@ -320,10 +321,10 @@ class _MainScreenState extends State<MainScreen> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text("From", style: TextStyle(color: Colors.grey, fontSize: 14),),
+                              Text(AppLocalization.of(context)!.from, style: const TextStyle(color: Colors.grey, fontSize: 14),),
                               Text(Provider.of<AppInfo>(context).userPickUpLocation != null
                                   ? "${(Provider.of<AppInfo>(context).userPickUpLocation!.locationName!).substring(0,35)}..."
-                                  : "Not getting address",
+                                  : AppLocalization.of(context)!.notGettingAddressWarning,
                                 style: const TextStyle(color: Colors.grey, fontSize: 16),
                               ),
                             ],
@@ -359,11 +360,11 @@ class _MainScreenState extends State<MainScreen> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text("To", style: TextStyle(color: Colors.grey, fontSize: 14),),
+                                Text(AppLocalization.of(context)!.to, style: const TextStyle(color: Colors.grey, fontSize: 14),),
                                 Text(
                                   Provider.of<AppInfo>(context).userDropOffLocation != null
                                       ? "${Provider.of<AppInfo>(context).userDropOffLocation!.humanReadableAddress!.substring(0, 35)}..."
-                                    : "Search Dropoff Locations",
+                                    : AppLocalization.of(context)!.dropOffLocation,
                                   style: const TextStyle(color: Colors.grey, fontSize: 16),),
                               ],
                             ),
@@ -387,8 +388,8 @@ class _MainScreenState extends State<MainScreen> {
                           primary: Colors.indigo,
                           textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                         ),
-                        child: const Text(
-                          "Request a Ride"
+                        child: Text(
+                          AppLocalization.of(context)!.requestRideButton
                         ),
                       ),
                     ],
@@ -411,7 +412,7 @@ class _MainScreenState extends State<MainScreen> {
 
     showDialog(
       context: context,
-      builder: (BuildContext context) => ProgressDialog(message: "Please wait...",),
+      builder: (BuildContext context) => ProgressDialog(message: AppLocalization.of(context)!.progressDialog,),
     );
 
     var directionDetailsInfo = await AssistantMethods.obtainOriginToDestinationDirectionDetails(originLatLng, destinationLatLng);

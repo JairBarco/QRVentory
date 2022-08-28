@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:users_app/drivers/en/splashScreen/splash_screen.dart';
+import 'package:users_app/users/en/app_localization/app_localization.dart';
+import 'package:users_app/users/en/widgets/language.dart';
 
 import '../global/global.dart';
 import '../splashScreen/splash_screen.dart';
@@ -71,11 +73,11 @@ class _MyDrawerState extends State<MyDrawer> {
             onTap: (){
 
             },
-            child: const ListTile(
-              leading: Icon(Icons.history, color: Colors.white54,),
+            child: ListTile(
+              leading: const Icon(Icons.history, color: Colors.white54,),
               title: Text(
-                "History",
-                style: TextStyle(
+                AppLocalization.of(context)!.history,
+                style: const TextStyle(
                   color: Colors.white54,
                 ),
               ),
@@ -86,11 +88,11 @@ class _MyDrawerState extends State<MyDrawer> {
             onTap: (){
 
             },
-            child: const ListTile(
-              leading: Icon(Icons.person, color: Colors.white54,),
+            child: ListTile(
+              leading: const Icon(Icons.person, color: Colors.white54,),
               title: Text(
-                "Profile",
-                style: TextStyle(
+                AppLocalization.of(context)!.profile,
+                style: const TextStyle(
                   color: Colors.white54,
                 ),
               ),
@@ -102,11 +104,26 @@ class _MyDrawerState extends State<MyDrawer> {
               fAuthUser.signOut();
               Navigator.push(context, MaterialPageRoute(builder: (c) => const DriversSplashScreen()));
             },
-            child: const ListTile(
-              leading: Icon(Icons.drive_eta, color: Colors.white54,),
+            child: ListTile(
+              leading: const Icon(Icons.drive_eta, color: Colors.white54,),
               title: Text(
-                "Driver",
-                style: TextStyle(
+                AppLocalization.of(context)!.driver,
+                style: const TextStyle(
+                  color: Colors.white54,
+                ),
+              ),
+            ),
+          ),
+
+          GestureDetector(
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (c) => const LanguageScreen()));
+            },
+            child: ListTile(
+              leading: const Icon(Icons.language, color: Colors.white54,),
+              title: Text(
+                AppLocalization.of(context)!.language,
+                style: const TextStyle(
                   color: Colors.white54,
                 ),
               ),
@@ -117,26 +134,11 @@ class _MyDrawerState extends State<MyDrawer> {
             onTap: (){
 
             },
-            child: const ListTile(
-              leading: Icon(Icons.language, color: Colors.white54,),
+            child: ListTile(
+              leading: const Icon(Icons.help_rounded, color: Colors.white54,),
               title: Text(
-                "Language",
-                style: TextStyle(
-                  color: Colors.white54,
-                ),
-              ),
-            ),
-          ),
-
-          GestureDetector(
-            onTap: (){
-
-            },
-            child: const ListTile(
-              leading: Icon(Icons.help_rounded, color: Colors.white54,),
-              title: Text(
-                "Help",
-                style: TextStyle(
+                AppLocalization.of(context)!.help,
+                style: const TextStyle(
                   color: Colors.white54,
                 ),
               ),
@@ -148,11 +150,11 @@ class _MyDrawerState extends State<MyDrawer> {
               fAuthUser.signOut();
               Navigator.push(context, MaterialPageRoute(builder: (c) => const MySplashScreen()));
             },
-            child: const ListTile(
-              leading: Icon(Icons.logout, color: Colors.white54,),
+            child: ListTile(
+              leading: const Icon(Icons.logout, color: Colors.white54,),
               title: Text(
-                "Log Out",
-                style: TextStyle(
+                AppLocalization.of(context)!.logOut,
+                style: const TextStyle(
                   color: Colors.white54,
                 ),
               ),

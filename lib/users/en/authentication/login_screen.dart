@@ -7,6 +7,7 @@ import 'package:users_app/users/en/authentication/signup_screen.dart';
 import '../global/global.dart';
 import '../splashScreen/splash_screen.dart';
 import '../widgets/progress_dialog.dart';
+import '../../../../generated/l10n.dart';
 
 class LoginScreen extends StatefulWidget {
 
@@ -17,7 +18,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
-
   validateForm(){
     validateEmail(String value) {
       String pattern =
@@ -106,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
 
               const SizedBox(height: 10,),
-              const Text("Login", style: TextStyle(
+              Text(S.current.login, style: const TextStyle(
                 fontSize: 24,
                 color: Colors.grey,
                 fontWeight: FontWeight.bold,
