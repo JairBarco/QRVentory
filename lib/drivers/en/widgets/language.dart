@@ -4,12 +4,12 @@ import 'package:users_app/users/en/app_localization/app_localization.dart';
 
 import '../splashScreen/splash_screen.dart';
 
-class LanguageScreen extends StatefulWidget {
+class DriversLanguageScreen extends StatefulWidget {
   @override
-  State<LanguageScreen> createState() => _LanguageScreenState();
+  State<DriversLanguageScreen> createState() => _DriversLanguageScreenState();
 }
 
-class _LanguageScreenState extends State<LanguageScreen> {
+class _DriversLanguageScreenState extends State<DriversLanguageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,7 +82,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                             onPressed: (){
                               setState(() {
                                 AppLocalization.load(const Locale('es', 'MX'));
-                                Navigator.push(context, MaterialPageRoute(builder: (c)=> const MySplashScreen()));
+                                Navigator.push(context, MaterialPageRoute(builder: (c)=> const DriversSplashScreen()));
                               });
                             },
                             style: ElevatedButton.styleFrom(
@@ -113,7 +113,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                             onPressed: (){
                               setState(() {
                                 AppLocalization.load(const Locale('en', 'US'));
-                                Navigator.push(context, MaterialPageRoute(builder: (c)=> const MySplashScreen()));
+                                Navigator.push(context, MaterialPageRoute(builder: (c)=> const DriversSplashScreen()));
                               });
                             },
                             style: ElevatedButton.styleFrom(
@@ -144,7 +144,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                             onPressed: (){
                               setState(() {
                                 AppLocalization.load(const Locale('de', ''));
-                                Navigator.push(context, MaterialPageRoute(builder: (c)=> const MySplashScreen()));
+                                Navigator.push(context, MaterialPageRoute(builder: (c)=> const DriversSplashScreen()));
                               });
                             },
                             style: ElevatedButton.styleFrom(

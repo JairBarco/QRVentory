@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:users_app/users/en/app_localization/app_localization.dart';
 
 import '../assistants/request_assistant.dart';
 import '../global/map_key.dart';
@@ -77,10 +78,10 @@ class _SearchPlacesScreenState extends State<SearchPlacesScreen> {
                         ),
                       ),
 
-                      const Center(
+                       Center(
                         child: Text(
-                          "Search & Set Drop off Location",
-                          style: TextStyle(
+                          AppLocalization.of(context)!.searchHeader,
+                          style: const TextStyle(
                             fontSize: 18.0,
                             color: Colors.grey,
                             fontWeight: FontWeight.bold
@@ -108,12 +109,12 @@ class _SearchPlacesScreenState extends State<SearchPlacesScreen> {
                             onChanged: (valueTyped){
                               findPlaceAutoCompleteSearch(valueTyped);
                             },
-                            decoration: const InputDecoration(
-                              hintText: "Search here...",
+                            decoration: InputDecoration(
+                              hintText: AppLocalization.of(context)!.search,
                               fillColor: Colors.white54,
                               filled: true,
                               border: InputBorder.none,
-                              contentPadding: EdgeInsets.only(
+                              contentPadding: const EdgeInsets.only(
                                 left: 15.0,
                                 top: 8.0,
                                 bottom: 8.0,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:users_app/users/en/app_localization/app_localization.dart';
 import '../global/global.dart';
 import 'login_screen.dart';
 
@@ -25,25 +26,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
           r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
       RegExp regExp = RegExp(pattern);
       if (value.isEmpty) {
-        Fluttertoast.showToast(msg: "Email is mandatory");
+        Fluttertoast.showToast(msg: AppLocalization.of(context)!.emailMandatory);
       } else if (!regExp.hasMatch(value)) {
-        Fluttertoast.showToast(msg: "Email is not valid");
+        Fluttertoast.showToast(msg: AppLocalization.of(context)!.emailNotValid);
       }
     }
 
     if(nameTextEditingController.text.length < 3){
-      Fluttertoast.showToast(msg: "Name must be at least 3 characters");
+      Fluttertoast.showToast(msg: AppLocalization.of(context)!.nameValidation);
     }
     else if(!emailTextEditingController.text.contains("@") || emailTextEditingController.text.isEmpty){
       validateEmail(emailTextEditingController.text);
     }
     else if(phoneTextEditingController.text.length < 10){
-      Fluttertoast.showToast(msg: "Phone number is not valid");
+      Fluttertoast.showToast(msg: AppLocalization.of(context)!.phoneNotValid);
     }
     else if(passwordTextEditingController.text.length < 8){
-      Fluttertoast.showToast(msg: "Password must have at least 8 characters");
+      Fluttertoast.showToast(msg: AppLocalization.of(context)!.passwordCharacters);
     }else if(passwordTextEditingController.text != confirmPasswordTextEditingController.text){
-      Fluttertoast.showToast(msg: "Passwords do not match");
+      Fluttertoast.showToast(msg: AppLocalization.of(context)!.passwordsNotMatch);
     }
     else{
       saveUserInfoNow();
@@ -77,11 +78,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
       currentFirebaseUser = firebaseUser;
       firebaseUser.sendEmailVerification();
-      Fluttertoast.showToast(msg: "Account has been created");
+      if (!mounted) return;
+      Fluttertoast.showToast(msg: AppLocalization.of(context)!.accountCreated);
       navigatorPush;
     } else {
       navigator.pop();
-      Fluttertoast.showToast(msg: "Account has not been created");
+      if (!mounted) return;
+      Fluttertoast.showToast(msg: AppLocalization.of(context)!.accountNotCreated);
     }
   }
 
@@ -101,7 +104,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               const SizedBox(height: 10,),
 
-              const Text("Register", style: TextStyle(
+               Text(AppLocalization.of(context)!.registerHeader, style: const TextStyle(
                 fontSize: 24,
                 color: Colors.grey,
                 fontWeight: FontWeight.bold,
@@ -112,20 +115,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   style: const TextStyle(
                     color:Colors.grey
                   ),
-                  decoration: const InputDecoration(
-                    labelText: "Name",
-                    hintText: "Name",
-                    enabledBorder: UnderlineInputBorder(
+                  decoration: InputDecoration(
+                    labelText: AppLocalization.of(context)!.name,
+                    hintText: AppLocalization.of(context)!.name,
+                    enabledBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey)
                     ),
-                    focusedBorder: UnderlineInputBorder(
+                    focusedBorder: const UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.grey)
                     ),
-                    hintStyle: TextStyle(
+                    hintStyle: const TextStyle(
                       color: Colors.grey,
                       fontSize: 10,
                     ),
-                      labelStyle: TextStyle(
+                      labelStyle: const TextStyle(
                     color: Colors.grey,
                     fontSize: 14,
                   ),
@@ -138,20 +141,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 style: const TextStyle(
                     color:Colors.grey
                 ),
-                decoration: const InputDecoration(
-                  labelText: "Email",
-                  hintText: "Email",
-                  enabledBorder: UnderlineInputBorder(
+                decoration: InputDecoration(
+                  labelText: AppLocalization.of(context)!.email,
+                  hintText: AppLocalization.of(context)!.email,
+                  enabledBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey)
                   ),
-                  focusedBorder: UnderlineInputBorder(
+                  focusedBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey)
                   ),
-                  hintStyle: TextStyle(
+                  hintStyle: const TextStyle(
                     color: Colors.grey,
                     fontSize: 10,
                   ),
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                     color: Colors.grey,
                     fontSize: 14,
                   ),
@@ -164,20 +167,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 style: const TextStyle(
                     color:Colors.grey
                 ),
-                decoration: const InputDecoration(
-                  labelText: "Phone",
-                  hintText: "Phone",
-                  enabledBorder: UnderlineInputBorder(
+                decoration: InputDecoration(
+                  labelText: AppLocalization.of(context)!.phone,
+                  hintText: AppLocalization.of(context)!.phone,
+                  enabledBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey)
                   ),
-                  focusedBorder: UnderlineInputBorder(
+                  focusedBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey)
                   ),
-                  hintStyle: TextStyle(
+                  hintStyle: const TextStyle(
                     color: Colors.grey,
                     fontSize: 10,
                   ),
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                     color: Colors.grey,
                     fontSize: 14,
                   ),
@@ -192,20 +195,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 style: const TextStyle(
                     color:Colors.grey
                 ),
-                decoration: const InputDecoration(
-                  labelText: "Password",
-                  hintText: "Password",
-                  enabledBorder: UnderlineInputBorder(
+                decoration: InputDecoration(
+                  labelText: AppLocalization.of(context)!.password,
+                  hintText: AppLocalization.of(context)!.password,
+                  enabledBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey)
                   ),
-                  focusedBorder: UnderlineInputBorder(
+                  focusedBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey)
                   ),
-                  hintStyle: TextStyle(
+                  hintStyle: const TextStyle(
                     color: Colors.grey,
                     fontSize: 10,
                   ),
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                     color: Colors.grey,
                     fontSize: 14,
                   ),
@@ -220,20 +223,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 style: const TextStyle(
                     color:Colors.grey
                 ),
-                decoration: const InputDecoration(
-                  labelText: "Confirm Password",
-                  hintText: "Confirm Password",
-                  enabledBorder: UnderlineInputBorder(
+                decoration: InputDecoration(
+                  labelText: AppLocalization.of(context)!.confirmPassword,
+                  hintText: AppLocalization.of(context)!.confirmPassword,
+                  enabledBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey)
                   ),
-                  focusedBorder: UnderlineInputBorder(
+                  focusedBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey)
                   ),
-                  hintStyle: TextStyle(
+                  hintStyle: const TextStyle(
                     color: Colors.grey,
                     fontSize: 10,
                   ),
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                     color: Colors.grey,
                     fontSize: 14,
                   ),
@@ -249,9 +252,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 style: ElevatedButton.styleFrom(
                   primary: Colors.indigo,
                 ),
-                child: const Text(
-                  "Create Account",
-                  style: TextStyle(
+                child: Text(
+                  AppLocalization.of(context)!.createAccountButton,
+                  style: const TextStyle(
                     color: Colors.white70,
                     fontSize: 18
                   ),
@@ -259,8 +262,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
 
               TextButton(
-                child: const Text("Already have an account? Login Here",
-                  style: TextStyle(color: Colors.grey),
+                child: Text(AppLocalization.of(context)!.loginHere,
+                  style: const TextStyle(color: Colors.grey),
                 ),
                 onPressed: (){
                   Navigator.push(context, MaterialPageRoute(builder: (c) => LoginScreen()));

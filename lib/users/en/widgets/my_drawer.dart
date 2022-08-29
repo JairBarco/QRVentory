@@ -117,7 +117,7 @@ class _MyDrawerState extends State<MyDrawer> {
 
           GestureDetector(
             onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (c) => const LanguageScreen()));
+              Navigator.push(context, MaterialPageRoute(builder: (c) => LanguageScreen()));
             },
             child: ListTile(
               leading: const Icon(Icons.language, color: Colors.white54,),

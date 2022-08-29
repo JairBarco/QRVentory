@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:users_app/users/en/app_localization/app_localization.dart';
 
 import '../tabPages/earning_tab.dart';
 import '../tabPages/home_tab.dart';
@@ -47,25 +48,25 @@ class _MainScreenState extends State<DriversMainScreen> with SingleTickerProvide
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const [
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Home"
+            icon: const Icon(Icons.home),
+            label: AppLocalization.of(context)!.home
           ),
 
           BottomNavigationBarItem(
-              icon: Icon(Icons.credit_card),
-              label: "Earnings"
+              icon: const Icon(Icons.credit_card),
+              label: AppLocalization.of(context)!.earnings
           ),
 
           BottomNavigationBarItem(
-              icon: Icon(Icons.star),
-              label: "Ratings"
+              icon: const Icon(Icons.star),
+              label: AppLocalization.of(context)!.ratings
           ),
 
           BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: "Account"
+              icon: const Icon(Icons.person),
+              label: AppLocalization.of(context)!.account
           ),
         ],
         unselectedItemColor: Colors.white54,

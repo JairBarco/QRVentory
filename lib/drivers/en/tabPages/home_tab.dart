@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:users_app/drivers/en/global/global.dart';
+import 'package:users_app/users/en/app_localization/app_localization.dart';
 
 import '../mainScreens/main_screen.dart';
 
@@ -27,7 +28,6 @@ class _HomeTabPageState extends State<HomeTabPage> {
   Position? driverCurrentPosition;
   var geoLocator = Geolocator();
 
-  String statusText = "Now Offline";
   Color buttonColor = Colors.red;
   bool isDriverActive = false;
 
@@ -211,6 +211,9 @@ class _HomeTabPageState extends State<HomeTabPage> {
 
   @override
   Widget build(BuildContext context) {
+    String statusText = AppLocalization.of(context)!.nowOffline;
+    String statusTextOnline = AppLocalization.of(context)!.nowOnline;
+
     return Stack(
       children: [
         GoogleMap(
@@ -235,7 +238,7 @@ class _HomeTabPageState extends State<HomeTabPage> {
         ),
 
         // UI for online offline driver
-        statusText != "Now Online"
+        statusText != statusTextOnline
             ? Container(
                 height: MediaQuery.of(context).size.height,
                 width: double.maxFinite,
@@ -245,7 +248,7 @@ class _HomeTabPageState extends State<HomeTabPage> {
 
         //button for online offline driver
         Positioned(
-          top: statusText != "Now Online"
+          top: statusText != statusTextOnline
               ? MediaQuery.of(context).size.height * 0.45
               : 60.0,
           left: 0.0,
@@ -262,26 +265,26 @@ class _HomeTabPageState extends State<HomeTabPage> {
                       updateDriversLocationAtRealTime();
 
                       setState(() {
-                        statusText = "Now Online";
+                        statusText = statusTextOnline;
                         isDriverActive = true;
                         buttonColor = Colors.green;
                       });
 
                       //display Toast
-                      Fluttertoast.showToast(msg: "You Are Online Now");
+                      Fluttertoast.showToast(msg: AppLocalization.of(context)!.nowOnlineMessage);
                     }
                     else //online
                         {
                       driverIsOfflineNow();
 
                       setState(() {
-                        statusText = "Now Offline";
+                        statusText = statusText;
                         isDriverActive = false;
                         buttonColor = Colors.grey;
                       });
 
                       //display Toast
-                      Fluttertoast.showToast(msg: "You Are Offline Now");
+                      Fluttertoast.showToast(msg: AppLocalization.of(context)!.nowOfflineMessage);
                     }
                   },
                   style: ElevatedButton.styleFrom(
@@ -291,7 +294,7 @@ class _HomeTabPageState extends State<HomeTabPage> {
                       borderRadius: BorderRadius.circular(20)
                     ),
                   ),
-                  child: statusText != "Now Online"
+                  child: statusText != statusTextOnline
                       ? Text(
                           statusText,
                           style: const TextStyle(

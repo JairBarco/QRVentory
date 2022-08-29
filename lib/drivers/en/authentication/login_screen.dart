@@ -6,8 +6,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:users_app/drivers/en/authentication/signup_screen.dart';
 import 'package:users_app/users/en/authentication/login_screen.dart';
 import '../../../drivers/en/global/global.dart';
+import '../../../users/en/app_localization/app_localization.dart';
 import '../../../users/en/widgets/progress_dialog.dart';
 import '../splashScreen/splash_screen.dart';
+import '../widgets/language.dart';
 
 class DriversLoginScreen extends StatefulWidget {
 
@@ -25,9 +27,9 @@ class _DriversLoginScreenState extends State<DriversLoginScreen> {
           r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
       RegExp regExp = RegExp(pattern);
       if (value.isEmpty) {
-        Fluttertoast.showToast(msg: "Email is mandatory");
+        Fluttertoast.showToast(msg: AppLocalization.of(context)!.emailMandatory);
       } else if (!regExp.hasMatch(value)) {
-        Fluttertoast.showToast(msg: "Email is not valid");
+        Fluttertoast.showToast(msg: AppLocalization.of(context)!.emailNotValid);
       }
     }
 
@@ -35,7 +37,7 @@ class _DriversLoginScreenState extends State<DriversLoginScreen> {
       validateEmail(emailTextEditingController.text);
     }
     if(passwordTextEditingController.text.isEmpty){
-      Fluttertoast.showToast(msg: "Password is required");
+      Fluttertoast.showToast(msg: AppLocalization.of(context)!.passwordIsRequired);
     }else{
       loginDriverNow();
     }
@@ -49,7 +51,7 @@ class _DriversLoginScreenState extends State<DriversLoginScreen> {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext c){
-          return ProgressDialog(message: "Processing, please wait...",);
+          return ProgressDialog(message: AppLocalization.of(context)!.progressDialog,);
         }
     );
 
@@ -69,17 +71,18 @@ class _DriversLoginScreenState extends State<DriversLoginScreen> {
         final snap = driverKey.snapshot;
         if(snap.value != null){
         currentFirebaseDriver = firebaseDriver;
-        Fluttertoast.showToast(msg: "Login Successful.");
+        Fluttertoast.showToast(msg: AppLocalization.of(context)!.loginSuccessful);
         navigatorPush;
       } else {
-          Fluttertoast.showToast(msg: "No record exist with this email.");
+          Fluttertoast.showToast(msg: AppLocalization.of(context)!.noRecordExistsWithThisEmail);
           fAuth.signOut();
           navigatorPush;
         }
       });
     } else {
       navigator.pop();
-      Fluttertoast.showToast(msg: "Error occurred during Login");
+      if(!mounted) return;
+      Fluttertoast.showToast(msg: AppLocalization.of(context)!.errorDuringLogin);
     }
   }
 
@@ -99,7 +102,7 @@ class _DriversLoginScreenState extends State<DriversLoginScreen> {
               ),
 
               const SizedBox(height: 10,),
-              const Text("Login", style: TextStyle(
+              Text(AppLocalization.of(context)!.loginButton, style: const TextStyle(
                 fontSize: 24,
                 color: Colors.grey,
                 fontWeight: FontWeight.bold,
@@ -111,20 +114,20 @@ class _DriversLoginScreenState extends State<DriversLoginScreen> {
                 style: const TextStyle(
                     color:Colors.grey
                 ),
-                decoration: const InputDecoration(
-                  labelText: "Email",
-                  hintText: "Email",
-                  enabledBorder: UnderlineInputBorder(
+                decoration: InputDecoration(
+                  labelText: AppLocalization.of(context)!.email,
+                  hintText: AppLocalization.of(context)!.email,
+                  enabledBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey)
                   ),
-                  focusedBorder: UnderlineInputBorder(
+                  focusedBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey)
                   ),
-                  hintStyle: TextStyle(
+                  hintStyle: const TextStyle(
                     color: Colors.grey,
                     fontSize: 10,
                   ),
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                     color: Colors.grey,
                     fontSize: 14,
                   ),
@@ -139,20 +142,20 @@ class _DriversLoginScreenState extends State<DriversLoginScreen> {
                 style: const TextStyle(
                     color:Colors.grey
                 ),
-                decoration: const InputDecoration(
-                  labelText: "Password",
-                  hintText: "Password",
-                  enabledBorder: UnderlineInputBorder(
+                decoration: InputDecoration(
+                  labelText: AppLocalization.of(context)!.password,
+                  hintText: AppLocalization.of(context)!.password,
+                  enabledBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey)
                   ),
-                  focusedBorder: UnderlineInputBorder(
+                  focusedBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey)
                   ),
-                  hintStyle: TextStyle(
+                  hintStyle: const TextStyle(
                     color: Colors.grey,
                     fontSize: 10,
                   ),
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                     color: Colors.grey,
                     fontSize: 14,
                   ),
@@ -168,9 +171,9 @@ class _DriversLoginScreenState extends State<DriversLoginScreen> {
                 style: ElevatedButton.styleFrom(
                   primary: Colors.indigo,
                 ),
-                child: const Text(
-                  "Login",
-                  style: TextStyle(
+                child: Text(
+                  AppLocalization.of(context)!.loginButton,
+                  style: const TextStyle(
                       color: Colors.white70,
                       fontSize: 18
                   ),
@@ -178,8 +181,8 @@ class _DriversLoginScreenState extends State<DriversLoginScreen> {
               ),
 
                TextButton(
-                child: const Text("Don't have an account? SignUp Here",
-                style: TextStyle(color: Colors.grey),
+                child: Text(AppLocalization.of(context)!.register,
+                style: const TextStyle(color: Colors.grey),
                 ),
                  onPressed: (){
                    Navigator.push(context, MaterialPageRoute(builder: (c) => const DriversSignUpScreen()));
@@ -187,11 +190,19 @@ class _DriversLoginScreenState extends State<DriversLoginScreen> {
               ),
 
               TextButton(
-                child: const Text("LogIn as User",
-                  style: TextStyle(color: Colors.grey),
+                child: Text(AppLocalization.of(context)!.loginAsUser,
+                  style: const TextStyle(color: Colors.grey),
                 ),
                 onPressed: (){
                   Navigator.push(context, MaterialPageRoute(builder: (c) => LoginScreen()));
+                },
+              ),
+              TextButton(
+                child: Text(AppLocalization.of(context)!.language,
+                  style: const TextStyle(color: Colors.grey),
+                ),
+                onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (c) => DriversLanguageScreen()));
                 },
               ),
             ],

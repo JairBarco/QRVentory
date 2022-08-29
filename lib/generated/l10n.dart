@@ -200,11 +200,331 @@ class S {
     );
   }
 
+  /// `Search & Set Drop off Location`
+  String get searchHeader {
+    return Intl.message(
+      'Search & Set Drop off Location',
+      name: 'searchHeader',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search Here...`
+  String get search {
+    return Intl.message(
+      'Search Here...',
+      name: 'search',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Please Wait...`
   String get progressDialog {
     return Intl.message(
       'Please Wait...',
       name: 'progressDialog',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email is Mandatory`
+  String get emailMandatory {
+    return Intl.message(
+      'Email is Mandatory',
+      name: 'emailMandatory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email is not valid`
+  String get emailNotValid {
+    return Intl.message(
+      'Email is not valid',
+      name: 'emailNotValid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password is required`
+  String get passwordIsRequired {
+    return Intl.message(
+      'Password is required',
+      name: 'passwordIsRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login Successful`
+  String get loginSuccessful {
+    return Intl.message(
+      'Login Successful',
+      name: 'loginSuccessful',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email not verified`
+  String get emailNotVerified {
+    return Intl.message(
+      'Email not verified',
+      name: 'emailNotVerified',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No record exists with this email`
+  String get noRecordExistsWithThisEmail {
+    return Intl.message(
+      'No record exists with this email',
+      name: 'noRecordExistsWithThisEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error occurred during Login`
+  String get errorDuringLogin {
+    return Intl.message(
+      'Error occurred during Login',
+      name: 'errorDuringLogin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email`
+  String get email {
+    return Intl.message(
+      'Email',
+      name: 'email',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password`
+  String get password {
+    return Intl.message(
+      'Password',
+      name: 'password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login`
+  String get loginButton {
+    return Intl.message(
+      'Login',
+      name: 'loginButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Don't have an account? SignUp Here`
+  String get register {
+    return Intl.message(
+      'Don\'t have an account? SignUp Here',
+      name: 'register',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you a driver? LogIn as Driver`
+  String get logInAsDriver {
+    return Intl.message(
+      'Are you a driver? LogIn as Driver',
+      name: 'logInAsDriver',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name must be at least 3 characters`
+  String get nameValidation {
+    return Intl.message(
+      'Name must be at least 3 characters',
+      name: 'nameValidation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone number is not valid`
+  String get phoneNotValid {
+    return Intl.message(
+      'Phone number is not valid',
+      name: 'phoneNotValid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password must have at least 8 characters`
+  String get passwordCharacters {
+    return Intl.message(
+      'Password must have at least 8 characters',
+      name: 'passwordCharacters',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Passwords do not match`
+  String get passwordsNotMatch {
+    return Intl.message(
+      'Passwords do not match',
+      name: 'passwordsNotMatch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account has been created`
+  String get accountCreated {
+    return Intl.message(
+      'Account has been created',
+      name: 'accountCreated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account has not been created`
+  String get accountNotCreated {
+    return Intl.message(
+      'Account has not been created',
+      name: 'accountNotCreated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Register`
+  String get registerHeader {
+    return Intl.message(
+      'Register',
+      name: 'registerHeader',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name`
+  String get name {
+    return Intl.message(
+      'Name',
+      name: 'name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone`
+  String get phone {
+    return Intl.message(
+      'Phone',
+      name: 'phone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm Password`
+  String get confirmPassword {
+    return Intl.message(
+      'Confirm Password',
+      name: 'confirmPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create Account`
+  String get createAccountButton {
+    return Intl.message(
+      'Create Account',
+      name: 'createAccountButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Have an account? Login Here`
+  String get loginHere {
+    return Intl.message(
+      'Have an account? Login Here',
+      name: 'loginHere',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Car details successfully saved`
+  String get carDetailsSaved {
+    return Intl.message(
+      'Car details successfully saved',
+      name: 'carDetailsSaved',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Language Settings`
+  String get languageSettings {
+    return Intl.message(
+      'Language Settings',
+      name: 'languageSettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Now Offline`
+  String get nowOffline {
+    return Intl.message(
+      'Now Offline',
+      name: 'nowOffline',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You Are Offline Now`
+  String get nowOfflineMessage {
+    return Intl.message(
+      'You Are Offline Now',
+      name: 'nowOfflineMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Now Online`
+  String get nowOnline {
+    return Intl.message(
+      'Now Online',
+      name: 'nowOnline',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You Are Online Now`
+  String get nowOnlineMessage {
+    return Intl.message(
+      'You Are Online Now',
+      name: 'nowOnlineMessage',
       desc: '',
       args: [],
     );

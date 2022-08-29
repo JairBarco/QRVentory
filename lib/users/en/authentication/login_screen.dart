@@ -3,11 +3,12 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:users_app/drivers/en/authentication/login_screen.dart';
+import 'package:users_app/users/en/app_localization/app_localization.dart';
 import 'package:users_app/users/en/authentication/signup_screen.dart';
+import 'package:users_app/users/en/widgets/language.dart';
 import '../global/global.dart';
 import '../splashScreen/splash_screen.dart';
 import '../widgets/progress_dialog.dart';
-import '../../../../generated/l10n.dart';
 
 class LoginScreen extends StatefulWidget {
 
@@ -24,9 +25,9 @@ class _LoginScreenState extends State<LoginScreen> {
           r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
       RegExp regExp = RegExp(pattern);
       if (value.isEmpty) {
-        Fluttertoast.showToast(msg: "Email is mandatory");
+        Fluttertoast.showToast(msg: AppLocalization.of(context)!.emailMandatory);
       } else if (!regExp.hasMatch(value)) {
-        Fluttertoast.showToast(msg: "Email is not valid");
+        Fluttertoast.showToast(msg: AppLocalization.of(context)!.emailNotValid);
       }
     }
 
@@ -34,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
       validateEmail(emailTextEditingController.text);
     }
     if(passwordTextEditingController.text.isEmpty){
-      Fluttertoast.showToast(msg: "Password is required");
+      Fluttertoast.showToast(msg: AppLocalization.of(context)!.passwordIsRequired);
     }else{
       loginUserNow();
     }
@@ -48,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext c){
-          return ProgressDialog(message: "Processing, please wait...",);
+          return ProgressDialog(message: AppLocalization.of(context)!.progressDialog,);
         }
     );
 
@@ -69,14 +70,14 @@ class _LoginScreenState extends State<LoginScreen> {
         if(firebaseUser.emailVerified == true){
           if(snap.value != null){
             currentFirebaseUser = firebaseUser;
-            Fluttertoast.showToast(msg: "Login Successful.");
+            Fluttertoast.showToast(msg: AppLocalization.of(context)!.loginSuccessful);
             navigatorPush;
           }
         } else if(firebaseUser.emailVerified == false){
-          Fluttertoast.showToast(msg: "Email not verified");
+          Fluttertoast.showToast(msg: AppLocalization.of(context)!.emailNotVerified);
 
           if(snap.value == null){
-            Fluttertoast.showToast(msg: "No record exist with this email");
+            Fluttertoast.showToast(msg: AppLocalization.of(context)!.noRecordExistsWithThisEmail);
             fAuthUser.signOut();
             navigatorPush;
           }
@@ -86,7 +87,8 @@ class _LoginScreenState extends State<LoginScreen> {
       });
     } else {
       navigator.pop();
-      Fluttertoast.showToast(msg: "Error occurred during Login");
+      if (!mounted) return;
+      Fluttertoast.showToast(msg: AppLocalization.of(context)!.errorDuringLogin);
     }
   }
 
@@ -106,7 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
 
               const SizedBox(height: 10,),
-              Text(S.current.login, style: const TextStyle(
+              Text(AppLocalization.of(context)!.login, style: const TextStyle(
                 fontSize: 24,
                 color: Colors.grey,
                 fontWeight: FontWeight.bold,
@@ -118,20 +120,20 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: const TextStyle(
                     color:Colors.grey
                 ),
-                decoration: const InputDecoration(
-                  labelText: "Email",
-                  hintText: "Email",
-                  enabledBorder: UnderlineInputBorder(
+                decoration: InputDecoration(
+                  labelText: AppLocalization.of(context)!.email,
+                  hintText: AppLocalization.of(context)!.email,
+                  enabledBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey)
                   ),
-                  focusedBorder: UnderlineInputBorder(
+                  focusedBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey)
                   ),
-                  hintStyle: TextStyle(
+                  hintStyle: const TextStyle(
                     color: Colors.grey,
                     fontSize: 10,
                   ),
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                     color: Colors.grey,
                     fontSize: 14,
                   ),
@@ -146,20 +148,20 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: const TextStyle(
                     color:Colors.grey
                 ),
-                decoration: const InputDecoration(
-                  labelText: "Password",
-                  hintText: "Password",
-                  enabledBorder: UnderlineInputBorder(
+                decoration: InputDecoration(
+                  labelText: AppLocalization.of(context)!.password,
+                  hintText: AppLocalization.of(context)!.password,
+                  enabledBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey)
                   ),
-                  focusedBorder: UnderlineInputBorder(
+                  focusedBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey)
                   ),
-                  hintStyle: TextStyle(
+                  hintStyle: const TextStyle(
                     color: Colors.grey,
                     fontSize: 10,
                   ),
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                     color: Colors.grey,
                     fontSize: 14,
                   ),
@@ -175,9 +177,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: ElevatedButton.styleFrom(
                   primary: Colors.indigo,
                 ),
-                child: const Text(
-                  "Login",
-                  style: TextStyle(
+                child: Text(
+                  AppLocalization.of(context)!.loginButton,
+                  style: const TextStyle(
                       color: Colors.white70,
                       fontSize: 18
                   ),
@@ -185,19 +187,27 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
 
                TextButton(
-                child: const Text("Don't have an account? SignUp Here",
-                style: TextStyle(color: Colors.grey),
+                child: Text(AppLocalization.of(context)!.register,
+                style: const TextStyle(color: Colors.grey),
                 ),
                  onPressed: (){
                    Navigator.push(context, MaterialPageRoute(builder: (c) => const SignUpScreen()));
                  },
               ),
               TextButton(
-                child: const Text("Are you a driver? LogIn as Driver",
-                  style: TextStyle(color: Colors.grey),
+                child: Text(AppLocalization.of(context)!.logInAsDriver,
+                  style: const TextStyle(color: Colors.grey),
                 ),
                 onPressed: (){
                   Navigator.push(context, MaterialPageRoute(builder: (c) => DriversLoginScreen()));
+                },
+              ),
+              TextButton(
+                child: Text(AppLocalization.of(context)!.language,
+                  style: const TextStyle(color: Colors.grey),
+                ),
+                onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (c) => LanguageScreen()));
                 },
               ),
             ],
