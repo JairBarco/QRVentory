@@ -29,7 +29,7 @@ void main() async {
           ],
           supportedLocales: [
             Locale('en', ''), // English, no country code
-            Locale('es', 'MX'),//Spanish, Mexico
+            Locale('es', ''),//Spanish, no country code
             Locale('de', ''),// German, no country code
           ],
           home: const MySplashScreen(),
