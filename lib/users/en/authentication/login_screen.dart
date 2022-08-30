@@ -199,6 +199,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: const TextStyle(color: Colors.grey),
                 ),
                 onPressed: (){
+                  fAuthUser.signOut();
                   Navigator.push(context, MaterialPageRoute(builder: (c) => DriversLoginScreen()));
                 },
               ),

@@ -30,7 +30,6 @@ class _MainScreenState extends State<DriversMainScreen> with SingleTickerProvide
   void initState() {
     // TODO: implement initState
     super.initState();
-
     tabController = TabController(length: 4, vsync: this);
   }
 

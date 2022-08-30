@@ -102,7 +102,7 @@ class _DriversLoginScreenState extends State<DriversLoginScreen> {
               ),
 
               const SizedBox(height: 10,),
-              Text(AppLocalization.of(context)!.loginButton, style: const TextStyle(
+              Text(AppLocalization.of(context)!.login, style: const TextStyle(
                 fontSize: 24,
                 color: Colors.grey,
                 fontWeight: FontWeight.bold,
@@ -194,6 +194,7 @@ class _DriversLoginScreenState extends State<DriversLoginScreen> {
                   style: const TextStyle(color: Colors.grey),
                 ),
                 onPressed: (){
+                  fAuth.signOut();
                   Navigator.push(context, MaterialPageRoute(builder: (c) => LoginScreen()));
                 },
               ),

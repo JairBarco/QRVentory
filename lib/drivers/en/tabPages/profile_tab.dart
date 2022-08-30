@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:users_app/drivers/en/widgets/language.dart';
+import 'package:users_app/users/en/app_localization/app_localization.dart';
 import '../../../drivers/en/global/global.dart';
-import '../../../users/en/app_localization/app_localization.dart';
 import '../splashScreen/splash_screen.dart';
 
 class ProfileTabPage extends StatefulWidget {
@@ -13,16 +14,28 @@ class ProfileTabPage extends StatefulWidget {
 class _ProfileTabPageState extends State<ProfileTabPage> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: ElevatedButton(
-        child: Text(
-            AppLocalization.of(context)!.logOut
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children:[
+        ElevatedButton(
+          child: Text(
+              AppLocalization.of(context)!.logOut
+          ),
+          onPressed: (){
+            fAuth.signOut();
+            Navigator.push(context, MaterialPageRoute(builder: (c)=> const DriversSplashScreen()));
+          },
         ),
-        onPressed: (){
-          fAuth.signOut();
-          Navigator.push(context, MaterialPageRoute(builder: (c)=> const DriversSplashScreen()));
-        },
-      ),
+        ElevatedButton(
+          child: Text(
+              AppLocalization.of(context)!.language
+          ),
+          onPressed: (){
+            fAuth.signOut();
+            Navigator.push(context, MaterialPageRoute(builder: (c)=> DriversLanguageScreen()));
+          },
+        ),
+      ]
     );
   }
 }

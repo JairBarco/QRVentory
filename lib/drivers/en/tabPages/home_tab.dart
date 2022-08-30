@@ -34,6 +34,9 @@ class _HomeTabPageState extends State<HomeTabPage> {
   double topPaddingOfMap = 0.0;
   double bottomPaddingOfMap = 0.0;
 
+  String statusText = AppLocalization().nowOffline;
+  String statusTextOnline = AppLocalization().nowOnline;
+
   blackThemeGoogleMap(){
     newGoogleMapController!.setMapStyle('''
                     [
@@ -211,8 +214,6 @@ class _HomeTabPageState extends State<HomeTabPage> {
 
   @override
   Widget build(BuildContext context) {
-    String statusText = AppLocalization.of(context)!.nowOffline;
-    String statusTextOnline = AppLocalization.of(context)!.nowOnline;
 
     return Stack(
       children: [
@@ -371,7 +372,7 @@ class _HomeTabPageState extends State<HomeTabPage> {
     ref.remove();
     ref = null;
 
-    Future.delayed(const Duration(milliseconds: 2000),(){
+    Future.delayed(const Duration(milliseconds: 10),(){
       Navigator.push(context, MaterialPageRoute(builder: (c)=> DriversMainScreen()));
     });
   }
