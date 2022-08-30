@@ -46,5 +46,10 @@
   "nowOffline": "Now Offline",
   "nowOfflineMessage": "You Are Offline Now",
   "nowOnline": "Now Online",
-  "nowOnlineMessage": "You Are Online Now"
+  "nowOnlineMessage": "You Are Online Now",
+  "home": "Home",
+  "earnings": "Earnings",
+  "ratings": "Ratings",
+  "account": "Account",
+  "loginAsUser": "Login as User"
 }

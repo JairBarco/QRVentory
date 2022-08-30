@@ -529,6 +529,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Home`
+  String get home {
+    return Intl.message(
+      'Home',
+      name: 'home',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Earnings`
+  String get earnings {
+    return Intl.message(
+      'Earnings',
+      name: 'earnings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ratings`
+  String get ratings {
+    return Intl.message(
+      'Ratings',
+      name: 'ratings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account`
+  String get account {
+    return Intl.message(
+      'Account',
+      name: 'account',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login as User`
+  String get loginAsUser {
+    return Intl.message(
+      'Login as User',
+      name: 'loginAsUser',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

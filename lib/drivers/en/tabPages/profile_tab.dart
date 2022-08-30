@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../drivers/en/global/global.dart';
+import '../../../users/en/app_localization/app_localization.dart';
 import '../splashScreen/splash_screen.dart';
 
 class ProfileTabPage extends StatefulWidget {
@@ -14,8 +15,8 @@ class _ProfileTabPageState extends State<ProfileTabPage> {
   Widget build(BuildContext context) {
     return Center(
       child: ElevatedButton(
-        child: const Text(
-          "Sign Out"
+        child: Text(
+            AppLocalization.of(context)!.logOut
         ),
         onPressed: (){
           fAuth.signOut();
