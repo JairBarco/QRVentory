@@ -31,7 +31,6 @@ class _ProfileTabPageState extends State<ProfileTabPage> {
               AppLocalization.of(context)!.language
           ),
           onPressed: (){
-            fAuth.signOut();
             Navigator.push(context, MaterialPageRoute(builder: (c)=> DriversLanguageScreen()));
           },
         ),
