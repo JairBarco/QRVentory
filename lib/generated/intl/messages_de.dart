@@ -24,6 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "From": MessageLookupByLibrary.simpleMessage("Von"),
         "To": MessageLookupByLibrary.simpleMessage("Zu"),
+        "account": MessageLookupByLibrary.simpleMessage("Konto"),
         "accountCreated":
             MessageLookupByLibrary.simpleMessage("Konto wurde erstellt"),
         "accountNotCreated": MessageLookupByLibrary.simpleMessage(
@@ -37,6 +38,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "driver": MessageLookupByLibrary.simpleMessage("Treiber"),
         "dropOffLocation":
             MessageLookupByLibrary.simpleMessage("DropOff-Standorte suchen"),
+        "earnings": MessageLookupByLibrary.simpleMessage("Ergebnis"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
         "emailMandatory":
             MessageLookupByLibrary.simpleMessage("E-Mail ist obligatorisch"),
@@ -48,6 +50,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Fehler beim Login aufgetreten"),
         "help": MessageLookupByLibrary.simpleMessage("Hilfe"),
         "history": MessageLookupByLibrary.simpleMessage("Geschichte"),
+        "home": MessageLookupByLibrary.simpleMessage("Startseite"),
         "language": MessageLookupByLibrary.simpleMessage("Sprache"),
         "languageSettings":
             MessageLookupByLibrary.simpleMessage("Spracheinstellungen"),
@@ -55,6 +58,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Sind Sie ein Fahrer? Als Fahrer anmelden"),
         "logOut": MessageLookupByLibrary.simpleMessage("Abmelden"),
         "login": MessageLookupByLibrary.simpleMessage("Anmeldung"),
+        "loginAsUser":
+            MessageLookupByLibrary.simpleMessage("Anmeldung als Benutzer"),
         "loginButton": MessageLookupByLibrary.simpleMessage("Anmeldung"),
         "loginHere": MessageLookupByLibrary.simpleMessage(
             "Haben Sie ein Konto? Hier anmelden"),
@@ -88,6 +93,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "profile": MessageLookupByLibrary.simpleMessage("Profil"),
         "progressDialog":
             MessageLookupByLibrary.simpleMessage("Bitte warten..."),
+        "ratings": MessageLookupByLibrary.simpleMessage("Bewertungen"),
         "register": MessageLookupByLibrary.simpleMessage(
             "Sie haben noch kein Konto? Hier anmelden"),
         "registerHeader": MessageLookupByLibrary.simpleMessage("Registrieren"),

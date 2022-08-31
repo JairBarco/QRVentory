@@ -46,5 +46,10 @@
   "nowOffline": "Jetzt offline",
   "nowOfflineMessage": "Sie sind jetzt offline",
   "nowOnline": "Jetzt online",
-  "nowOnlineMessage": "Sie sind jetzt online"
+  "nowOnlineMessage": "Sie sind jetzt online",
+  "home": "Startseite",
+  "earnings": "Ergebnis",
+  "ratings": "Bewertungen",
+  "account": "Konto",
+  "loginAsUser": "Anmeldung als Benutzer"
 }
