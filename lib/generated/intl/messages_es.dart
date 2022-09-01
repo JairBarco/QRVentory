@@ -23,6 +23,86 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "From": MessageLookupByLibrary.simpleMessage("Desde"),
-        "login": MessageLookupByLibrary.simpleMessage("Iniciar Sesión")
+        "To": MessageLookupByLibrary.simpleMessage("Para"),
+        "account": MessageLookupByLibrary.simpleMessage("Cuenta"),
+        "accountCreated":
+            MessageLookupByLibrary.simpleMessage("La cuenta ha sido creada"),
+        "accountNotCreated":
+            MessageLookupByLibrary.simpleMessage("La cuenta no ha sido creada"),
+        "carDetailsSaved": MessageLookupByLibrary.simpleMessage(
+            "Datos del coche guardados con éxito"),
+        "confirmPassword":
+            MessageLookupByLibrary.simpleMessage("Confirmar contraseña"),
+        "createAccountButton":
+            MessageLookupByLibrary.simpleMessage("Crear una cuenta"),
+        "driver": MessageLookupByLibrary.simpleMessage("Conductor"),
+        "dropOffLocation":
+            MessageLookupByLibrary.simpleMessage("Buscar lugares de entrega"),
+        "earnings": MessageLookupByLibrary.simpleMessage("Ganancias"),
+        "email": MessageLookupByLibrary.simpleMessage("Email"),
+        "emailMandatory":
+            MessageLookupByLibrary.simpleMessage("El email es obligatorio"),
+        "emailNotValid":
+            MessageLookupByLibrary.simpleMessage("El email no es válido"),
+        "emailNotVerified": MessageLookupByLibrary.simpleMessage(
+            "El email no se ha verificado"),
+        "errorDuringLogin": MessageLookupByLibrary.simpleMessage(
+            "Se ha producido un error durante el inicio de sesión"),
+        "help": MessageLookupByLibrary.simpleMessage("Ayuda"),
+        "history": MessageLookupByLibrary.simpleMessage("Historial"),
+        "home": MessageLookupByLibrary.simpleMessage("Casa"),
+        "language": MessageLookupByLibrary.simpleMessage("Lenguaje"),
+        "languageSettings":
+            MessageLookupByLibrary.simpleMessage("Ajustes de idioma"),
+        "logInAsDriver": MessageLookupByLibrary.simpleMessage(
+            "¿Es usted conductor? Entrar como conductor"),
+        "logOut": MessageLookupByLibrary.simpleMessage("Cerrar sesión"),
+        "login": MessageLookupByLibrary.simpleMessage("Iniciar Sesión"),
+        "loginAsUser":
+            MessageLookupByLibrary.simpleMessage("Iniciar sesión como usuario"),
+        "loginButton": MessageLookupByLibrary.simpleMessage("Inicio de sesión"),
+        "loginHere": MessageLookupByLibrary.simpleMessage(
+            "¿Tiene una cuenta? Inicie sesión aquí"),
+        "loginSuccessful":
+            MessageLookupByLibrary.simpleMessage("Login Exitoso"),
+        "name": MessageLookupByLibrary.simpleMessage("Nombre"),
+        "nameValidation": MessageLookupByLibrary.simpleMessage(
+            "El nombre debe tener al menos 3 caracteres"),
+        "noRecordExistsWithThisEmail": MessageLookupByLibrary.simpleMessage(
+            "No existe ningún registro con este email"),
+        "notGettingAddressWarning":
+            MessageLookupByLibrary.simpleMessage("Direccion no conseguida"),
+        "nowOffline": MessageLookupByLibrary.simpleMessage("Fuera de línea"),
+        "nowOfflineMessage":
+            MessageLookupByLibrary.simpleMessage("Ahora está desconectado"),
+        "nowOnline": MessageLookupByLibrary.simpleMessage("En línea"),
+        "nowOnlineMessage":
+            MessageLookupByLibrary.simpleMessage("Ahora está en linea"),
+        "originLocation":
+            MessageLookupByLibrary.simpleMessage("Ubicación de origen"),
+        "password": MessageLookupByLibrary.simpleMessage("Contraseña"),
+        "passwordCharacters": MessageLookupByLibrary.simpleMessage(
+            "La contraseña debe tener al menos 8 caracteres"),
+        "passwordIsRequired":
+            MessageLookupByLibrary.simpleMessage("Se requiere una contraseña"),
+        "passwordsNotMatch": MessageLookupByLibrary.simpleMessage(
+            "Las contraseñas no coinciden"),
+        "phone": MessageLookupByLibrary.simpleMessage("Teléfono"),
+        "phoneNotValid": MessageLookupByLibrary.simpleMessage(
+            "El número de teléfono no es válido"),
+        "profile": MessageLookupByLibrary.simpleMessage("Perfil"),
+        "progressDialog":
+            MessageLookupByLibrary.simpleMessage("Por favor, espere..."),
+        "ratings": MessageLookupByLibrary.simpleMessage("Clasificaciones"),
+        "register": MessageLookupByLibrary.simpleMessage(
+            "¿No tiene una cuenta? Regístrese aquí"),
+        "registerHeader": MessageLookupByLibrary.simpleMessage("Registrar"),
+        "requestRideButton":
+            MessageLookupByLibrary.simpleMessage("Pedir un viaje"),
+        "search": MessageLookupByLibrary.simpleMessage("Buscar aquí..."),
+        "searchHeader": MessageLookupByLibrary.simpleMessage(
+            "Buscar y fijar el lugar de entrega"),
+        "yourEmail": MessageLookupByLibrary.simpleMessage("Tu e-mail"),
+        "yourName": MessageLookupByLibrary.simpleMessage("Tu nombre")
       };
 }
