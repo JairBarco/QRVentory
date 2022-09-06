@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:smooth_star_rating_nsafe/smooth_star_rating.dart';
+import 'package:users_app/users/en/assistants/assistant_methods.dart';
 import 'package:users_app/users/en/global/global.dart';
 
 class SelectNearestActiveDriversScreen extends StatefulWidget {
@@ -11,6 +12,23 @@ class SelectNearestActiveDriversScreen extends StatefulWidget {
 }
 
 class _SelectNearestActiveDriversScreenState extends State<SelectNearestActiveDriversScreen> {
+  String fareAmount = "";
+
+  getFareAmountAccordingToVehicleType(int index){
+    if(tripDirectionDetailsInfo != null){
+      if(dList[index]["car_details"]["type"].toString() == "Bike"){
+        fareAmount = (AssistantMethods.calculateFareAmountFromOriginToDestination(tripDirectionDetailsInfo!) / 2).toStringAsFixed(2);
+      }
+      if(dList[index]["car_details"]["type"].toString() == "Uber-Black"){
+        fareAmount = (AssistantMethods.calculateFareAmountFromOriginToDestination(tripDirectionDetailsInfo!) * 2).toStringAsFixed(2);
+      }
+      if(dList[index]["car_details"]["type"].toString() == "Uber-X"){
+        fareAmount = (AssistantMethods.calculateFareAmountFromOriginToDestination(tripDirectionDetailsInfo!)).toString();
+      }
+    }
+    return fareAmount;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,12 +81,6 @@ class _SelectNearestActiveDriversScreenState extends State<SelectNearestActiveDr
                         fontSize: 12,
                         color: Colors.white54
                     ),
-                  ),Text(
-                    dList[index]["car_details"]["car_color"],
-                    style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.black54
-                    ),
                   ),
                   SmoothStarRating(
                     rating: 3.5,
@@ -84,18 +96,27 @@ class _SelectNearestActiveDriversScreenState extends State<SelectNearestActiveDr
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "3",
-                    style: TextStyle(
+                    "${getFareAmountAccordingToVehicleType(index)}",
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 2,),
                   Text(
-                    "13 km",
-                    style: TextStyle(
+                    tripDirectionDetailsInfo != null ? tripDirectionDetailsInfo!.duration_text! : "",
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black54,
                       fontSize: 12
+                    ),
+                  ),
+                  const SizedBox(height: 2,),
+                  Text(
+                    tripDirectionDetailsInfo != null ? tripDirectionDetailsInfo!.distance_text! : "",
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black54,
+                        fontSize: 12
                     ),
                   ),
                 ],

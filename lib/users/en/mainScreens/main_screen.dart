@@ -519,9 +519,10 @@ class _MainScreenState extends State<MainScreen> {
           ProgressDialog(message: AppLocalization.of(context)!.progressDialog,),
     );
 
-    var directionDetailsInfo = await AssistantMethods
-        .obtainOriginToDestinationDirectionDetails(
-        originLatLng, destinationLatLng);
+    var directionDetailsInfo = await AssistantMethods.obtainOriginToDestinationDirectionDetails(originLatLng, destinationLatLng);
+    setState(() {
+      tripDirectionDetailsInfo = directionDetailsInfo;
+    });
 
     if (!mounted) return;
     Navigator.pop(context);
