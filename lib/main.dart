@@ -27,7 +27,7 @@ void main() async {
             GlobalWidgetsLocalizations.delegate,
             _localeOverrideDelegate
           ],
-          supportedLocales: [
+          supportedLocales: const[
             Locale('en', ''), // English, no country code
             Locale('es', ''),//Spanish, no country code
             Locale('de', ''),// German, no country code

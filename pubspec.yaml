@@ -47,6 +47,7 @@ dependencies:
   flutter_polyline_points: ^1.0.0
   flutter_geofire: ^2.0.1
   intl: ^0.17.0
+  smooth_star_rating_nsafe: ^1.0.0+1
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +75,10 @@ flutter:
   assets:
      - img/logo.png
      - img/logo1.png
+     - img/car.png
+     - img/Uber-Black.png
+     - img/Uber-X.png
+     - img/Bike.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
