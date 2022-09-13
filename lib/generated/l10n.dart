@@ -579,6 +579,66 @@ class S {
       args: [],
     );
   }
+
+  /// `Nearest Online Drivers`
+  String get nearestOnlineDrivers {
+    return Intl.message(
+      'Nearest Online Drivers',
+      name: 'nearestOnlineDrivers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ride Request Cancelled`
+  String get cancelRideRequest {
+    return Intl.message(
+      'Ride Request Cancelled',
+      name: 'cancelRideRequest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New Ride Request`
+  String get newRide {
+    return Intl.message(
+      'New Ride Request',
+      name: 'newRide',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This Ride Request Not Exists`
+  String get rideNotExists {
+    return Intl.message(
+      'This Ride Request Not Exists',
+      name: 'rideNotExists',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Accept`
+  String get accept {
+    return Intl.message(
+      'Accept',
+      name: 'accept',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

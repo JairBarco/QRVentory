@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:users_app/drivers/en/global/global.dart';
+import '../../../drivers/en/mainScreens/main_screen.dart';
 import '../assistants/assistant_methods.dart';
 import '../authentication/login_screen.dart';
 import '../global/global.dart';
@@ -26,11 +28,13 @@ class _MySplashScreenState extends State<MySplashScreen> {
   }
 
   startTimer(){
-    fAuthUser.currentUser != null ? AssistantMethods.readCurrentOnlineUserInfo() : null;
     Timer(const Duration(seconds:3),() async {
       if(fAuthUser.currentUser !=null){
+        fAuthUser.currentUser != null ? AssistantMethods.readCurrentOnlineUserInfo() : null;
+
         currentFirebaseUser = fAuthUser.currentUser;
-          Navigator.push(context, MaterialPageRoute(builder: (c)=> MainScreen()));
+        //Navigator.push(context, MaterialPageRoute(builder: (c)=> MainScreen()));
+        Navigator.push(context, MaterialPageRoute(builder: (c)=> DriversMainScreen()));
       } else {
         //send user to main screen
         Navigator.push(context, MaterialPageRoute(builder: (c)=> LoginScreen()));
@@ -41,6 +45,8 @@ class _MySplashScreenState extends State<MySplashScreen> {
   @override
   void initState() {
     // TODO: implement initState
+    //fAuth.signOut();
+    //fAuthUser.signOut();
     checkIfPermissionLocationAllowed();
     super.initState();
     startTimer();

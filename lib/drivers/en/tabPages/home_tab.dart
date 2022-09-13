@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:users_app/drivers/en/global/global.dart';
+import 'package:users_app/drivers/en/push_notifications/push_notification_system.dart';
 import 'package:users_app/users/en/app_localization/app_localization.dart';
 
 import '../mainScreens/main_screen.dart';
@@ -210,6 +211,19 @@ class _HomeTabPageState extends State<HomeTabPage> {
     LatLng latLngPosition = LatLng(driverCurrentPosition!.latitude, driverCurrentPosition!.longitude);
     CameraPosition cameraPosition = CameraPosition(target: latLngPosition, zoom: 14.4746);
     newGoogleMapController!.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+  }
+
+  readCurrentDriverInformation(){
+    currentFirebaseDriver = fAuth.currentUser;
+    PushNotificationSystem pushNotificationSystem = PushNotificationSystem();
+    pushNotificationSystem.initializeCloudMessaging(context);
+    pushNotificationSystem.generateAndGetToken();
+  }
+
+  @override
+  void initState(){
+    super.initState();
+    readCurrentDriverInformation();
   }
 
   @override

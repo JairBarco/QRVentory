@@ -8,6 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:restart_app/restart_app.dart';
 import 'package:users_app/users/en/app_localization/app_localization.dart';
 import 'package:users_app/users/en/assistants/geofire_assistant.dart';
 import 'package:users_app/users/en/mainScreens/search_places_screen.dart';
@@ -53,6 +54,8 @@ class _MainScreenState extends State<MainScreen> {
   BitmapDescriptor? activeNearbyIcon;
 
   List<ActiveNearbyAvailableDrivers> onlineNearbyAvailableDriversList = [];
+
+  DatabaseReference? referenceRideRequest;
 
   blackThemeGoogleMap() {
     createActiveNearbyDriverIcon();
@@ -249,6 +252,35 @@ class _MainScreenState extends State<MainScreen> {
 
   saveRideRequestInformation(){
     //Save the ride request
+    referenceRideRequest = FirebaseDatabase.instance.ref().child("All Ride Requests").push();
+    var originLocation = Provider.of<AppInfo>(context, listen: false).userPickUpLocation;
+    var destinationLocation = Provider.of<AppInfo>(context, listen: false).userDropOffLocation;
+
+    Map originLocationMap = {
+      //"key" : value,
+      "latitude": originLocation!.locationLatitude.toString(),
+      "longitude": originLocation.locationLongitude.toString()
+    };
+
+    Map destinationLocationMap = {
+      //"key" : value,
+      "latitude": destinationLocation!.locationLatitude.toString(),
+      "longitude": destinationLocation.locationLongitude.toString()
+    };
+
+    Map userInformationMap = {
+      "origin": originLocationMap,
+      "destination": destinationLocationMap,
+      "time": DateTime.now().toString(),
+      "userName": userModelCurrentInfo!.name,
+      "userPhone": userModelCurrentInfo!.phone,
+      "originAddress": originLocation.locationName,
+      "destinationAddress": destinationLocation.locationName,
+      "driverId": "waiting"
+    };
+
+    referenceRideRequest!.set(userInformationMap);
+
     onlineNearbyAvailableDriversList = GeoFireAssistant.activeNearbyAvailableDriversList;
     searchNearestOnlineDrivers();
   }
@@ -257,6 +289,8 @@ class _MainScreenState extends State<MainScreen> {
     //No available drivers
     if(onlineNearbyAvailableDriversList.isEmpty){
       //Cancel the ride request
+      referenceRideRequest!.remove();
+
       setState(() {
         polyLineSet.clear();
         markersSet.clear();
@@ -276,7 +310,7 @@ class _MainScreenState extends State<MainScreen> {
     await retrieveOnlineDriversInformation(onlineNearbyAvailableDriversList);
 
     if(!mounted) return;
-    Navigator.push(context, MaterialPageRoute(builder: (c)=> const SelectNearestActiveDriversScreen()));
+    Navigator.push(context, MaterialPageRoute(builder: (c)=> SelectNearestActiveDriversScreen(referenceRideRequest : referenceRideRequest)));
   }
 
   retrieveOnlineDriversInformation(List onlineNearestDriversList) async{
@@ -346,7 +380,7 @@ class _MainScreenState extends State<MainScreen> {
                   sKey.currentState!.openDrawer();
                 } else {
                   //Refresh app automatically
-                  Navigator.push(context, MaterialPageRoute(builder: (c) => MainScreen()));
+                  Restart.restartApp();
                 }
               },
               child: CircleAvatar(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:users_app/users/en/app_localization/app_localization.dart';
 import 'package:users_app/users/en/widgets/progress_dialog.dart';
 
 import '../assistants/request_assistant.dart';
@@ -17,7 +18,7 @@ class PlacePredictionTileDesign extends StatelessWidget {
     showDialog(
         context: context,
         builder: (BuildContext context) => ProgressDialog(
-          message: "Please wait...",
+          message: AppLocalization.of(context)!.progressDialog,
         ));
 
     String placeDirectionDetails = "https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=$mapKeyAndroid";

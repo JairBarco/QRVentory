@@ -1,11 +1,15 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smooth_star_rating_nsafe/smooth_star_rating.dart';
+import 'package:users_app/users/en/app_localization/app_localization.dart';
 import 'package:users_app/users/en/assistants/assistant_methods.dart';
 import 'package:users_app/users/en/global/global.dart';
+import 'package:restart_app/restart_app.dart';
 
 class SelectNearestActiveDriversScreen extends StatefulWidget {
-  const SelectNearestActiveDriversScreen({Key? key}) : super(key: key);
+  DatabaseReference? referenceRideRequest;
+  SelectNearestActiveDriversScreen({this.referenceRideRequest});
 
   @override
   State<SelectNearestActiveDriversScreen> createState() => _SelectNearestActiveDriversScreenState();
@@ -36,7 +40,7 @@ class _SelectNearestActiveDriversScreenState extends State<SelectNearestActiveDr
       appBar: AppBar(
         backgroundColor: Colors.white54,
         title: Text(
-          "Nearest Online Drivers",
+          AppLocalization.of(context)!.nearestOnlineDrivers,
           style: const TextStyle(fontSize: 18,),
         ),
         leading: IconButton(
@@ -45,7 +49,9 @@ class _SelectNearestActiveDriversScreenState extends State<SelectNearestActiveDr
           ),
           onPressed: (){
             //delete the ride request from database
-            SystemNavigator.pop();
+            widget.referenceRideRequest!.remove();
+            Fluttertoast.showToast(msg: AppLocalization.of(context)!.cancelRideRequest);
+            Restart.restartApp();
           },
         ),
       ),
