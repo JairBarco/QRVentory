@@ -37,7 +37,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Crear una cuenta"),
         "driver": MessageLookupByLibrary.simpleMessage("Conductor"),
         "dropOffLocation":
-            MessageLookupByLibrary.simpleMessage("Buscar lugares de entrega"),
+            MessageLookupByLibrary.simpleMessage("Dirección de Destino"),
         "earnings": MessageLookupByLibrary.simpleMessage("Ganancias"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
         "emailMandatory":

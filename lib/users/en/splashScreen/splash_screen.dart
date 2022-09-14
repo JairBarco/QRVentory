@@ -33,8 +33,8 @@ class _MySplashScreenState extends State<MySplashScreen> {
         fAuthUser.currentUser != null ? AssistantMethods.readCurrentOnlineUserInfo() : null;
 
         currentFirebaseUser = fAuthUser.currentUser;
-        //Navigator.push(context, MaterialPageRoute(builder: (c)=> MainScreen()));
-        Navigator.push(context, MaterialPageRoute(builder: (c)=> DriversMainScreen()));
+        Navigator.push(context, MaterialPageRoute(builder: (c)=> MainScreen()));
+        //Navigator.push(context, MaterialPageRoute(builder: (c)=> DriversMainScreen()));
       } else {
         //send user to main screen
         Navigator.push(context, MaterialPageRoute(builder: (c)=> LoginScreen()));

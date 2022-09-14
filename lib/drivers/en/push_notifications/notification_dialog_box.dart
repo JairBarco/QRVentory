@@ -1,4 +1,6 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
+import 'package:users_app/drivers/en/global/global.dart';
 import 'package:users_app/drivers/en/models/user_ride_request_information.dart';
 import 'package:users_app/users/en/app_localization/app_localization.dart';
 import 'package:restart_app/restart_app.dart';
@@ -125,8 +127,11 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
                       primary: Colors.red,
                     ),
                       onPressed: (){
+                        audioPlayer.pause();
+                        audioPlayer.stop();
+                        audioPlayer = AssetsAudioPlayer();
                         //Cancel the ride request
-                        Restart.restartApp();
+                        Navigator.pop(context);
                       },
                       child: Text(
                         AppLocalization.of(context)!.cancel.toUpperCase(),
@@ -143,8 +148,11 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
                         primary: Colors.green,
                       ),
                       onPressed: (){
+                        audioPlayer.pause();
+                        audioPlayer.stop();
+                        audioPlayer = AssetsAudioPlayer();
                         //Cancel the ride request
-                        Restart.restartApp();
+                        Navigator.pop(context);
                       },
                       child: Text(
                         AppLocalization.of(context)!.accept.toUpperCase(),
