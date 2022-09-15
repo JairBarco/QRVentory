@@ -1,7 +1,7 @@
 import 'dart:async';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:users_app/drivers/en/global/global.dart';
 import '../../../drivers/en/mainScreens/main_screen.dart';
 import '../assistants/assistant_methods.dart';
 import '../authentication/login_screen.dart';
@@ -16,7 +16,7 @@ class MySplashScreen extends StatefulWidget {
 }
 
 class _MySplashScreenState extends State<MySplashScreen> {
-
+  final ref = FirebaseDatabase.instance.ref();
   LocationPermission? _locationPermission;
 
   checkIfPermissionLocationAllowed() async{
@@ -29,12 +29,16 @@ class _MySplashScreenState extends State<MySplashScreen> {
 
   startTimer(){
     Timer(const Duration(seconds:3),() async {
-      if(fAuthUser.currentUser !=null){
+      final snapshot = await ref.child('users/${fAuthUser.currentUser!.uid}/id').get();
+      final snapshotDriver = await ref.child('drivers/${fAuthUser.currentUser!.uid}/id').get();
+
+      if(snapshot.exists != false){
         fAuthUser.currentUser != null ? AssistantMethods.readCurrentOnlineUserInfo() : null;
 
         currentFirebaseUser = fAuthUser.currentUser;
         Navigator.push(context, MaterialPageRoute(builder: (c)=> MainScreen()));
-        //Navigator.push(context, MaterialPageRoute(builder: (c)=> DriversMainScreen()));
+      } else if(snapshotDriver.exists != false) {
+        Navigator.push(context, MaterialPageRoute(builder: (c)=> DriversMainScreen()));
       } else {
         //send user to main screen
         Navigator.push(context, MaterialPageRoute(builder: (c)=> LoginScreen()));
@@ -45,8 +49,6 @@ class _MySplashScreenState extends State<MySplashScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    //fAuth.signOut();
-    //fAuthUser.signOut();
     checkIfPermissionLocationAllowed();
     super.initState();
     startTimer();
