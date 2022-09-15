@@ -31,7 +31,8 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  dialog_flowtter:
+  stream_chat_flutter: ^4.5.0 # dependecia para el chat
+
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -49,9 +50,6 @@ dependencies:
   flutter_geofire: ^2.0.1
   intl: ^0.17.0
   smooth_star_rating_nsafe: ^1.0.0+1
-  restart_app: ^1.1.0
-  firebase_messaging: ^13.0.1
-  assets_audio_player: ^3.0.5
 
 dev_dependencies:
   flutter_test:
@@ -77,8 +75,12 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-     - img/
-     - music/
+     - img/logo.png
+     - img/logo1.png
+     - img/car.png
+     - img/Uber-Black.png
+     - img/Uber-X.png
+     - img/Bike.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
