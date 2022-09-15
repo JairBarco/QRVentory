@@ -34,7 +34,7 @@ class AssistantMethods{
   }
 
   static void readCurrentOnlineUserInfo() async{
-    currentFirebaseDriver = fAuth.currentDriver;
+    currentFirebaseDriver = fAuth.currentUser;
     DatabaseReference userRef = FirebaseDatabase.instance.ref().child("drivers").child(currentFirebaseDriver!.uid);
     userRef.once().then((snap){
       if(snap.snapshot.value  != null){
