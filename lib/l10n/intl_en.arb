@@ -51,5 +51,11 @@
   "earnings": "Earnings",
   "ratings": "Ratings",
   "account": "Account",
-  "loginAsUser": "Login as User"
+  "loginAsUser": "Login as User",
+  "nearestOnlineDrivers": "Nearest Online Drivers",
+  "cancelRideRequest": "Ride Request Cancelled",
+  "newRide": "New Ride Request",
+  "rideNotExists": "This Ride Request Not Exists",
+  "cancel": "Cancel",
+  "accept": "Accept"
 }

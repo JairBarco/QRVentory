@@ -24,11 +24,15 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "From": MessageLookupByLibrary.simpleMessage("From"),
         "To": MessageLookupByLibrary.simpleMessage("To"),
+        "accept": MessageLookupByLibrary.simpleMessage("Accept"),
         "account": MessageLookupByLibrary.simpleMessage("Account"),
         "accountCreated":
             MessageLookupByLibrary.simpleMessage("Account has been created"),
         "accountNotCreated": MessageLookupByLibrary.simpleMessage(
             "Account has not been created"),
+        "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+        "cancelRideRequest":
+            MessageLookupByLibrary.simpleMessage("Ride Request Cancelled"),
         "carDetailsSaved": MessageLookupByLibrary.simpleMessage(
             "Car details successfully saved"),
         "confirmPassword":
@@ -67,6 +71,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "name": MessageLookupByLibrary.simpleMessage("Name"),
         "nameValidation": MessageLookupByLibrary.simpleMessage(
             "Name must be at least 3 characters"),
+        "nearestOnlineDrivers":
+            MessageLookupByLibrary.simpleMessage("Nearest Online Drivers"),
+        "newRide": MessageLookupByLibrary.simpleMessage("New Ride Request"),
         "noRecordExistsWithThisEmail": MessageLookupByLibrary.simpleMessage(
             "No record exists with this email"),
         "notGettingAddressWarning":
@@ -98,6 +105,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "registerHeader": MessageLookupByLibrary.simpleMessage("Register"),
         "requestRideButton":
             MessageLookupByLibrary.simpleMessage("Request a Ride"),
+        "rideNotExists": MessageLookupByLibrary.simpleMessage(
+            "This Ride Request Not Exists"),
         "search": MessageLookupByLibrary.simpleMessage("Search Here..."),
         "searchHeader": MessageLookupByLibrary.simpleMessage(
             "Search & Set Drop off Location"),

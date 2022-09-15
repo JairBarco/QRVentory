@@ -288,6 +288,21 @@ class AppLocalization {
     );
   }
 
+  //Nearest Drivers
+  String get nearestOnlineDrivers {
+    return Intl.message(
+        'Nearest Online Drivers',
+        name: 'nearestOnlineDrivers'
+    );
+  }
+
+  String get cancelRideRequest {
+    return Intl.message(
+        'Ride Request Cancelled',
+        name: 'cancelRideRequest'
+    );
+  }
+
   //Drivers App
   //Main Screen
   String get home {
@@ -398,6 +413,35 @@ class AppLocalization {
     return Intl.message(
         'You Are Online Now',
         name: 'nowOnlineMessage'
+    );
+  }
+
+  //Push Notification
+  String get newRide {
+    return Intl.message(
+        "New Ride Request",
+        name: 'newRide'
+    );
+  }
+
+  String get rideNotExists {
+    return Intl.message(
+        "This Ride Request Not Exists",
+        name: 'rideNotExists'
+    );
+  }
+
+  String get cancel {
+    return Intl.message(
+        "Cancel",
+        name: 'cancel'
+    );
+  }
+
+  String get accept {
+    return Intl.message(
+        "Accept",
+        name: 'accept'
     );
   }
 
