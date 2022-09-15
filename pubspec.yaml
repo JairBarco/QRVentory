@@ -32,8 +32,8 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   stream_chat_flutter: ^4.5.0 # dependecia para el chat
-  agora_rtc_engine: ^4.0.1 # Dependecia para la video llamada
-  permission_handler: null # Dependecia para la video llamada
+  agora_rtc_engine: ^5.2.0 # Dependecia para la video llamada
+  permission_handler: ^8.3.0 # Dependecia para la video llamada
 
 
 
