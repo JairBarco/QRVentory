@@ -31,7 +31,6 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  stream_chat_flutter: ^4.6.0
   agora_rtc_engine: ^5.2.0 # Dependecia para la video llamada
   permission_handler: ^8.3.0 # Dependecia para la video llamada
 
@@ -55,6 +54,16 @@ dependencies:
   restart_app: ^1.1.0+1
   assets_audio_player: ^3.0.5
   firebase_messaging: ^13.0.1
+  flutter_contacts: ^1.1.5
+  cupertino_list_tile: ^0.2.1
+  cloud_firestore: ^3.1.10
+  firebase_storage: ^10.2.11
+  flutter_chat_bubble: ^2.0.0
+  mobx: ^2.0.6+1
+  flutter_mobx: ^2.0.4
+  image_picker: ^0.8.4+11
+  path_provider: ^2.0.9
+
 
 dev_dependencies:
   flutter_test:
@@ -66,6 +75,8 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  build_runner: ^2.2.1
+  mobx_codegen: ^2.0.5+2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

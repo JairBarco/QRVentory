@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_database/firebase_database.dart';
@@ -68,7 +69,7 @@ class _DriversSignUpScreenState extends State<DriversSignUpScreen> {
     ).user;
 
     if(firebaseDriver !=null){
-      Map driverMap = {
+      final driverMap = {
         "id": firebaseDriver.uid,
         "name": nameTextEditingController.text.trim(),
         "email": emailTextEditingController.text.trim(),
@@ -77,6 +78,10 @@ class _DriversSignUpScreenState extends State<DriversSignUpScreen> {
 
       DatabaseReference driversRef = FirebaseDatabase.instance.ref().child("drivers");
       driversRef.child(firebaseDriver.uid).set(driverMap);
+
+
+      DocumentReference ref = FirebaseFirestore.instance.collection('drivers').doc(firebaseDriver.uid);
+      ref.set(driverMap);
 
       currentFirebaseDriver = firebaseDriver;
       firebaseDriver.sendEmailVerification();

@@ -66,22 +66,30 @@ class _DriversLoginScreenState extends State<DriversLoginScreen> {
     ).user;
 
     if(firebaseDriver !=null){
-      DatabaseReference driversRef = FirebaseDatabase.instance.ref().child("drivers");
+      DatabaseReference driversRef = FirebaseDatabase.instance.ref().child("users");
       driversRef.child(firebaseDriver.uid).once().then((driverKey) {
         final snap = driverKey.snapshot;
-        if(snap.value != null){
-        currentFirebaseDriver = firebaseDriver;
-        Fluttertoast.showToast(msg: AppLocalization.of(context)!.loginSuccessful);
-        navigatorPush;
-      } else {
-          Fluttertoast.showToast(msg: AppLocalization.of(context)!.noRecordExistsWithThisEmail);
+        if(firebaseDriver.emailVerified == true){
+          if(snap.value != null){
+            currentFirebaseDriver = firebaseDriver;
+            Fluttertoast.showToast(msg: AppLocalization.of(context)!.loginSuccessful);
+            navigatorPush;
+          }
+        } else if(firebaseDriver.emailVerified == false){
+          Fluttertoast.showToast(msg: AppLocalization.of(context)!.emailNotVerified);
+
+          if(snap.value == null){
+            Fluttertoast.showToast(msg: AppLocalization.of(context)!.noRecordExistsWithThisEmail);
+            fAuth.signOut();
+            navigatorPush;
+          }
           fAuth.signOut();
           navigatorPush;
         }
       });
     } else {
       navigator.pop();
-      if(!mounted) return;
+      if (!mounted) return;
       Fluttertoast.showToast(msg: AppLocalization.of(context)!.errorDuringLogin);
     }
   }

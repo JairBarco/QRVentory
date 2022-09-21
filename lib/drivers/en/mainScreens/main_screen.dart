@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:users_app/users/en/app_localization/app_localization.dart';
 

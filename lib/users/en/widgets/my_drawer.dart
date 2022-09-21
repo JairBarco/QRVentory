@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:users_app/drivers/en/splashScreen/splash_screen.dart';
 import 'package:users_app/users/en/app_localization/app_localization.dart';
-import 'package:users_app/users/en/mainScreens/help_screen.dart';
+import 'package:users_app/users/en/chat/home_page.dart';
 import 'package:users_app/users/en/widgets/language.dart';
 
 import '../global/global.dart';
-import '../mainScreens/video_call.dart';
 import '../splashScreen/splash_screen.dart';
 
 class MyDrawer extends StatefulWidget {
@@ -134,7 +133,7 @@ class _MyDrawerState extends State<MyDrawer> {
 
           GestureDetector(
             onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (c) => VideoCall()));
+              Navigator.push(context, MaterialPageRoute(builder: (c) => HomePageCupertino()));
             },
             child: ListTile(
               leading: const Icon(Icons.help_rounded, color: Colors.white54,),

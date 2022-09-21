@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -66,7 +67,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     ).user;
 
     if(firebaseUser !=null){
-      Map userMap = {
+      final userMap = {
         "id": firebaseUser.uid,
         "name": nameTextEditingController.text.trim(),
         "email": emailTextEditingController.text.trim(),
@@ -75,6 +76,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
       DatabaseReference usersRef = FirebaseDatabase.instance.ref().child("users");
       usersRef.child(firebaseUser.uid).set(userMap);
+
+      DocumentReference ref = FirebaseFirestore.instance.collection('users').doc(firebaseUser.uid);
+      ref.set(userMap);
 
       currentFirebaseUser = firebaseUser;
       firebaseUser.sendEmailVerification();
