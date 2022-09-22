@@ -6,10 +6,11 @@ import 'package:flutter_chat_bubble/chat_bubble.dart';
 import 'package:flutter_chat_bubble/clippers/chat_bubble_clipper_6.dart';
 import 'package:users_app/users/en/app_localization/app_localization.dart';
 import 'package:users_app/users/en/global/global.dart';
+import '../mainScreens/home_videocall.dart';
 
 class ChatDetail extends StatefulWidget {
-  final friendId;
-  final friendName;
+  var friendId;
+  var friendName;
 
   ChatDetail({Key? key, this.friendId, this.friendName}) : super(key: key);
 
@@ -31,6 +32,10 @@ class _ChatDetailState extends State<ChatDetail> {
   var chatDocId;
   TextEditingController _textController = TextEditingController();
   _ChatDetailState(this.friendId, this.friendName);
+
+  var _stream = FirebaseFirestore.instance.collection('chats').doc('eWoZj3PO1KXe8QH98c6h')
+      .collection('messages').orderBy('createdOn', descending: true)
+      .snapshots();
 
   @override
   void initState() {
@@ -85,12 +90,8 @@ class _ChatDetailState extends State<ChatDetail> {
     return Alignment.topLeft;
   }
 
-
   @override
-  Widget build(BuildContext context) {
-    Stream<QuerySnapshot> _stream = FirebaseFirestore.instance.collection('chats').doc(chatDocId)
-        .collection('messages').orderBy('createdOn', descending: true).snapshots();
-
+  Widget build(BuildContext context){
     return StreamBuilder<QuerySnapshot>(
       stream: _stream,
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -108,7 +109,9 @@ class _ChatDetailState extends State<ChatDetail> {
               middle: Text(friendName),
               trailing: CupertinoButton(
                 padding: EdgeInsets.zero,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (c) => VideoCallApp()));
+                },
                 child: Icon(CupertinoIcons.video_camera),
               ),
               previousPageTitle: "Back",

@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
 import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
 
+
 class VideoCall extends StatefulWidget {
+  const VideoCall({super.key});
   @override
   State<VideoCall> createState() => _VideoCallState();
 }
@@ -86,7 +87,7 @@ class _VideoCallState extends State<VideoCall> {
       return RtcRemoteView.SurfaceView(uid: _remoteUid!, channelId: "firstchannel",);
     } else {
       return Text(
-        'Please wait for remote user to join',
+        'Llamando...',
         textAlign: TextAlign.center,
       );
     }

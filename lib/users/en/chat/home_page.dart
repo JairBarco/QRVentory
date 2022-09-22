@@ -12,6 +12,7 @@ class HomePageCupertino extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoApp(
+      useInheritedMediaQuery: true,
       theme: CupertinoThemeData(brightness: Brightness.light),
       home: HomePage(),
       debugShowCheckedModeBanner: false,
