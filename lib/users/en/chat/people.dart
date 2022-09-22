@@ -10,12 +10,12 @@ class People extends StatelessWidget {
   People({Key? key}) : super(key: key);
   var currentUser = fAuthUser.currentUser!.uid;
 
-  void callChatDetailScreen(BuildContext context, String name, String uid) {
+  void callChatDetailScreen(BuildContext context, String name, String id) {
     Navigator.push(
         context,
         CupertinoPageRoute(
             builder: (context) =>
-                ChatDetail(friendId: uid, friendName: name)));
+                ChatDetail(friendId: id, friendName: name)));
   }
 
   @override

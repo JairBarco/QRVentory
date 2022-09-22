@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_bubble/bubble_type.dart';
@@ -18,15 +17,21 @@ class ChatDetail extends StatefulWidget {
   _ChatDetailState createState() => _ChatDetailState(friendId, friendName);
 }
 
+/*chats
+    .doc(chatDocId)
+.collection('messages')
+.orderBy('createdOn', descending: true)
+.snapshots()*/
+
 class _ChatDetailState extends State<ChatDetail> {
   CollectionReference chats = FirebaseFirestore.instance.collection('chats');
-  final friendId;
-  final friendName;
-  final currentUserId = FirebaseAuth.instance.currentUser?.uid;
+  var friendId;
+  var friendName;
+  var currentUserId = fAuthUser.currentUser!.uid;
   var chatDocId;
-  var _textController = TextEditingController();
-
+  TextEditingController _textController = TextEditingController();
   _ChatDetailState(this.friendId, this.friendName);
+
   @override
   void initState() {
     super.initState();
@@ -49,7 +54,7 @@ class _ChatDetailState extends State<ChatDetail> {
         } else {
           await chats.add({
             'users': {currentUserId: null, friendId: null},
-            'names':{currentUserId:fAuthUser.currentUser!.displayName,friendId:friendName }
+            'names':{currentUserId:userModelCurrentInfo!.name,friendId:friendName }
           }).then((value) => {chatDocId = value});
         }
       },
@@ -80,20 +85,15 @@ class _ChatDetailState extends State<ChatDetail> {
     return Alignment.topLeft;
   }
 
+
   @override
   Widget build(BuildContext context) {
+    Stream<QuerySnapshot> _stream = FirebaseFirestore.instance.collection('chats').doc(chatDocId)
+        .collection('messages').orderBy('createdOn', descending: true).snapshots();
+
     return StreamBuilder<QuerySnapshot>(
-      stream: chats
-          .doc(chatDocId)
-          .collection('messages')
-          .orderBy('createdOn', descending: true)
-          .snapshots(),
+      stream: _stream,
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return Center(
-            child: Text("Something went wrong"),
-          );
-        }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
@@ -113,7 +113,6 @@ class _ChatDetailState extends State<ChatDetail> {
               ),
               previousPageTitle: "Back",
             ),
-            child: SafeArea(
               child: Column(
                 children: [
                   Expanded(
@@ -125,8 +124,7 @@ class _ChatDetailState extends State<ChatDetail> {
                           print(document.toString());
                           print(data['msg']);
                           return Padding(
-                            padding:
-                            const EdgeInsets.symmetric(horizontal: 8.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
                             child: ChatBubble(
                               clipper: ChatBubbleClipper6(
                                 nipSize: 0,
@@ -138,7 +136,7 @@ class _ChatDetailState extends State<ChatDetail> {
                               alignment: getAlignment(data['id'].toString()),
                               margin: EdgeInsets.only(top: 20),
                               backGroundColor: isSender(data['id'].toString())
-                                  ? Color(0xFF08C187)
+                                  ? Colors.indigo
                                   : Color(0xffE7E7ED),
                               child: Container(
                                 constraints: BoxConstraints(
@@ -178,7 +176,7 @@ class _ChatDetailState extends State<ChatDetail> {
                                                   : Colors.black),
                                         )
                                       ],
-                                    )
+                                    ),
                                   ],
                                 ),
                               ),
@@ -188,6 +186,7 @@ class _ChatDetailState extends State<ChatDetail> {
                       ).toList(),
                     ),
                   ),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -195,6 +194,7 @@ class _ChatDetailState extends State<ChatDetail> {
                         child: Padding(
                           padding: const EdgeInsets.only(left: 18.0),
                           child: CupertinoTextField(
+                            placeholder: "Write a message",
                             controller: _textController,
                           ),
                         ),
@@ -203,10 +203,9 @@ class _ChatDetailState extends State<ChatDetail> {
                           child: Icon(Icons.send_sharp),
                           onPressed: () => sendMessage(_textController.text))
                     ],
-                  )
+                  ),
                 ],
               ),
-            ),
           );
         } else {
           return Container();

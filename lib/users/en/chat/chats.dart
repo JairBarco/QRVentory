@@ -14,12 +14,12 @@ class Chats extends StatefulWidget {
 }
 
 class _ChatsState extends State<Chats> {
-  void callChatDetailScreen(BuildContext context, String name, String uid) {
+  void callChatDetailScreen(BuildContext context, String name, String id) {
     Navigator.push(
         context,
         CupertinoPageRoute(
             builder: (context) =>
-                ChatDetail(friendId: uid, friendName: name)));
+                ChatDetail(friendId: id, friendName: name)));
   }
 
   @override
