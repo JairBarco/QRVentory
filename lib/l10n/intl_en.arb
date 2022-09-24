@@ -57,5 +57,6 @@
   "newRide": "New Ride Request",
   "rideNotExists": "This Ride Request Not Exists",
   "cancel": "Cancel",
-  "accept": "Accept"
+  "accept": "Accept",
+  "messages": "Messages"
 }

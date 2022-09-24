@@ -107,6 +107,13 @@ class AppLocalization {
     );
   }
 
+  String get messages {
+    return Intl.message(
+        'Messages',
+        name: 'messages'
+    );
+  }
+
   //Search Places Screen
   String get searchHeader {
     return Intl.message(

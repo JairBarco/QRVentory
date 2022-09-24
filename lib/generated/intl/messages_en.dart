@@ -68,6 +68,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Have an account? Login Here"),
         "loginSuccessful":
             MessageLookupByLibrary.simpleMessage("Login Successful"),
+        "messages": MessageLookupByLibrary.simpleMessage("Messages"),
         "name": MessageLookupByLibrary.simpleMessage("Name"),
         "nameValidation": MessageLookupByLibrary.simpleMessage(
             "Name must be at least 3 characters"),

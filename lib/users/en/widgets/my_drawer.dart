@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:users_app/drivers/en/splashScreen/splash_screen.dart';
 import 'package:users_app/users/en/app_localization/app_localization.dart';
-import 'package:users_app/users/en/chat/home_page.dart';
+import 'package:users_app/users/en/chats/screens/home_screen.dart';
 import 'package:users_app/users/en/widgets/language.dart';
-
 import '../global/global.dart';
 import '../splashScreen/splash_screen.dart';
 
@@ -133,12 +132,12 @@ class _MyDrawerState extends State<MyDrawer> {
 
           GestureDetector(
             onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (c) => HomePageCupertino()));
+              Navigator.push(context, MaterialPageRoute(builder: (c) => ChatsHomeScreen()));
             },
             child: ListTile(
-              leading: const Icon(Icons.help_rounded, color: Colors.white54,),
+              leading: const Icon(Icons.message_rounded, color: Colors.white54,),
               title: Text(
-                AppLocalization.of(context)!.help,
+                AppLocalization.of(context)!.messages,
                 style: const TextStyle(
                   color: Colors.white54,
                 ),

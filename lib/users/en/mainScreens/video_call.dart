@@ -1,24 +1,23 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
 import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
 
-
 class VideoCall extends StatefulWidget {
-  const VideoCall({super.key});
   @override
   State<VideoCall> createState() => _VideoCallState();
 }
 
-const appId = "8139cfafa48c4b78af8426975903c5b6";
-const token = "007eJxTYMh+5b2zb93u4FgXnhhXid47ez/MnXTj97f5wrb295ZHqrYoMFgYGlsmpyWmJZpYJJskmVskplmYGJlZmptaGhgnmyaZJQYrJz9aopIsxXaUmZEBAkF8Hoa0zKLikuSMxLy81BwGBgDbPiUA";
+const appId = "c34cbe9c50bb4f1ab95bcdc2a96a1a99";
+const token = "007eJxTYDBzykjs4nksHNLKxLi5ZKO/tnTDGS9TjdC0rskRp5mqFyswJBubJCelWiabGiQlmaQZJiZZmiYlpyQbJVqaJRomWlq+jdFPzl5nkFzK0snCyACBID4PQ1pmUXFJckZiXl5qDgMDAGfFIVc=";
 
 class _VideoCallState extends State<VideoCall> {
   int? _remoteUid;
   late RtcEngine _engine;
-  
+
   @override
   void initState() {
     super.initState();
@@ -54,32 +53,32 @@ class _VideoCallState extends State<VideoCall> {
 
     await _engine.joinChannel(token, "firstchannel", null, 0);
   }
-    
-    @override
-    Widget build(BuildContext context) {
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text('Video Call'),
-        ),
-        body: Stack(
-          children: [
-            Center(
-              child: _remoteVideo(),
-            ),
-            Align(
-              alignment: Alignment.topLeft,
-              child: Container(
-                width: 100,
-                height: 100,
-                child: Center(
-                  child: RtcLocalView.SurfaceView(),
-                ),
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Video Call'),
+      ),
+      body: Stack(
+        children: [
+          Center(
+            child: _remoteVideo(),
+          ),
+          Align(
+            alignment: Alignment.topLeft,
+            child: Container(
+              width: 100,
+              height: 100,
+              child: Center(
+                child: RtcLocalView.SurfaceView(),
               ),
             ),
-          ],
-        ),
-      );
-    }
+          ),
+        ],
+      ),
+    );
+  }
 
   // Display remote user's video
   Widget _remoteVideo() {
@@ -87,7 +86,7 @@ class _VideoCallState extends State<VideoCall> {
       return RtcRemoteView.SurfaceView(uid: _remoteUid!, channelId: "firstchannel",);
     } else {
       return Text(
-        'Llamando...',
+        'Please wait for remote user to join',
         textAlign: TextAlign.center,
       );
     }
