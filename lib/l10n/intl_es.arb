@@ -51,5 +51,20 @@
   "earnings": "Ganancias",
   "ratings": "Clasificaciones",
   "account": "Cuenta",
-  "loginAsUser": "Iniciar sesión como usuario"
+  "loginAsUser": "Iniciar sesión como usuario",
+  "nearestOnlineDrivers": "Drivers en línea más cerca",
+  "cancelRideRequest": "Solicitud de viaje cancelada",
+  "newRide": "Nueva solicitud de viaje",
+  "rideNotExists": "Esta solicitud de viaje no existe",
+  "cancel": "Cancelar",
+  "accept": "Aceptar",
+  "messages": "Mensajes",
+  "messaging": "Mensajeando",
+  "message": "Di hola!",
+  "noChatsAvailable": "No hay chats disponibles",
+  "typeUsername": "Tipo de nombre de usuario",
+  "friends": "Amigos",
+  "noFriends": "Aún no tienes amigos agregados",
+  "videoCall": "Vídeo-llamada",
+  "waitUserToJoin": "Esperando a que un usuario se una"
 }
