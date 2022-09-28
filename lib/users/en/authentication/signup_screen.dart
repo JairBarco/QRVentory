@@ -74,11 +74,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
         "phone": phoneTextEditingController.text.trim(),
       };
 
+        final userFirestoreMap = {
+          "id": firebaseUser.uid,
+          "name": nameTextEditingController.text.trim(),
+          "email": emailTextEditingController.text.trim(),
+          "phone": phoneTextEditingController.text.trim(),
+          "date": Timestamp.now(),
+          "isDriver": false
+        };
+
       DatabaseReference usersRef = FirebaseDatabase.instance.ref().child("users");
       usersRef.child(firebaseUser.uid).set(userMap);
 
       DocumentReference ref = FirebaseFirestore.instance.collection('users').doc(firebaseUser.uid);
-      ref.set(userMap);
+      ref.set(userFirestoreMap);
 
       currentFirebaseUser = firebaseUser;
       firebaseUser.sendEmailVerification();

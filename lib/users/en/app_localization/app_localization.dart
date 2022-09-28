@@ -452,6 +452,64 @@ class AppLocalization {
     );
   }
 
+  //Chat
+  String get messaging {
+    return Intl.message(
+        "Messaging",
+        name: 'messaging'
+    );
+  }
+
+  String get sayHi {
+    return Intl.message(
+        "Say Hi",
+        name: 'sayHi'
+    );
+  }
+
+  String get noChatsAvailable {
+    return Intl.message(
+        "No Chats Available",
+        name: 'noChatsAvailable'
+    );
+  }
+
+  String get typeUsername {
+    return Intl.message(
+        "Type Username...",
+        name: 'typeUsername'
+    );
+  }
+
+  String get friends {
+    return Intl.message(
+        "Friends",
+        name: 'friends'
+    );
+  }
+
+  String get noFriends {
+    return Intl.message(
+        "No Friends Added Yet",
+        name: 'noFriends'
+    );
+  }
+
+  //Video Call
+
+  String get videoCall {
+    return Intl.message(
+        "Video Call",
+        name: 'videoCall'
+    );
+  }
+
+  String get waitUserToJoin {
+    return Intl.message(
+        "Waiting for user to join",
+        name: 'waitUserToJoin'
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalization> {

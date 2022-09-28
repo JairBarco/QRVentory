@@ -58,5 +58,13 @@
   "rideNotExists": "This Ride Request Not Exists",
   "cancel": "Cancel",
   "accept": "Accept",
-  "messages": "Messages"
+  "messages": "Messages",
+  "messaging": "Messaging",
+  "message": "Say Hi",
+  "noChatsAvailable": "No Chats Available",
+  "typeUsername": "Type Username",
+  "friends": "Friends",
+  "noFriends": "No Friends Added Yet",
+  "videoCall": "Video Call",
+  "waitUserToJoin": "Wait for a user to join"
 }

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:users_app/users/en/app_localization/app_localization.dart';
 import 'package:users_app/users/en/global/global.dart';
 import 'package:users_app/users/en/mainScreens/video_call.dart';
 import '../widgets/message_textfield.dart';
@@ -43,12 +44,17 @@ class ChatScreen extends StatelessWidget {
                )
              ),
              child: StreamBuilder(
-               stream: FirebaseFirestore.instance.collection("users").doc(fAuthUser.currentUser!.uid).collection('messages').doc(friendId).collection('chats').orderBy("date",descending: true).snapshots(),
+               stream: FirebaseFirestore.instance.collection("users")
+                   .doc(fAuthUser.currentUser!.uid)
+                   .collection('messages')
+                   .doc(friendId)
+                   .collection('chats')
+                   .orderBy("date",descending: true).snapshots(),
                builder: (context,AsyncSnapshot snapshot){
                    if(snapshot.hasData){
                      if(snapshot.data.docs.length < 1){
                        return Center(
-                         child: Text("Say Hi"),
+                         child: Text(AppLocalization().sayHi),
                        );
                      }
                      return ListView.builder(

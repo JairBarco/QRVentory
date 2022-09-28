@@ -14,6 +14,7 @@ class UserModel{
     phone = (snap.value as dynamic)["phone"];
     name = (snap.value as dynamic)["name"];
     id = snap.key;
+    date = (snap.value as dynamic)['date'];
     email = (snap.value as dynamic)["email"];
   }
 

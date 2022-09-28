@@ -5,6 +5,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
 import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
+import 'package:users_app/users/en/app_localization/app_localization.dart';
 
 class VideoCall extends StatefulWidget {
   @override
@@ -12,7 +13,7 @@ class VideoCall extends StatefulWidget {
 }
 
 const appId = "c34cbe9c50bb4f1ab95bcdc2a96a1a99";
-const token = "007eJxTYDBzykjs4nksHNLKxLi5ZKO/tnTDGS9TjdC0rskRp5mqFyswJBubJCelWiabGiQlmaQZJiZZmiYlpyQbJVqaJRomWlq+jdFPzl5nkFzK0snCyACBID4PQ1pmUXFJckZiXl5qDgMDAGfFIVc=";
+const token = "007eJxTYMgxaMu5Pd3/Pfv6WWevPhSf9eDizX/H+OcFxNv3bar0lU9VYEg2NklOSrVMNjVISjJJM0xMsjRNSk5JNkq0NEs0TLS0bDxgnPxL0DRZP0WIhZEBAkF8dobkjMS8vNQcBgYAfagjyA==";
 
 class _VideoCallState extends State<VideoCall> {
   int? _remoteUid;
@@ -51,14 +52,24 @@ class _VideoCallState extends State<VideoCall> {
       ),
     );
 
-    await _engine.joinChannel(token, "firstchannel", null, 0);
+    await _engine.joinChannel(token, "channel", null, 0);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Video Call'),
+      appBar:
+      AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white,),
+          onPressed: (){
+            Navigator.pop(context);
+            _engine.leaveChannel();
+          },
+        ),
+        title: Text(AppLocalization().videoCall),
+        centerTitle: true,
+        backgroundColor: Colors.indigo,
       ),
       body: Stack(
         children: [
@@ -83,10 +94,10 @@ class _VideoCallState extends State<VideoCall> {
   // Display remote user's video
   Widget _remoteVideo() {
     if (_remoteUid != null) {
-      return RtcRemoteView.SurfaceView(uid: _remoteUid!, channelId: "firstchannel",);
+      return RtcRemoteView.SurfaceView(uid: _remoteUid!, channelId: "channel");
     } else {
       return Text(
-        'Please wait for remote user to join',
+        AppLocalization().waitUserToJoin,
         textAlign: TextAlign.center,
       );
     }

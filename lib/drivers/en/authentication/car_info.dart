@@ -31,7 +31,7 @@ class _CarInfoScreenState extends State<CarInfoScreen> {
     DatabaseReference driversRef = FirebaseDatabase.instance.ref().child("drivers");
     driversRef.child(currentFirebaseDriver!.uid).child("car_details").set(driverCarInfoMap);
 
-    DocumentReference ref = FirebaseFirestore.instance.collection('drivers').doc(currentFirebaseDriver!.uid).collection('car_details').doc(currentFirebaseDriver!.uid);
+    DocumentReference ref = FirebaseFirestore.instance.collection('users').doc(currentFirebaseDriver!.uid).collection('car_details').doc(currentFirebaseDriver!.uid);
     ref.set(driverCarInfoMap);
 
     Fluttertoast.showToast(msg: AppLocalization.of(context)!.carDetailsSaved);

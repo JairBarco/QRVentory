@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:users_app/users/en/app_localization/app_localization.dart';
+import 'package:users_app/users/en/chats/screens/chats_screen.dart';
 import '../../global/global.dart';
-import 'chat_screen.dart';
 
 
 class SearchScreen extends StatefulWidget {
@@ -45,7 +46,9 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Search your Friend"),
+        title: Text(AppLocalization().search),
+        centerTitle: true,
+        backgroundColor: Colors.indigo,
       ),
       body: Column(
         children: [
@@ -57,7 +60,7 @@ class _SearchScreenState extends State<SearchScreen> {
                    child: TextField(
                      controller: searchController,
                      decoration: InputDecoration(
-                       hintText: "type username....",
+                       hintText: AppLocalization().typeUsername,
                        border: OutlineInputBorder(
                          borderRadius: BorderRadius.circular(10)
                        )
@@ -78,15 +81,19 @@ class _SearchScreenState extends State<SearchScreen> {
                   return ListTile(
                     title: Text(searchResult[index]['name']),
                     subtitle: Text(searchResult[index]['email']),
-                    trailing: IconButton(onPressed: (){
-                        setState(() {
-                          searchController.text = "";
-                        });
-                           Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatScreen(
-                             currentUser: widget.user, 
-                             friendId: searchResult[index]['id'],
-                              friendName: searchResult[index]['name'],)));
-                    }, icon: Icon(Icons.message)),
+                    trailing: IconButton(onPressed: () async{
+                      final friendInfoMap = {
+                        "name": searchResult[index]['name'],
+                        "email": searchResult[index]['email'],
+                        "id": searchResult[index]['id'],
+                        "phone": searchResult[index]['phone'],
+                      };
+                      DocumentReference ref = FirebaseFirestore.instance.collection('users')
+                          .doc(fAuthUser.currentUser!.uid).collection('friends').doc(searchResult[index]['id']);
+                      ref.set(friendInfoMap);
+
+                      Navigator.push(context, MaterialPageRoute(builder: (c) => ChatsScreen()));
+                    }, icon: Icon(Icons.add)),
                   );
                 }))
            else if(isLoading == true)

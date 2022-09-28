@@ -76,18 +76,28 @@ class _DriversSignUpScreenState extends State<DriversSignUpScreen> {
         "phone": phoneTextEditingController.text.trim(),
       };
 
+      final driverFirestoreMap = {
+        "id": firebaseDriver.uid,
+        "name": nameTextEditingController.text.trim(),
+        "email": emailTextEditingController.text.trim(),
+        "phone": phoneTextEditingController.text.trim(),
+        "date": Timestamp.now(),
+        "isDriver": true
+      };
+
       DatabaseReference driversRef = FirebaseDatabase.instance.ref().child("drivers");
       driversRef.child(firebaseDriver.uid).set(driverMap);
 
 
-      DocumentReference ref = FirebaseFirestore.instance.collection('drivers').doc(firebaseDriver.uid);
-      ref.set(driverMap);
+      DocumentReference ref = FirebaseFirestore.instance.collection('users').doc(firebaseDriver.uid);
+      ref.set(driverFirestoreMap);
 
       currentFirebaseDriver = firebaseDriver;
       firebaseDriver.sendEmailVerification();
       if(!mounted) return;
       Fluttertoast.showToast(msg: AppLocalization.of(context)!.accountCreated);
       navigatorPush;
+      fAuth.signOut();
     } else {
       navigator.pop();
       if(!mounted) return;

@@ -649,6 +649,86 @@ class S {
       args: [],
     );
   }
+
+  /// `Messaging`
+  String get messaging {
+    return Intl.message(
+      'Messaging',
+      name: 'messaging',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Say Hi`
+  String get message {
+    return Intl.message(
+      'Say Hi',
+      name: 'message',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No Chats Available`
+  String get noChatsAvailable {
+    return Intl.message(
+      'No Chats Available',
+      name: 'noChatsAvailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Type Username`
+  String get typeUsername {
+    return Intl.message(
+      'Type Username',
+      name: 'typeUsername',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Friends`
+  String get friends {
+    return Intl.message(
+      'Friends',
+      name: 'friends',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No Friends Added Yet`
+  String get noFriends {
+    return Intl.message(
+      'No Friends Added Yet',
+      name: 'noFriends',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Video Call`
+  String get videoCall {
+    return Intl.message(
+      'Video Call',
+      name: 'videoCall',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Wait for a user to join`
+  String get waitUserToJoin {
+    return Intl.message(
+      'Wait for a user to join',
+      name: 'waitUserToJoin',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

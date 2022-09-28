@@ -137,7 +137,7 @@ class _MyDrawerState extends State<MyDrawer> {
             child: ListTile(
               leading: const Icon(Icons.message_rounded, color: Colors.white54,),
               title: Text(
-                AppLocalization.of(context)!.messages,
+                AppLocalization.of(context)!.messaging,
                 style: const TextStyle(
                   color: Colors.white54,
                 ),

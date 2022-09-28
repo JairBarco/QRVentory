@@ -52,6 +52,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Email not verified"),
         "errorDuringLogin":
             MessageLookupByLibrary.simpleMessage("Error occurred during Login"),
+        "friends": MessageLookupByLibrary.simpleMessage("Friends"),
         "help": MessageLookupByLibrary.simpleMessage("Help"),
         "history": MessageLookupByLibrary.simpleMessage("History"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
@@ -68,13 +69,19 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Have an account? Login Here"),
         "loginSuccessful":
             MessageLookupByLibrary.simpleMessage("Login Successful"),
+        "message": MessageLookupByLibrary.simpleMessage("Say Hi"),
         "messages": MessageLookupByLibrary.simpleMessage("Messages"),
+        "messaging": MessageLookupByLibrary.simpleMessage("Messaging"),
         "name": MessageLookupByLibrary.simpleMessage("Name"),
         "nameValidation": MessageLookupByLibrary.simpleMessage(
             "Name must be at least 3 characters"),
         "nearestOnlineDrivers":
             MessageLookupByLibrary.simpleMessage("Nearest Online Drivers"),
         "newRide": MessageLookupByLibrary.simpleMessage("New Ride Request"),
+        "noChatsAvailable":
+            MessageLookupByLibrary.simpleMessage("No Chats Available"),
+        "noFriends":
+            MessageLookupByLibrary.simpleMessage("No Friends Added Yet"),
         "noRecordExistsWithThisEmail": MessageLookupByLibrary.simpleMessage(
             "No record exists with this email"),
         "notGettingAddressWarning":
@@ -111,6 +118,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "search": MessageLookupByLibrary.simpleMessage("Search Here..."),
         "searchHeader": MessageLookupByLibrary.simpleMessage(
             "Search & Set Drop off Location"),
+        "typeUsername": MessageLookupByLibrary.simpleMessage("Type Username"),
+        "videoCall": MessageLookupByLibrary.simpleMessage("Video Call"),
+        "waitUserToJoin":
+            MessageLookupByLibrary.simpleMessage("Wait for a user to join"),
         "yourEmail": MessageLookupByLibrary.simpleMessage("Your e-mail"),
         "yourName": MessageLookupByLibrary.simpleMessage("Your Name")
       };

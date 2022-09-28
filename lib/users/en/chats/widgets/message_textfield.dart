@@ -24,7 +24,7 @@ class _MessageTextFieldState extends State<MessageTextField> {
            Expanded(child: TextField(
              controller: _controller,
               decoration: InputDecoration(
-                labelText:"Type your Message",
+                labelText:"Aa",
                 fillColor: Colors.grey[100],
                 filled: true,
                 border: OutlineInputBorder(
@@ -36,7 +36,7 @@ class _MessageTextFieldState extends State<MessageTextField> {
            )),
            SizedBox(width: 20,),
            GestureDetector(
-             onTap: ()async{
+             onTap: () async{
                String message = _controller.text;
                _controller.clear();
                await FirebaseFirestore.instance.collection('users').doc(widget.currentId).collection('messages').doc(widget.friendId).collection('chats').add({
@@ -65,10 +65,10 @@ class _MessageTextFieldState extends State<MessageTextField> {
                });
              },
              child: Container(
-               padding: EdgeInsets.all(8),
+               padding: EdgeInsets.all(10),
                decoration: BoxDecoration(
                  shape: BoxShape.circle,
-                 color: Colors.blue,
+                 color: Colors.indigo,
                ),
                child: Icon(Icons.send,color: Colors.white,),
              ),

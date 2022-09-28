@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:users_app/drivers/en/widgets/language.dart';
 import 'package:users_app/users/en/app_localization/app_localization.dart';
 import '../../../drivers/en/global/global.dart';
+import '../../../users/en/chats/screens/home_screen.dart';
 import '../splashScreen/splash_screen.dart';
 
 class ProfileTabPage extends StatefulWidget {
@@ -32,6 +33,15 @@ class _ProfileTabPageState extends State<ProfileTabPage> {
           ),
           onPressed: (){
             Navigator.push(context, MaterialPageRoute(builder: (c)=> DriversLanguageScreen()));
+          },
+        ),
+
+        ElevatedButton(
+          child: Text(
+              AppLocalization().messages
+          ),
+          onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (c)=> ChatsHomeScreen()));
           },
         ),
       ]
