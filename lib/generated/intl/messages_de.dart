@@ -24,11 +24,15 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "From": MessageLookupByLibrary.simpleMessage("Von"),
         "To": MessageLookupByLibrary.simpleMessage("Zu"),
+        "accept": MessageLookupByLibrary.simpleMessage("Akzeptieren"),
         "account": MessageLookupByLibrary.simpleMessage("Konto"),
         "accountCreated":
             MessageLookupByLibrary.simpleMessage("Konto wurde erstellt"),
         "accountNotCreated": MessageLookupByLibrary.simpleMessage(
             "Konto wurde noch nicht erstellt"),
+        "cancel": MessageLookupByLibrary.simpleMessage("Abbrechen"),
+        "cancelRideRequest":
+            MessageLookupByLibrary.simpleMessage("Fahrtanfrage storniert"),
         "carDetailsSaved": MessageLookupByLibrary.simpleMessage(
             "Fahrzeugdaten erfolgreich gespeichert"),
         "confirmPassword":
@@ -48,6 +52,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("E-Mail nicht verifiziert"),
         "errorDuringLogin": MessageLookupByLibrary.simpleMessage(
             "Fehler beim Login aufgetreten"),
+        "friends": MessageLookupByLibrary.simpleMessage("Freunde"),
         "help": MessageLookupByLibrary.simpleMessage("Hilfe"),
         "history": MessageLookupByLibrary.simpleMessage("Geschichte"),
         "home": MessageLookupByLibrary.simpleMessage("Startseite"),
@@ -65,9 +70,21 @@ class MessageLookup extends MessageLookupByLibrary {
             "Haben Sie ein Konto? Hier anmelden"),
         "loginSuccessful":
             MessageLookupByLibrary.simpleMessage("Anmeldung erfolgreich"),
+        "message": MessageLookupByLibrary.simpleMessage("Sag Hallo"),
+        "messages": MessageLookupByLibrary.simpleMessage("Nachrichten"),
+        "messaging":
+            MessageLookupByLibrary.simpleMessage("Nachrichtenübermittlung"),
         "name": MessageLookupByLibrary.simpleMessage("Name"),
         "nameValidation": MessageLookupByLibrary.simpleMessage(
             "Der Name muss aus mindestens 3 Zeichen bestehen"),
+        "nearestOnlineDrivers": MessageLookupByLibrary.simpleMessage(
+            "Nächstgelegene Online-Treiber"),
+        "newRide":
+            MessageLookupByLibrary.simpleMessage("Anfrage für neue Fahrten"),
+        "noChatsAvailable":
+            MessageLookupByLibrary.simpleMessage("Keine Chats verfügbar"),
+        "noFriends": MessageLookupByLibrary.simpleMessage(
+            "Noch keine Freunde hinzugefügt"),
         "noRecordExistsWithThisEmail": MessageLookupByLibrary.simpleMessage(
             "Zu dieser E-Mail existiert kein Eintrag"),
         "notGettingAddressWarning":
@@ -99,9 +116,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "registerHeader": MessageLookupByLibrary.simpleMessage("Registrieren"),
         "requestRideButton":
             MessageLookupByLibrary.simpleMessage("Fahrt anfordern"),
+        "rideNotExists": MessageLookupByLibrary.simpleMessage(
+            "Diese Fahrtanfrage existiert nicht"),
         "search": MessageLookupByLibrary.simpleMessage("Suche hier..."),
         "searchHeader": MessageLookupByLibrary.simpleMessage(
             "Suchen & Einstellen der Abgabestelle"),
+        "typeUsername":
+            MessageLookupByLibrary.simpleMessage("Typ Benutzername"),
+        "videoCall": MessageLookupByLibrary.simpleMessage("Videoanruf"),
+        "waitUserToJoin": MessageLookupByLibrary.simpleMessage(
+            "Warten auf den Beitritt eines Benutzers"),
         "yourEmail":
             MessageLookupByLibrary.simpleMessage("Ihre E-Mail-Adresse"),
         "yourName": MessageLookupByLibrary.simpleMessage("Ihr Name")

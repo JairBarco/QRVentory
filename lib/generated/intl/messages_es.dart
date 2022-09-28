@@ -24,11 +24,15 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "From": MessageLookupByLibrary.simpleMessage("Desde"),
         "To": MessageLookupByLibrary.simpleMessage("Para"),
+        "accept": MessageLookupByLibrary.simpleMessage("Aceptar"),
         "account": MessageLookupByLibrary.simpleMessage("Cuenta"),
         "accountCreated":
             MessageLookupByLibrary.simpleMessage("La cuenta ha sido creada"),
         "accountNotCreated":
             MessageLookupByLibrary.simpleMessage("La cuenta no ha sido creada"),
+        "cancel": MessageLookupByLibrary.simpleMessage("Cancelar"),
+        "cancelRideRequest": MessageLookupByLibrary.simpleMessage(
+            "Solicitud de viaje cancelada"),
         "carDetailsSaved": MessageLookupByLibrary.simpleMessage(
             "Datos del coche guardados con éxito"),
         "confirmPassword":
@@ -48,6 +52,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "El email no se ha verificado"),
         "errorDuringLogin": MessageLookupByLibrary.simpleMessage(
             "Se ha producido un error durante el inicio de sesión"),
+        "friends": MessageLookupByLibrary.simpleMessage("Amigos"),
         "help": MessageLookupByLibrary.simpleMessage("Ayuda"),
         "history": MessageLookupByLibrary.simpleMessage("Historial"),
         "home": MessageLookupByLibrary.simpleMessage("Casa"),
@@ -65,9 +70,20 @@ class MessageLookup extends MessageLookupByLibrary {
             "¿Tiene una cuenta? Inicie sesión aquí"),
         "loginSuccessful":
             MessageLookupByLibrary.simpleMessage("Login Exitoso"),
+        "message": MessageLookupByLibrary.simpleMessage("Di hola!"),
+        "messages": MessageLookupByLibrary.simpleMessage("Mensajes"),
+        "messaging": MessageLookupByLibrary.simpleMessage("Mensajeando"),
         "name": MessageLookupByLibrary.simpleMessage("Nombre"),
         "nameValidation": MessageLookupByLibrary.simpleMessage(
             "El nombre debe tener al menos 3 caracteres"),
+        "nearestOnlineDrivers":
+            MessageLookupByLibrary.simpleMessage("Drivers en línea más cerca"),
+        "newRide":
+            MessageLookupByLibrary.simpleMessage("Nueva solicitud de viaje"),
+        "noChatsAvailable":
+            MessageLookupByLibrary.simpleMessage("No hay chats disponibles"),
+        "noFriends": MessageLookupByLibrary.simpleMessage(
+            "Aún no tienes amigos agregados"),
         "noRecordExistsWithThisEmail": MessageLookupByLibrary.simpleMessage(
             "No existe ningún registro con este email"),
         "notGettingAddressWarning":
@@ -99,9 +115,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "registerHeader": MessageLookupByLibrary.simpleMessage("Registrar"),
         "requestRideButton":
             MessageLookupByLibrary.simpleMessage("Pedir un viaje"),
+        "rideNotExists": MessageLookupByLibrary.simpleMessage(
+            "Esta solicitud de viaje no existe"),
         "search": MessageLookupByLibrary.simpleMessage("Buscar aquí..."),
         "searchHeader": MessageLookupByLibrary.simpleMessage(
             "Buscar y fijar el lugar de entrega"),
+        "typeUsername":
+            MessageLookupByLibrary.simpleMessage("Escribe nombre de usuario"),
+        "videoCall": MessageLookupByLibrary.simpleMessage("Vídeo-llamada"),
+        "waitUserToJoin": MessageLookupByLibrary.simpleMessage(
+            "Esperando a que un usuario se una"),
         "yourEmail": MessageLookupByLibrary.simpleMessage("Tu e-mail"),
         "yourName": MessageLookupByLibrary.simpleMessage("Tu nombre")
       };
