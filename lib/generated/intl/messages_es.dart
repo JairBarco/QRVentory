@@ -72,7 +72,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Login Exitoso"),
         "message": MessageLookupByLibrary.simpleMessage("Di hola!"),
         "messages": MessageLookupByLibrary.simpleMessage("Mensajes"),
-        "messaging": MessageLookupByLibrary.simpleMessage("Mensajeando"),
+        "messaging": MessageLookupByLibrary.simpleMessage("Mensajería"),
         "name": MessageLookupByLibrary.simpleMessage("Nombre"),
         "nameValidation": MessageLookupByLibrary.simpleMessage(
             "El nombre debe tener al menos 3 caracteres"),
