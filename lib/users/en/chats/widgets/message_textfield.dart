@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../push_notifications/push_notification_chats.dart';
+
 
 class MessageTextField extends StatefulWidget {
   final String currentId;
@@ -63,6 +65,8 @@ class _MessageTextFieldState extends State<MessageTextField> {
                    "last_msg":message
                  });
                });
+
+               callOnFcmApiSendPushNotifications(title: 'Nuevo Mensaje', body: 'Tienes un nuevo mensaje');
              },
              child: Container(
                padding: EdgeInsets.all(10),

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_geofire/flutter_geofire.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -224,6 +225,7 @@ class _HomeTabPageState extends State<HomeTabPage> {
   void initState(){
     super.initState();
     readCurrentDriverInformation();
+    FirebaseMessaging.instance.subscribeToTopic("chats");
   }
 
   @override

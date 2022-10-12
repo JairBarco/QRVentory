@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_geofire/flutter_geofire.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -248,6 +249,8 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
+    generateAndGetToken();
+    FirebaseMessaging.instance.subscribeToTopic("chats");
   }
 
   saveRideRequestInformation(){
@@ -329,6 +332,22 @@ class _MainScreenState extends State<MainScreen> {
     FirebaseDatabase.instance.ref().child("drivers").child(chosenDriverId).child("newRideStatus").set(referenceRideRequest!.key);
     //Automate the push notification
 
+  }
+
+  Future generateAndGetToken() async
+  {
+    String? registrationToken = await FirebaseMessaging.instance.getToken();
+    print("FCM Registration Token: ");
+    print(registrationToken);
+
+    FirebaseDatabase.instance.ref()
+        .child("users")
+        .child(currentFirebaseUser!.uid)
+        .child("token")
+        .set(registrationToken);
+
+    FirebaseMessaging.instance.subscribeToTopic("allDrivers");
+    FirebaseMessaging.instance.subscribeToTopic("allUsers");
   }
 
   retrieveOnlineDriversInformation(List onlineNearestDriversList) async{
