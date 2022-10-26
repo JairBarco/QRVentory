@@ -2,7 +2,9 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:users_app/drivers/en/assistants/assistant_methods.dart';
 import 'package:users_app/drivers/en/global/global.dart';
+import 'package:users_app/drivers/en/mainScreens/new_trip_screen.dart';
 import 'package:users_app/drivers/en/models/user_ride_request_information.dart';
 import 'package:users_app/users/en/app_localization/app_localization.dart';
 
@@ -181,7 +183,9 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
 
       if(getRideRequestId == widget.userRideRequestDetails!.rideRequestId){
         FirebaseDatabase.instance.ref().child("drivers").child(currentFirebaseDriver!.uid).child("newRideStatus").set("accepted");
+        AssistantMethods.pauseLiveLocationUpdate();
         //send driver to newRide Screen
+        Navigator.push(context,MaterialPageRoute(builder: (c)=> NewTripScreen(userRideRequestDetails: widget.userRideRequestDetails)));
       } else{
         Fluttertoast.showToast(msg: "This ride request don't exists");
       }

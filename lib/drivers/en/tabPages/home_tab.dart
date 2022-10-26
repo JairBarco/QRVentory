@@ -10,6 +10,7 @@ import 'package:users_app/drivers/en/global/global.dart';
 import 'package:users_app/drivers/en/push_notifications/push_notification_system.dart';
 import 'package:users_app/users/en/app_localization/app_localization.dart';
 
+import '../assistants/black_theme_google_map.dart';
 import '../mainScreens/main_screen.dart';
 
 class HomeTabPage extends StatefulWidget {
@@ -27,7 +28,6 @@ class _HomeTabPageState extends State<HomeTabPage> {
     zoom: 14.4746,
   );
 
-  Position? driverCurrentPosition;
   var geoLocator = Geolocator();
 
   Color buttonColor = Colors.red;
@@ -38,172 +38,6 @@ class _HomeTabPageState extends State<HomeTabPage> {
 
   String statusText = AppLocalization().nowOffline;
   String statusTextOnline = AppLocalization().nowOnline;
-
-  blackThemeGoogleMap(){
-    newGoogleMapController!.setMapStyle('''
-                    [
-                      {
-                        "elementType": "geometry",
-                        "stylers": [
-                          {
-                            "color": "#242f3e"
-                          }
-                        ]
-                      },
-                      {
-                        "elementType": "labels.text.fill",
-                        "stylers": [
-                          {
-                            "color": "#746855"
-                          }
-                        ]
-                      },
-                      {
-                        "elementType": "labels.text.stroke",
-                        "stylers": [
-                          {
-                            "color": "#242f3e"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "administrative.locality",
-                        "elementType": "labels.text.fill",
-                        "stylers": [
-                          {
-                            "color": "#d59563"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "poi",
-                        "elementType": "labels.text.fill",
-                        "stylers": [
-                          {
-                            "color": "#d59563"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "poi.park",
-                        "elementType": "geometry",
-                        "stylers": [
-                          {
-                            "color": "#263c3f"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "poi.park",
-                        "elementType": "labels.text.fill",
-                        "stylers": [
-                          {
-                            "color": "#6b9a76"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "road",
-                        "elementType": "geometry",
-                        "stylers": [
-                          {
-                            "color": "#38414e"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "road",
-                        "elementType": "geometry.stroke",
-                        "stylers": [
-                          {
-                            "color": "#212a37"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "road",
-                        "elementType": "labels.text.fill",
-                        "stylers": [
-                          {
-                            "color": "#9ca5b3"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "road.highway",
-                        "elementType": "geometry",
-                        "stylers": [
-                          {
-                            "color": "#746855"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "road.highway",
-                        "elementType": "geometry.stroke",
-                        "stylers": [
-                          {
-                            "color": "#1f2835"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "road.highway",
-                        "elementType": "labels.text.fill",
-                        "stylers": [
-                          {
-                            "color": "#f3d19c"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "transit",
-                        "elementType": "geometry",
-                        "stylers": [
-                          {
-                            "color": "#2f3948"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "transit.station",
-                        "elementType": "labels.text.fill",
-                        "stylers": [
-                          {
-                            "color": "#d59563"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "water",
-                        "elementType": "geometry",
-                        "stylers": [
-                          {
-                            "color": "#17263c"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "water",
-                        "elementType": "labels.text.fill",
-                        "stylers": [
-                          {
-                            "color": "#515c6d"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "water",
-                        "elementType": "labels.text.stroke",
-                        "stylers": [
-                          {
-                            "color": "#17263c"
-                          }
-                        ]
-                      }
-                    ]
-                ''');
-  }
 
   locateDriverPosition() async{
     Position cPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
@@ -216,6 +50,24 @@ class _HomeTabPageState extends State<HomeTabPage> {
 
   readCurrentDriverInformation(){
     currentFirebaseDriver = fAuth.currentUser;
+
+    FirebaseDatabase.instance.ref().child("drivers").child(currentFirebaseDriver!.uid).once().then((snap){
+      if(snap.snapshot.value != null){
+        onlineDriverData.id = (snap.snapshot.value as Map)["id"];
+        onlineDriverData.name = (snap.snapshot.value as Map)["name"];
+        onlineDriverData.phone = (snap.snapshot.value as Map)["phone"];
+        onlineDriverData.email = (snap.snapshot.value as Map)["email"];
+
+        onlineDriverData.car_color = (snap.snapshot.value as Map)["car_details"]["car_color"];
+        onlineDriverData.car_model = (snap.snapshot.value as Map)["car_details"]["car_model"];
+        onlineDriverData.car_number = (snap.snapshot.value as Map)["car_details"]["car_number"];
+
+        print("//////////////////////////////");
+        print(onlineDriverData.car_color);
+        print("//////////////////////////////");
+      }
+    });
+
     PushNotificationSystem pushNotificationSystem = PushNotificationSystem();
     pushNotificationSystem.initializeCloudMessaging(context);
     pushNotificationSystem.generateAndGetToken();
@@ -244,7 +96,7 @@ class _HomeTabPageState extends State<HomeTabPage> {
             _controllerGoogleMap.complete(controller);
             newGoogleMapController = controller;
             //Black theme google map
-            blackThemeGoogleMap();
+            blackThemeGoogleMap(newGoogleMapController);
 
             locateDriverPosition();
 
