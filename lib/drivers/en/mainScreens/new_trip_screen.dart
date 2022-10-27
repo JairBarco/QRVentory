@@ -45,6 +45,11 @@ class _NewTripScreenState extends State<NewTripScreen> {
   var geoLocator = Geolocator();
   Position? onlineDriverCurrentPosition;
 
+  String rideRequestStatus = "accepted";
+  String durationFromOriginToDestination = "";
+
+  bool isRequestDirectionDetails = false;
+
   Future<void> drawPolylineFromOriginToDestination(LatLng originLatLng, LatLng destinationLatLng) async {
     showDialog(
       context: context,
@@ -177,6 +182,8 @@ class _NewTripScreenState extends State<NewTripScreen> {
   }
 
   getDriversLocationUpdatesAtRealTime(){
+    // ignore: unused_local_variable
+    LatLng oldLatLng = LatLng(0, 0);
     streamSubscriptionDriverLivePosition = Geolocator.getPositionStream()
         .listen((Position position)
     {
@@ -203,7 +210,47 @@ class _NewTripScreenState extends State<NewTripScreen> {
         setOfMarkers.add(animatingMarker);
       });
 
+      oldLatLng = latLngLiveDriverPosition;
+      updateDurationTimeAtRealTime();
+
+      //Update driver location at realtime in database
+      Map driverLatLngDataMap = {
+        "latitude": onlineDriverCurrentPosition!.latitude.toString(),
+        "longitude": driverCurrentPosition!.longitude.toString()
+      };
+
+      FirebaseDatabase.instance.ref().child("All Ride Requests").child(widget.userRideRequestDetails!.rideRequestId!)
+          .child("driverLocation").set(driverLatLngDataMap);
     });
+  }
+
+  updateDurationTimeAtRealTime() async{
+    if(isRequestDirectionDetails == false){
+      isRequestDirectionDetails = true;
+
+      if(onlineDriverCurrentPosition == null){
+        return;
+      }
+
+      var originLatLng = LatLng(onlineDriverCurrentPosition!.latitude, onlineDriverCurrentPosition!.longitude);
+      var destinationLatLng;
+
+      if(rideRequestStatus == "accepted"){
+        destinationLatLng = widget.userRideRequestDetails!.originLatLng;
+      } else{
+        destinationLatLng = widget.userRideRequestDetails!.destinationLatLng;
+      }
+
+      var directionInformation = await AssistantMethods.obtainOriginToDestinationDirectionDetails(originLatLng, destinationLatLng);
+
+      if(directionInformation != null){
+        setState((){
+          durationFromOriginToDestination = directionInformation.duration_text!;
+        });
+      }
+
+      isRequestDirectionDetails = false;
+    }
   }
 
   @override
@@ -260,7 +307,7 @@ class _NewTripScreenState extends State<NewTripScreen> {
                 child: Column(
                   children: [
                     //Duration
-                    Text("15 min", style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: Colors.lightGreenAccent),),
+                    Text(durationFromOriginToDestination, style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: Colors.lightGreenAccent),),
 
                     const SizedBox(height: 18,),
 
