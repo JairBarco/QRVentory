@@ -392,8 +392,45 @@ class _NewTripScreenState extends State<NewTripScreen> {
                     const SizedBox(height: 10,),
 
                     ElevatedButton.icon(
-                        onPressed: (){
+                        onPressed: () async{
+                          //Driver arrived
+                          if(rideRequestStatus == "accepted"){
+                            rideRequestStatus = "arrived";
+                            FirebaseDatabase.instance.ref().child("All Ride Requests")
+                                .child(widget.userRideRequestDetails!.rideRequestId!)
+                                .child("status").set(rideRequestStatus);
 
+                            setState(() {
+                              buttonTitle = "Start Trip"; //Start trip
+                              buttonColor = Colors.lightGreen;
+                            });
+
+                            showDialog(context: context, barrierDismissible: false
+                                , builder: (BuildContext c)=> ProgressDialog(message: AppLocalization().progressDialog,));
+
+                            await drawPolylineFromOriginToDestination(widget.userRideRequestDetails!.originLatLng!
+                                , widget.userRideRequestDetails!.destinationLatLng!);
+
+                            Navigator.pop(context);
+                          }
+
+                          //Start trip
+                          else if(rideRequestStatus == "arrived"){
+                            rideRequestStatus = "onTrip";
+                            FirebaseDatabase.instance.ref().child("All Ride Requests")
+                                .child(widget.userRideRequestDetails!.rideRequestId!)
+                                .child("status").set(rideRequestStatus);
+
+                            setState(() {
+                              buttonTitle = "End Trip"; //Start trip
+                              buttonColor = Colors.redAccent;
+                            });
+                          }
+
+                          //End trip
+                          else if(rideRequestStatus == "onTrip"){
+
+                          }
                         },
                       style: ElevatedButton.styleFrom(
                         primary: buttonColor,
