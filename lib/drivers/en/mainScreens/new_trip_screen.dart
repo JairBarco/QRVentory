@@ -429,7 +429,7 @@ class _NewTripScreenState extends State<NewTripScreen> {
 
                           //End trip
                           else if(rideRequestStatus == "onTrip"){
-
+                            endTripNow();
                           }
                         },
                       style: ElevatedButton.styleFrom(
@@ -457,6 +457,30 @@ class _NewTripScreenState extends State<NewTripScreen> {
         ],
       ),
     );
+  }
+
+  endTripNow() async{
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) =>  ProgressDialog(message: AppLocalization().progressDialog,));
+
+    //Get trip direction details
+    var currentDriverPositionLatLng = LatLng(driverCurrentPosition!.latitude, driverCurrentPosition!.longitude);
+    var tripDirectionDetails = await AssistantMethods.obtainOriginToDestinationDirectionDetails(
+        currentDriverPositionLatLng, widget.userRideRequestDetails!.originLatLng!
+    );
+
+    //Fare amount
+    double totalFareAmount = AssistantMethods.calculateFareAmountFromOriginToDestination(tripDirectionDetails!);
+    FirebaseDatabase.instance.ref().child("All Ride Requests")
+        .child(widget.userRideRequestDetails!.rideRequestId!)
+        .child("fareAmount").set(totalFareAmount.toString());
+
+    FirebaseDatabase.instance.ref().child("All Ride Requests")
+        .child(widget.userRideRequestDetails!.rideRequestId!)
+        .child("status").set("ended");
+    streamSubscriptionDriverLivePosition!.cancel();
   }
 
   saveAssignedDriverDetailsToUserRideRequest(){
