@@ -12,6 +12,7 @@ import '../../../users/en/app_localization/app_localization.dart';
 import '../../../users/en/assistants/assistant_methods.dart';
 import '../../../users/en/widgets/progress_dialog.dart';
 import '../assistants/black_theme_google_map.dart';
+import '../widgets/fare_amount_collection_dialog.dart';
 
 class NewTripScreen extends StatefulWidget {
   UserRideRequestInformation? userRideRequestDetails;
@@ -481,6 +482,17 @@ class _NewTripScreenState extends State<NewTripScreen> {
         .child(widget.userRideRequestDetails!.rideRequestId!)
         .child("status").set("ended");
     streamSubscriptionDriverLivePosition!.cancel();
+    Navigator.pop(context);
+
+    //Display fare amount in dialog box
+    showDialog(
+        context: context,
+        builder: (BuildContext c) => FareAmountCollectionDialog(
+            totalFareAmount: totalFareAmount,
+        ),
+    );
+
+    //Save fare amount to driver total's earnings
   }
 
   saveAssignedDriverDetailsToUserRideRequest(){
