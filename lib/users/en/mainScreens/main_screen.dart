@@ -337,7 +337,11 @@ class _MainScreenState extends State<MainScreen> {
         String deviceRegistrationToken = snap.snapshot.value.toString();
 
         //Send notification now
-
+        AssistantMethods.sendNotificationToDriverNow(deviceRegistrationToken,
+            referenceRideRequest!.key.toString(),
+            context
+        );
+        Fluttertoast.showToast(msg: "Notificación Enviada Exitosamente");
       } else {
         Fluttertoast.showToast(msg: "Por favor selecciona otro conductor");
         return;
@@ -744,6 +748,7 @@ class _MainScreenState extends State<MainScreen> {
 
           case Geofire.onKeyExited: //Whenever any driver is offline
             GeoFireAssistant.deleteOfflineDriverFromList(map['key']);
+            displayActiveDriversOnUsersMap();
             break;
 
           case Geofire.onKeyMoved: //Whenever driver moves

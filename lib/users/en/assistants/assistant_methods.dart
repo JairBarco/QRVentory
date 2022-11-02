@@ -9,6 +9,8 @@ import '../infoHandler/app_info.dart';
 import '../models/direction_details_info.dart';
 import '../models/directions.dart';
 import '../models/user_model.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class AssistantMethods{
   static Future<String> searchAddressForGeographicCoOrdinates(Position position, context) async
@@ -70,5 +72,39 @@ class AssistantMethods{
     double totalFareAmount = (timeTraveledFareAmountPerMinute + distanceTraveledFareAmountPerKilometer) * 20.00;
 
     return double.parse(totalFareAmount.toStringAsFixed(2));
+  }
+
+  static sendNotificationToDriverNow(String deviceRegistrationToken, String userRideRequestId, context) async{
+    String destinationAddress = userDropOffAddress;
+
+    Map<String, String> headerNotification = {
+      'Content-Type': 'application/json',
+      'Authorization': cloudMessagingServerToken,
+    };
+
+    Map bodyNotification = {
+      "body":"Destino: \n$destinationAddress",
+      "title":"Nueva Solicitud de Viaje"
+    };
+
+    Map dataMap = {
+      "click_action": "FLUTTER_NOTIFICATION_CLICK",
+      "id": "1",
+      "status": "done",
+      "rideRequestId": userRideRequestId
+    };
+
+    Map officialNotificationFormat = {
+      "notification": bodyNotification,
+      "data": dataMap,
+      "priority": "high",
+      "to": deviceRegistrationToken,
+    };
+
+    var responseNotification = http.post(
+      Uri.parse("https://fcm.googleapis.com/fcm/send"),
+      headers: headerNotification,
+      body: jsonEncode(officialNotificationFormat),
+    );
   }
 }

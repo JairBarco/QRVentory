@@ -85,7 +85,7 @@ class _FareAmountCollectionDialogState extends State<FareAmountCollectionDialog>
                       child: Text(
                         "Recolectar efectivo",
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 15,
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
@@ -94,7 +94,7 @@ class _FareAmountCollectionDialogState extends State<FareAmountCollectionDialog>
                     Text(
                       "\$" + widget.totalFareAmount!.toString(),
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 15,
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
