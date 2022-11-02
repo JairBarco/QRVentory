@@ -7,6 +7,7 @@ import 'package:users_app/drivers/en/global/global.dart';
 import 'package:users_app/drivers/en/mainScreens/new_trip_screen.dart';
 import 'package:users_app/drivers/en/models/user_ride_request_information.dart';
 import 'package:users_app/users/en/app_localization/app_localization.dart';
+import 'package:restart_app/restart_app.dart';
 
 class NotificationDialogBox extends StatefulWidget {
   UserRideRequestInformation? userRideRequestDetails;
@@ -133,8 +134,19 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
                         audioPlayer.pause();
                         audioPlayer.stop();
                         audioPlayer = AssetsAudioPlayer();
+
                         //Cancel the ride request
-                        Navigator.pop(context);
+                        FirebaseDatabase.instance.ref().child("All Ride Requests")
+                            .child(widget.userRideRequestDetails!.rideRequestId!).remove().then((value) {
+                              FirebaseDatabase.instance.ref().child("drivers").child(currentFirebaseDriver!.uid).child("newRideStatus").set("idle");
+                        }).then((value) {
+                          FirebaseDatabase.instance.ref().child("drivers")
+                              .child(currentFirebaseDriver!.uid).child("tripsHistory")
+                              .child(widget.userRideRequestDetails!.rideRequestId!).remove();
+                        }).then((value) {
+                          Fluttertoast.showToast(msg: "Viaje Cancelado Exitosamente. Recargando la Aplicación...");
+                        });
+                        Restart.restartApp();
                       },
                       child: Text(
                         AppLocalization.of(context)!.cancel.toUpperCase(),

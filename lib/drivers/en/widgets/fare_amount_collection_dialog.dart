@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:restart_app/restart_app.dart';
 import 'package:users_app/drivers/en/global/global.dart';
 
 class FareAmountCollectionDialog extends StatefulWidget {
@@ -74,7 +74,7 @@ class _FareAmountCollectionDialogState extends State<FareAmountCollectionDialog>
                 ),
                   onPressed: (){
                     Future.delayed(const Duration(milliseconds: 2000), (){
-                      SystemNavigator.pop();
+                      Restart.restartApp();
                     });
                 },
                 child: Row(

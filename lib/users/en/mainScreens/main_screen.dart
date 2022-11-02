@@ -330,8 +330,19 @@ class _MainScreenState extends State<MainScreen> {
   sendNotificationToDriverNow(String chosenDriverId){
     //Assign ride requestId to new ride status in Drivers Parent node for the chosen driver
     FirebaseDatabase.instance.ref().child("drivers").child(chosenDriverId).child("newRideStatus").set(referenceRideRequest!.key);
-    //Automate the push notification
 
+    //Automate the push notification
+    FirebaseDatabase.instance.ref().child("drivers").child(chosenDriverId).child("token").once().then((snap) {
+      if(snap.snapshot.value != null){
+        String deviceRegistrationToken = snap.snapshot.value.toString();
+
+        //Send notification now
+
+      } else {
+        Fluttertoast.showToast(msg: "Por favor selecciona otro conductor");
+        return;
+      }
+    });
   }
 
   Future generateAndGetToken() async

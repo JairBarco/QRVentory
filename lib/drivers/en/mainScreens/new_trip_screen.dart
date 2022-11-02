@@ -493,6 +493,26 @@ class _NewTripScreenState extends State<NewTripScreen> {
     );
 
     //Save fare amount to driver total's earnings
+    saveFareAmountToDriverEarnings(totalFareAmount);
+  }
+
+  saveFareAmountToDriverEarnings(double totalFareAmount){
+    FirebaseDatabase.instance.ref().child("drivers").child(currentFirebaseDriver!.uid)
+        .child("earnings").once().then((snap){
+      if(snap.snapshot.value != null){
+
+        double oldEarnings = double.parse(snap.snapshot.value.toString());
+        double driverTotalEarnings = totalFareAmount + oldEarnings;
+        FirebaseDatabase.instance.ref().child("drivers").child(currentFirebaseDriver!.uid)
+            .child("earnings").set(driverTotalEarnings.toString());
+
+      } else {
+
+        FirebaseDatabase.instance.ref().child("drivers").child(currentFirebaseDriver!.uid)
+            .child("earnings").set(totalFareAmount.toString());
+
+      }
+    });
   }
 
   saveAssignedDriverDetailsToUserRideRequest(){
