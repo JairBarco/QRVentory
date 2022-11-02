@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:users_app/users/en/app_localization/app_localization.dart';
 
 import '../../../users/en/widgets/progress_dialog.dart';
 import '../assistants/assistant_methods.dart';
@@ -38,7 +39,7 @@ class _NewTripScreenState extends State<NewTripScreen>
     zoom: 14.4746,
   );
 
-  String? buttonTitle = "Arrived";
+  String? buttonTitle = "He llegado";
   Color? buttonColor = Colors.green;
 
   Set<Marker> setOfMarkers = Set<Marker>();
@@ -99,7 +100,7 @@ class _NewTripScreenState extends State<NewTripScreen>
 
     setState(() {
       Polyline polyline = Polyline(
-        color: Colors.purpleAccent,
+        color: Colors.indigo,
         polylineId: const PolylineId("PolylineID"),
         jointType: JointType.round,
         points: polyLinePositionCoordinates,
@@ -140,13 +141,13 @@ class _NewTripScreenState extends State<NewTripScreen>
     Marker originMarker = Marker(
       markerId: const MarkerId("originID"),
       position: originLatLng,
-      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueViolet),
     );
 
     Marker destinationMarker = Marker(
       markerId: const MarkerId("destinationID"),
       position: destinationLatLng,
-      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueViolet),
     );
 
     setState(() {
@@ -217,7 +218,7 @@ class _NewTripScreenState extends State<NewTripScreen>
         markerId: const MarkerId("AnimatedMarker"),
         position: latLngLiveDriverPosition,
         icon: iconAnimatedMarker!,
-        infoWindow: const InfoWindow(title: "This is your Position"),
+        infoWindow: const InfoWindow(title: "Esta es tu posición"),
       );
 
       setState(() {
@@ -473,7 +474,7 @@ class _NewTripScreenState extends State<NewTripScreen>
                               .set(rideRequestStatus);
 
                           setState(() {
-                            buttonTitle = "Let's Go"; //start the trip
+                            buttonTitle = "Comenzar Viaje"; //start the trip
                             buttonColor = Colors.lightGreen;
                           });
 
@@ -481,7 +482,7 @@ class _NewTripScreenState extends State<NewTripScreen>
                             context: context,
                             barrierDismissible: false,
                             builder: (BuildContext c)=> ProgressDialog(
-                              message: "Loading...",
+                              message: AppLocalization().progressDialog,
                             ),
                           );
 
@@ -504,7 +505,7 @@ class _NewTripScreenState extends State<NewTripScreen>
                               .set(rideRequestStatus);
 
                           setState(() {
-                            buttonTitle = "End Trip"; //end the trip
+                            buttonTitle = "Terminar Viaje"; //end the trip
                             buttonColor = Colors.redAccent;
                           });
                         }
@@ -548,7 +549,7 @@ class _NewTripScreenState extends State<NewTripScreen>
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (BuildContext context)=> ProgressDialog(message: "Please wait...",),
+      builder: (BuildContext context)=> ProgressDialog(message: AppLocalization().progressDialog,),
     );
 
     //get the tripDirectionDetails = distance travelled
