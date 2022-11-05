@@ -20,6 +20,7 @@ import '../global/global.dart';
 import '../infoHandler/app_info.dart';
 import '../widgets/my_drawer.dart';
 import '../widgets/progress_dialog.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -37,6 +38,7 @@ class _MainScreenState extends State<MainScreen> {
 
   GlobalKey<ScaffoldState> sKey = GlobalKey<ScaffoldState>();
   double searchLocationContainerHeight = 220.0;
+  double waitingResponseFromDriverContainerHeight = 0;
 
   Position? userCurrentPosition;
   var geoLocator = Geolocator();
@@ -320,11 +322,37 @@ class _MainScreenState extends State<MainScreen> {
         if(snap.snapshot.value != null){
           //Send notification to the driver
           sendNotificationToDriverNow(chosenDriverId!);
+
+          //Waiting response from driver
+          showWaitingResponseFromDriverUI();
+
+          //Driver's response
+          FirebaseDatabase.instance.ref().child("drivers").child(chosenDriverId!).child("newRideStatus").onValue.listen((eventSnapshot) {
+            //Cancel the rideRequest
+            if(eventSnapshot.snapshot.value == "idle"){
+              Fluttertoast.showToast(msg: "El conductor ha cancelado el viaje. Selecciona otro conductor.");
+              Restart.restartApp();
+            }
+
+            //Accept the rideRequest
+            if(eventSnapshot.snapshot.value == "accepted"){
+
+            }
+          });
+
+
         } else{
           Fluttertoast.showToast(msg: "This driver do not exist. Try again.");
         }
       });
     }
+  }
+
+  showWaitingResponseFromDriverUI(){
+    setState(() {
+      searchLocationContainerHeight = 0.0;
+      waitingResponseFromDriverContainerHeight = 220.0;
+    });
   }
 
   sendNotificationToDriverNow(String chosenDriverId){
@@ -574,6 +602,41 @@ class _MainScreenState extends State<MainScreen> {
                         child: Text(
                             AppLocalization.of(context)!.requestRideButton
                         ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          //UI waiting response from driver
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              height: waitingResponseFromDriverContainerHeight,
+              decoration: const BoxDecoration(
+                color: Colors.black87,
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(20),
+                  topLeft: Radius.circular(20),
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Center(
+                  child: AnimatedTextKit(
+                    animatedTexts: [
+                      FadeAnimatedText(
+                        'Esperando confirmación del conductor...', duration: Duration(seconds: 6),
+                        textAlign: TextAlign.center,
+                        textStyle: TextStyle(fontSize: 30.0, color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                      ScaleAnimatedText(
+                        'Espere por favor...', duration: Duration(seconds: 10),
+                        textAlign: TextAlign.center,
+                        textStyle: TextStyle(fontSize: 35.0, color: Colors.white,fontFamily: 'Canterbury'),
                       ),
                     ],
                   ),
