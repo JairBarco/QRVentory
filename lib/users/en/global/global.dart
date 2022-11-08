@@ -11,3 +11,6 @@ DirectionDetailsInfo? tripDirectionDetailsInfo;
 String? chosenDriverId = "";
 String cloudMessagingServerToken = "key=AAAAllq7gd8:APA91bH3Z_rJ4PD24EjcVwiTZ0dUJJtgDwhvxsQHI-LkD5KCwkBpKExjWGKMLrrpodarTnQI7NvF4hRIZ-5ycn9u74uEp5gKt0gd_lA-nBPHP10kpNNcFDmhjvjCokBQFzKs4MfPPtwh";
 String userDropOffAddress = "";
+String driverCarDetails = "";
+String driverName = "";
+String driverPhone = "";
