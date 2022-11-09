@@ -7,7 +7,6 @@ import '../models/predicted_places.dart';
 import '../widgets/place_prediction_tile.dart';
 
 class SearchPlacesScreen extends StatefulWidget {
-
   @override
   State<SearchPlacesScreen> createState() => _SearchPlacesScreenState();
 }
@@ -16,19 +15,24 @@ class _SearchPlacesScreenState extends State<SearchPlacesScreen> {
   List<PredictedPlaces> placesPredictedList = [];
 
   void findPlaceAutoCompleteSearch(String inputText) async {
-    if(inputText.length > 1){
-      String urlAutoCompleteSearch = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$inputText&key=$mapKeyAndroid&components=country:MX";
+    if (inputText.length > 1) {
+      String urlAutoCompleteSearch =
+          "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$inputText&key=$mapKeyAndroid&components=country:MX";
 
-      var responseAutoCompleteSearch = await RequestAssistant.receiveRequest(urlAutoCompleteSearch);
+      var responseAutoCompleteSearch =
+          await RequestAssistant.receiveRequest(urlAutoCompleteSearch);
 
-      if(responseAutoCompleteSearch == "Error Occurred, Failed. No Response.") {
+      if (responseAutoCompleteSearch ==
+          "Error Occurred, Failed. No Response.") {
         return;
       }
 
-      if(responseAutoCompleteSearch["status"] == "OK") {
+      if (responseAutoCompleteSearch["status"] == "OK") {
         var placePredictions = responseAutoCompleteSearch["predictions"];
 
-        var placePredictionsList = (placePredictions as List).map((jsonData) => PredictedPlaces.fromJson(jsonData)).toList();
+        var placePredictionsList = (placePredictions as List)
+            .map((jsonData) => PredictedPlaces.fromJson(jsonData))
+            .toList();
 
         setState(() {
           placesPredictedList = placePredictionsList;
@@ -48,28 +52,29 @@ class _SearchPlacesScreenState extends State<SearchPlacesScreen> {
             height: 180,
             decoration: const BoxDecoration(
               color: Colors.black54,
-              boxShadow:
-                [
-                  BoxShadow(
-                    color: Colors.white54,
-                    blurRadius: 8,
-                    spreadRadius: 0.5,
-                    offset: Offset(
-                      0.7,
-                      0.7,
-                    ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.white54,
+                  blurRadius: 8,
+                  spreadRadius: 0.5,
+                  offset: Offset(
+                    0.7,
+                    0.7,
                   ),
-                ],
+                ),
+              ],
             ),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  const SizedBox(height: 60.0,),
+                  const SizedBox(
+                    height: 60.0,
+                  ),
                   Stack(
                     children: [
                       GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           Navigator.pop(context);
                         },
                         child: const Icon(
@@ -77,36 +82,30 @@ class _SearchPlacesScreenState extends State<SearchPlacesScreen> {
                           color: Colors.grey,
                         ),
                       ),
-
-                       Center(
+                      Center(
                         child: Text(
                           AppLocalization.of(context)!.searchHeader,
                           style: const TextStyle(
-                            fontSize: 18.0,
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold
-                          ),
+                              fontSize: 18.0,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],
                   ),
-
                   const SizedBox(height: 10.0),
-
                   Row(
                     children: [
                       const Icon(
                         Icons.adjust_sharp,
                         color: Colors.grey,
                       ),
-
                       const SizedBox(height: 16.0),
-
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextField(
-                            onChanged: (valueTyped){
+                            onChanged: (valueTyped) {
                               findPlaceAutoCompleteSearch(valueTyped);
                             },
                             decoration: InputDecoration(
@@ -133,23 +132,23 @@ class _SearchPlacesScreenState extends State<SearchPlacesScreen> {
           //Display place predictions result
           (placesPredictedList.isNotEmpty)
               ? Expanded(
-            child: ListView.separated(
-              itemCount: placesPredictedList.length,
-              physics: const ClampingScrollPhysics(),
-              itemBuilder: (context, index){
-                return PlacePredictionTileDesign(
-                  predictedPlaces: placesPredictedList[index],
-                );
-              },
-              separatorBuilder: (BuildContext context, int index){
-                return const Divider(
-                  height: 2,
-                  color: Colors.white,
-                  thickness: 2,
-                );
-              },
-            ),
-          )
+                  child: ListView.separated(
+                    itemCount: placesPredictedList.length,
+                    physics: const ClampingScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return PlacePredictionTileDesign(
+                        predictedPlaces: placesPredictedList[index],
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const Divider(
+                        height: 2,
+                        color: Colors.white,
+                        thickness: 2,
+                      );
+                    },
+                  ),
+                )
               : Container(),
         ],
       ),

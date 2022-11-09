@@ -11,7 +11,6 @@ import '../splashScreen/splash_screen.dart';
 import '../widgets/progress_dialog.dart';
 
 class LoginScreen extends StatefulWidget {
-
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
@@ -19,65 +18,76 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
-  validateForm(){
+
+  validateForm() {
     validateEmail(String value) {
       String pattern =
           r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
       RegExp regExp = RegExp(pattern);
       if (value.isEmpty) {
-        Fluttertoast.showToast(msg: AppLocalization.of(context)!.emailMandatory);
+        Fluttertoast.showToast(
+            msg: AppLocalization.of(context)!.emailMandatory);
       } else if (!regExp.hasMatch(value)) {
         Fluttertoast.showToast(msg: AppLocalization.of(context)!.emailNotValid);
       }
     }
 
-    if(!emailTextEditingController.text.contains("@") || emailTextEditingController.text.isEmpty){
+    if (!emailTextEditingController.text.contains("@") ||
+        emailTextEditingController.text.isEmpty) {
       validateEmail(emailTextEditingController.text);
     }
-    if(passwordTextEditingController.text.isEmpty){
-      Fluttertoast.showToast(msg: AppLocalization.of(context)!.passwordIsRequired);
-    }else{
+    if (passwordTextEditingController.text.isEmpty) {
+      Fluttertoast.showToast(
+          msg: AppLocalization.of(context)!.passwordIsRequired);
+    } else {
       loginUserNow();
     }
   }
 
   loginUserNow() async {
     final navigator = Navigator.of(context);
-    final navigatorPush = Navigator.push(context, MaterialPageRoute(builder: (c) => const MySplashScreen()));
+    final navigatorPush = Navigator.push(
+        context, MaterialPageRoute(builder: (c) => const MySplashScreen()));
 
     showDialog(
         context: context,
         barrierDismissible: false,
-        builder: (BuildContext c){
-          return ProgressDialog(message: AppLocalization.of(context)!.progressDialog,);
-        }
-    );
+        builder: (BuildContext c) {
+          return ProgressDialog(
+            message: AppLocalization.of(context)!.progressDialog,
+          );
+        });
 
-    final User? firebaseUser = (
-        await fAuthUser.signInWithEmailAndPassword(
-          email: emailTextEditingController.text.trim(),
-          password: passwordTextEditingController.text.trim(),
-        ).catchError((msg){
-          Navigator.pop(context);
-          Fluttertoast.showToast(msg: "Error:  ${msg.toString()}");
-        })
-    ).user;
+    final User? firebaseUser = (await fAuthUser
+            .signInWithEmailAndPassword(
+      email: emailTextEditingController.text.trim(),
+      password: passwordTextEditingController.text.trim(),
+    )
+            .catchError((msg) {
+      Navigator.pop(context);
+      Fluttertoast.showToast(msg: "Error:  ${msg.toString()}");
+    }))
+        .user;
 
-    if(firebaseUser !=null){
-      DatabaseReference driversRef = FirebaseDatabase.instance.ref().child("users");
+    if (firebaseUser != null) {
+      DatabaseReference driversRef =
+          FirebaseDatabase.instance.ref().child("users");
       driversRef.child(firebaseUser.uid).once().then((driverKey) {
         final snap = driverKey.snapshot;
-        if(firebaseUser.emailVerified == true){
-          if(snap.value != null){
+        if (firebaseUser.emailVerified == true) {
+          if (snap.value != null) {
             currentFirebaseUser = firebaseUser;
-            Fluttertoast.showToast(msg: AppLocalization.of(context)!.loginSuccessful);
+            Fluttertoast.showToast(
+                msg: AppLocalization.of(context)!.loginSuccessful);
             navigatorPush;
           }
-        } else if(firebaseUser.emailVerified == false){
-          Fluttertoast.showToast(msg: AppLocalization.of(context)!.emailNotVerified);
+        } else if (firebaseUser.emailVerified == false) {
+          Fluttertoast.showToast(
+              msg: AppLocalization.of(context)!.emailNotVerified);
 
-          if(snap.value == null){
-            Fluttertoast.showToast(msg: AppLocalization.of(context)!.noRecordExistsWithThisEmail);
+          if (snap.value == null) {
+            Fluttertoast.showToast(
+                msg: AppLocalization.of(context)!.noRecordExistsWithThisEmail);
             fAuthUser.signOut();
             navigatorPush;
           }
@@ -88,7 +98,8 @@ class _LoginScreenState extends State<LoginScreen> {
     } else {
       navigator.pop();
       if (!mounted) return;
-      Fluttertoast.showToast(msg: AppLocalization.of(context)!.errorDuringLogin);
+      Fluttertoast.showToast(
+          msg: AppLocalization.of(context)!.errorDuringLogin);
     }
   }
 
@@ -101,34 +112,35 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Image.asset("img/logo.png"),
               ),
-
-              const SizedBox(height: 10,),
-              Text(AppLocalization.of(context)!.login, style: const TextStyle(
-                fontSize: 24,
-                color: Colors.grey,
-                fontWeight: FontWeight.bold,
-              ),),
-
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                AppLocalization.of(context)!.login,
+                style: const TextStyle(
+                  fontSize: 24,
+                  color: Colors.grey,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               TextField(
                 controller: emailTextEditingController,
                 keyboardType: TextInputType.emailAddress,
-                style: const TextStyle(
-                    color:Colors.grey
-                ),
+                style: const TextStyle(color: Colors.grey),
                 decoration: InputDecoration(
                   labelText: AppLocalization.of(context)!.email,
                   hintText: AppLocalization.of(context)!.email,
                   enabledBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)
-                  ),
+                      borderSide: BorderSide(color: Colors.grey)),
                   focusedBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)
-                  ),
+                      borderSide: BorderSide(color: Colors.grey)),
                   hintStyle: const TextStyle(
                     color: Colors.grey,
                     fontSize: 10,
@@ -139,24 +151,18 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
-
               TextField(
                 controller: passwordTextEditingController,
                 keyboardType: TextInputType.text,
                 obscureText: true,
-
-                style: const TextStyle(
-                    color:Colors.grey
-                ),
+                style: const TextStyle(color: Colors.grey),
                 decoration: InputDecoration(
                   labelText: AppLocalization.of(context)!.password,
                   hintText: AppLocalization.of(context)!.password,
                   enabledBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)
-                  ),
+                      borderSide: BorderSide(color: Colors.grey)),
                   focusedBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)
-                  ),
+                      borderSide: BorderSide(color: Colors.grey)),
                   hintStyle: const TextStyle(
                     color: Colors.grey,
                     fontSize: 10,
@@ -167,11 +173,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
-
-              const SizedBox(height: 20,),
-
+              const SizedBox(
+                height: 20,
+              ),
               ElevatedButton(
-                onPressed: (){
+                onPressed: () {
                   validateForm();
                 },
                 style: ElevatedButton.styleFrom(
@@ -179,36 +185,38 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 child: Text(
                   AppLocalization.of(context)!.loginButton,
-                  style: const TextStyle(
-                      color: Colors.white70,
-                      fontSize: 18
-                  ),
+                  style: const TextStyle(color: Colors.white70, fontSize: 18),
                 ),
-              ),
-
-               TextButton(
-                child: Text(AppLocalization.of(context)!.register,
-                style: const TextStyle(color: Colors.grey),
-                ),
-                 onPressed: (){
-                   Navigator.push(context, MaterialPageRoute(builder: (c) => const SignUpScreen()));
-                 },
               ),
               TextButton(
-                child: Text(AppLocalization.of(context)!.logInAsDriver,
+                child: Text(
+                  AppLocalization.of(context)!.register,
                   style: const TextStyle(color: Colors.grey),
                 ),
-                onPressed: (){
-                  fAuthUser.signOut();
-                  Navigator.push(context, MaterialPageRoute(builder: (c) => DriversLoginScreen()));
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (c) => const SignUpScreen()));
                 },
               ),
               TextButton(
-                child: Text(AppLocalization.of(context)!.language,
+                child: Text(
+                  AppLocalization.of(context)!.logInAsDriver,
                   style: const TextStyle(color: Colors.grey),
                 ),
-                onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (c) => LanguageScreen()));
+                onPressed: () {
+                  fAuthUser.signOut();
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (c) => DriversLoginScreen()));
+                },
+              ),
+              TextButton(
+                child: Text(
+                  AppLocalization.of(context)!.language,
+                  style: const TextStyle(color: Colors.grey),
+                ),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (c) => LanguageScreen()));
                 },
               ),
             ],

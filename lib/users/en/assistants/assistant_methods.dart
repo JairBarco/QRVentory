@@ -12,16 +12,16 @@ import '../models/user_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class AssistantMethods{
-  static Future<String> searchAddressForGeographicCoOrdinates(Position position, context) async
-  {
-    String apiUrl = "https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.latitude},${position.longitude}&key=$mapKeyAndroid";
-    String humanReadableAddress="";
+class AssistantMethods {
+  static Future<String> searchAddressForGeographicCoOrdinates(
+      Position position, context) async {
+    String apiUrl =
+        "https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.latitude},${position.longitude}&key=$mapKeyAndroid";
+    String humanReadableAddress = "";
 
     var requestResponse = await RequestAssistant.receiveRequest(apiUrl);
 
-    if(requestResponse != "Error Occurred, Failed. No Response.")
-    {
+    if (requestResponse != "Error Occurred, Failed. No Response.") {
       humanReadableAddress = requestResponse["results"][0]["formatted_address"];
 
       Directions userPickUpAddress = Directions();
@@ -29,52 +29,71 @@ class AssistantMethods{
       userPickUpAddress.locationLongitude = position.longitude;
       userPickUpAddress.locationName = humanReadableAddress;
 
-      Provider.of<AppInfo>(context, listen: false).updatePickUpLocationAddress(userPickUpAddress);
+      Provider.of<AppInfo>(context, listen: false)
+          .updatePickUpLocationAddress(userPickUpAddress);
     }
 
     return humanReadableAddress;
   }
 
-  static void readCurrentOnlineUserInfo() async{
+  static void readCurrentOnlineUserInfo() async {
     currentFirebaseUser = fAuthUser.currentUser;
-    DatabaseReference userRef = FirebaseDatabase.instance.ref().child("users").child(currentFirebaseUser!.uid);
-    userRef.once().then((snap){
-      if(snap.snapshot.value  != null){
+    DatabaseReference userRef = FirebaseDatabase.instance
+        .ref()
+        .child("users")
+        .child(currentFirebaseUser!.uid);
+    userRef.once().then((snap) {
+      if (snap.snapshot.value != null) {
         userModelCurrentInfo = UserModel.fromSnapshot(snap.snapshot);
       }
     });
   }
 
-  static Future<DirectionDetailsInfo?> obtainOriginToDestinationDirectionDetails(LatLng originPosition, LatLng destinationPosition) async{
-    String urlOriginToDestinationDirectionDetails = "https://maps.googleapis.com/maps/api/directions/json?origin=${originPosition.latitude},${originPosition.longitude}&destination=${destinationPosition.latitude},${destinationPosition.longitude}&key=$mapKeyAndroid";
+  static Future<DirectionDetailsInfo?>
+      obtainOriginToDestinationDirectionDetails(
+          LatLng originPosition, LatLng destinationPosition) async {
+    String urlOriginToDestinationDirectionDetails =
+        "https://maps.googleapis.com/maps/api/directions/json?origin=${originPosition.latitude},${originPosition.longitude}&destination=${destinationPosition.latitude},${destinationPosition.longitude}&key=$mapKeyAndroid";
 
-    var responseDirectionApi = await RequestAssistant.receiveRequest(urlOriginToDestinationDirectionDetails);
+    var responseDirectionApi = await RequestAssistant.receiveRequest(
+        urlOriginToDestinationDirectionDetails);
 
-    if(responseDirectionApi == ["Error Occurred, Failed. No Response."]){
+    if (responseDirectionApi == ["Error Occurred, Failed. No Response."]) {
       return null;
     }
 
     DirectionDetailsInfo directionDetailsInfo = DirectionDetailsInfo();
-    directionDetailsInfo.e_points = responseDirectionApi["routes"][0]["overview_polyline"]["points"];
+    directionDetailsInfo.e_points =
+        responseDirectionApi["routes"][0]["overview_polyline"]["points"];
 
-    directionDetailsInfo.distance_text = responseDirectionApi["routes"][0]["legs"][0]["distance"]["text"];
-    directionDetailsInfo.distance_value = responseDirectionApi["routes"][0]["legs"][0]["distance"]["value"];
+    directionDetailsInfo.distance_text =
+        responseDirectionApi["routes"][0]["legs"][0]["distance"]["text"];
+    directionDetailsInfo.distance_value =
+        responseDirectionApi["routes"][0]["legs"][0]["distance"]["value"];
 
-    directionDetailsInfo.duration_text = responseDirectionApi["routes"][0]["legs"][0]["duration"]["text"];
-    directionDetailsInfo.duration_value = responseDirectionApi["routes"][0]["legs"][0]["duration"]["value"];
+    directionDetailsInfo.duration_text =
+        responseDirectionApi["routes"][0]["legs"][0]["duration"]["text"];
+    directionDetailsInfo.duration_value =
+        responseDirectionApi["routes"][0]["legs"][0]["duration"]["value"];
 
     return directionDetailsInfo;
   }
 
-  static double calculateFareAmountFromOriginToDestination(DirectionDetailsInfo directionDetailsInfo){
-    double timeTraveledFareAmountPerMinute = (directionDetailsInfo.duration_value! / 60) * 0.1;
-    double distanceTraveledFareAmountPerKilometer = (directionDetailsInfo.duration_value! / 1000) * 0.1;
-    double totalFareAmount = (timeTraveledFareAmountPerMinute + distanceTraveledFareAmountPerKilometer) * 20.00;
+  static double calculateFareAmountFromOriginToDestination(
+      DirectionDetailsInfo directionDetailsInfo) {
+    double timeTraveledFareAmountPerMinute =
+        (directionDetailsInfo.duration_value! / 60) * 0.1;
+    double distanceTraveledFareAmountPerKilometer =
+        (directionDetailsInfo.duration_value! / 1000) * 0.1;
+    double totalFareAmount = (timeTraveledFareAmountPerMinute +
+            distanceTraveledFareAmountPerKilometer) *
+        20.00;
 
     return double.parse(totalFareAmount.toStringAsFixed(2));
   }
 
-  static sendNotificationToDriverNow(String deviceRegistrationToken, String userRideRequestId, context) async{
+  static sendNotificationToDriverNow(
+      String deviceRegistrationToken, String userRideRequestId, context) async {
     String destinationAddress = userDropOffAddress;
 
     Map<String, String> headerNotification = {
@@ -83,8 +102,8 @@ class AssistantMethods{
     };
 
     Map bodyNotification = {
-      "body":"Destino: \n$destinationAddress",
-      "title":"Nueva Solicitud de Viaje"
+      "body": "Destino: \n$destinationAddress",
+      "title": "Nueva Solicitud de Viaje"
     };
 
     Map dataMap = {
@@ -101,6 +120,7 @@ class AssistantMethods{
       "to": deviceRegistrationToken,
     };
 
+    // ignore: unused_local_variable
     var responseNotification = http.post(
       Uri.parse("https://fcm.googleapis.com/fcm/send"),
       headers: headerNotification,

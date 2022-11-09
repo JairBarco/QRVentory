@@ -7,20 +7,20 @@ import '../../../drivers/en/global/global.dart';
 import '../splashScreen/splash_screen.dart';
 
 class CarInfoScreen extends StatefulWidget {
-
   @override
   State<CarInfoScreen> createState() => _CarInfoScreenState();
 }
 
 class _CarInfoScreenState extends State<CarInfoScreen> {
   TextEditingController carModelTextEditingController = TextEditingController();
-  TextEditingController carNumberTextEditingController = TextEditingController();
+  TextEditingController carNumberTextEditingController =
+      TextEditingController();
   TextEditingController carColorTextEditingController = TextEditingController();
 
   List<String> carTypesList = ["Uber-X", "Uber-Black", "Bike"];
   String? selectedCarType;
 
-  saveCarInfo(){
+  saveCarInfo() {
     final driverCarInfoMap = {
       "car_color": carColorTextEditingController.text.trim(),
       "car_number": carNumberTextEditingController.text.trim(),
@@ -28,14 +28,23 @@ class _CarInfoScreenState extends State<CarInfoScreen> {
       "type": selectedCarType,
     };
 
-    DatabaseReference driversRef = FirebaseDatabase.instance.ref().child("drivers");
-    driversRef.child(currentFirebaseDriver!.uid).child("car_details").set(driverCarInfoMap);
+    DatabaseReference driversRef =
+        FirebaseDatabase.instance.ref().child("drivers");
+    driversRef
+        .child(currentFirebaseDriver!.uid)
+        .child("car_details")
+        .set(driverCarInfoMap);
 
-    DocumentReference ref = FirebaseFirestore.instance.collection('users').doc(currentFirebaseDriver!.uid).collection('car_details').doc(currentFirebaseDriver!.uid);
+    DocumentReference ref = FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentFirebaseDriver!.uid)
+        .collection('car_details')
+        .doc(currentFirebaseDriver!.uid);
     ref.set(driverCarInfoMap);
 
     Fluttertoast.showToast(msg: AppLocalization.of(context)!.carDetailsSaved);
-    Navigator.push(context, MaterialPageRoute(builder: (c) => const DriversSplashScreen()));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (c) => const DriversSplashScreen()));
   }
 
   @override
@@ -47,35 +56,34 @@ class _CarInfoScreenState extends State<CarInfoScreen> {
           padding: const EdgeInsets.all(24.0),
           child: Column(
             children: [
-              const SizedBox(height: 24,),
-
+              const SizedBox(
+                height: 24,
+              ),
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Image.asset("img/logo1.png"),
               ),
-
-              const SizedBox(height: 10,),
-
-               Text(AppLocalization.of(context)!.carDetails, style: const TextStyle(
-                fontSize: 24,
-                color: Colors.grey,
-                fontWeight: FontWeight.bold,
-              ),),
-
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                AppLocalization.of(context)!.carDetails,
+                style: const TextStyle(
+                  fontSize: 24,
+                  color: Colors.grey,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               TextField(
                 controller: carModelTextEditingController,
-                style: const TextStyle(
-                    color:Colors.grey
-                ),
+                style: const TextStyle(color: Colors.grey),
                 decoration: InputDecoration(
                   labelText: AppLocalization.of(context)!.carModel,
                   hintText: AppLocalization.of(context)!.carModel,
                   enabledBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)
-                  ),
+                      borderSide: BorderSide(color: Colors.grey)),
                   focusedBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)
-                  ),
+                      borderSide: BorderSide(color: Colors.grey)),
                   hintStyle: const TextStyle(
                     color: Colors.grey,
                     fontSize: 10,
@@ -86,22 +94,17 @@ class _CarInfoScreenState extends State<CarInfoScreen> {
                   ),
                 ),
               ),
-
               TextField(
                 controller: carNumberTextEditingController,
                 keyboardType: TextInputType.number,
-                style: const TextStyle(
-                    color:Colors.grey
-                ),
+                style: const TextStyle(color: Colors.grey),
                 decoration: InputDecoration(
                   labelText: AppLocalization.of(context)!.carNumber,
                   hintText: AppLocalization.of(context)!.carNumber,
                   enabledBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)
-                  ),
+                      borderSide: BorderSide(color: Colors.grey)),
                   focusedBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)
-                  ),
+                      borderSide: BorderSide(color: Colors.grey)),
                   hintStyle: const TextStyle(
                     color: Colors.grey,
                     fontSize: 10,
@@ -112,21 +115,16 @@ class _CarInfoScreenState extends State<CarInfoScreen> {
                   ),
                 ),
               ),
-
               TextField(
                 controller: carColorTextEditingController,
-                style: const TextStyle(
-                    color:Colors.grey
-                ),
+                style: const TextStyle(color: Colors.grey),
                 decoration: InputDecoration(
                   labelText: AppLocalization.of(context)!.carColor,
                   hintText: AppLocalization.of(context)!.carColor,
                   enabledBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)
-                  ),
+                      borderSide: BorderSide(color: Colors.grey)),
                   focusedBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)
-                  ),
+                      borderSide: BorderSide(color: Colors.grey)),
                   hintStyle: const TextStyle(
                     color: Colors.grey,
                     fontSize: 10,
@@ -137,9 +135,9 @@ class _CarInfoScreenState extends State<CarInfoScreen> {
                   ),
                 ),
               ),
-
-              const SizedBox(height: 20,),
-
+              const SizedBox(
+                height: 20,
+              ),
               DropdownButton(
                 iconSize: 26,
                 dropdownColor: Colors.black,
@@ -151,29 +149,30 @@ class _CarInfoScreenState extends State<CarInfoScreen> {
                   ),
                 ),
                 value: selectedCarType,
-                onChanged: (newValue)
-                {
+                onChanged: (newValue) {
                   setState(() {
-                  selectedCarType = newValue.toString();
-                   });
+                    selectedCarType = newValue.toString();
+                  });
                 },
-                  items: carTypesList.map((car){
-                    return DropdownMenuItem(
-                      value: car,
-                      child: Text(
-                        car,
-                        style: const TextStyle(color: Colors.grey),
-                      ),
-                    );
-                  }).toList(),
+                items: carTypesList.map((car) {
+                  return DropdownMenuItem(
+                    value: car,
+                    child: Text(
+                      car,
+                      style: const TextStyle(color: Colors.grey),
+                    ),
+                  );
+                }).toList(),
               ),
-
-              const SizedBox(height: 20,),
-
+              const SizedBox(
+                height: 20,
+              ),
               ElevatedButton(
-                onPressed: (){
-                  if(carColorTextEditingController.text.isNotEmpty && carNumberTextEditingController.text.isNotEmpty
-                      && carModelTextEditingController.text.isNotEmpty && selectedCarType != null){
+                onPressed: () {
+                  if (carColorTextEditingController.text.isNotEmpty &&
+                      carNumberTextEditingController.text.isNotEmpty &&
+                      carModelTextEditingController.text.isNotEmpty &&
+                      selectedCarType != null) {
                     saveCarInfo();
                   }
                 },
@@ -182,10 +181,7 @@ class _CarInfoScreenState extends State<CarInfoScreen> {
                 ),
                 child: Text(
                   AppLocalization.of(context)!.saveNowButton,
-                  style: const TextStyle(
-                      color: Colors.white70,
-                      fontSize: 18
-                  ),
+                  style: const TextStyle(color: Colors.white70, fontSize: 18),
                 ),
               )
             ],

@@ -9,25 +9,39 @@ import 'package:restart_app/restart_app.dart';
 
 class SelectNearestActiveDriversScreen extends StatefulWidget {
   DatabaseReference? referenceRideRequest;
+
   SelectNearestActiveDriversScreen({this.referenceRideRequest});
 
   @override
-  State<SelectNearestActiveDriversScreen> createState() => _SelectNearestActiveDriversScreenState();
+  State<SelectNearestActiveDriversScreen> createState() =>
+      _SelectNearestActiveDriversScreenState();
 }
 
-class _SelectNearestActiveDriversScreenState extends State<SelectNearestActiveDriversScreen> {
+class _SelectNearestActiveDriversScreenState
+    extends State<SelectNearestActiveDriversScreen> {
   String fareAmount = "";
 
-  getFareAmountAccordingToVehicleType(int index){
-    if(tripDirectionDetailsInfo != null){
-      if(dList[index]["car_details"]["type"].toString() == "Bike"){
-        fareAmount = (AssistantMethods.calculateFareAmountFromOriginToDestination(tripDirectionDetailsInfo!) / 2).toStringAsFixed(2);
+  getFareAmountAccordingToVehicleType(int index) {
+    if (tripDirectionDetailsInfo != null) {
+      if (dList[index]["car_details"]["type"].toString() == "Bike") {
+        fareAmount =
+            (AssistantMethods.calculateFareAmountFromOriginToDestination(
+                        tripDirectionDetailsInfo!) /
+                    2)
+                .toStringAsFixed(2);
       }
-      if(dList[index]["car_details"]["type"].toString() == "Uber-Black"){
-        fareAmount = (AssistantMethods.calculateFareAmountFromOriginToDestination(tripDirectionDetailsInfo!) * 2).toStringAsFixed(2);
+      if (dList[index]["car_details"]["type"].toString() == "Uber-Black") {
+        fareAmount =
+            (AssistantMethods.calculateFareAmountFromOriginToDestination(
+                        tripDirectionDetailsInfo!) *
+                    2)
+                .toStringAsFixed(2);
       }
-      if(dList[index]["car_details"]["type"].toString() == "Uber-X"){
-        fareAmount = (AssistantMethods.calculateFareAmountFromOriginToDestination(tripDirectionDetailsInfo!)).toString();
+      if (dList[index]["car_details"]["type"].toString() == "Uber-X") {
+        fareAmount =
+            (AssistantMethods.calculateFareAmountFromOriginToDestination(
+                    tripDirectionDetailsInfo!))
+                .toString();
       }
     }
     return fareAmount;
@@ -41,25 +55,29 @@ class _SelectNearestActiveDriversScreenState extends State<SelectNearestActiveDr
         backgroundColor: Colors.white54,
         title: Text(
           AppLocalization.of(context)!.nearestOnlineDrivers,
-          style: const TextStyle(fontSize: 18,),
+          style: const TextStyle(
+            fontSize: 18,
+          ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.close,
-          color: Colors.white,
+          icon: const Icon(
+            Icons.close,
+            color: Colors.white,
           ),
-          onPressed: (){
+          onPressed: () {
             //delete the ride request from database
             widget.referenceRideRequest!.remove();
-            Fluttertoast.showToast(msg: AppLocalization.of(context)!.cancelRideRequest);
+            Fluttertoast.showToast(
+                msg: AppLocalization.of(context)!.cancelRideRequest);
             Restart.restartApp();
           },
         ),
       ),
       body: ListView.builder(
         itemCount: dList.length,
-        itemBuilder: (BuildContext context, int index){
+        itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
-            onTap: (){
+            onTap: () {
               setState(() {
                 chosenDriverId = dList[index]["id"].toString();
               });
@@ -83,17 +101,13 @@ class _SelectNearestActiveDriversScreenState extends State<SelectNearestActiveDr
                   children: [
                     Text(
                       dList[index]["name"],
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.black54
-                      ),
-                  ),
+                      style:
+                          const TextStyle(fontSize: 14, color: Colors.black54),
+                    ),
                     Text(
                       dList[index]["car_details"]["car_model"],
-                      style: const TextStyle(
-                          fontSize: 12,
-                          color: Colors.white54
-                      ),
+                      style:
+                          const TextStyle(fontSize: 12, color: Colors.white54),
                     ),
                     SmoothStarRating(
                       rating: 3.5,
@@ -103,8 +117,8 @@ class _SelectNearestActiveDriversScreenState extends State<SelectNearestActiveDr
                       starCount: 5,
                       size: 15,
                     ),
-                ],
-              ),
+                  ],
+                ),
                 trailing: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -114,23 +128,29 @@ class _SelectNearestActiveDriversScreenState extends State<SelectNearestActiveDr
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 2,),
-                    Text(
-                      tripDirectionDetailsInfo != null ? tripDirectionDetailsInfo!.duration_text! : "",
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black54,
-                        fontSize: 12
-                      ),
+                    const SizedBox(
+                      height: 2,
                     ),
-                    const SizedBox(height: 2,),
                     Text(
-                      tripDirectionDetailsInfo != null ? tripDirectionDetailsInfo!.distance_text! : "",
+                      tripDirectionDetailsInfo != null
+                          ? tripDirectionDetailsInfo!.duration_text!
+                          : "",
                       style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.black54,
-                          fontSize: 12
-                      ),
+                          fontSize: 12),
+                    ),
+                    const SizedBox(
+                      height: 2,
+                    ),
+                    Text(
+                      tripDirectionDetailsInfo != null
+                          ? tripDirectionDetailsInfo!.distance_text!
+                          : "",
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black54,
+                          fontSize: 12),
                     ),
                   ],
                 ),

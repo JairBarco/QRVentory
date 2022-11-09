@@ -20,7 +20,8 @@ Future<bool> callOnFcmApiSendPushNotifications(
   final headers = {
     'content-type': 'application/json',
     'Authorization':
-    'key=AAAAllq7gd8:APA91bH3Z_rJ4PD24EjcVwiTZ0dUJJtgDwhvxsQHI-LkD5KCwkBpKExjWGKMLrrpodarTnQI7NvF4hRIZ-5ycn9u74uEp5gKt0gd_lA-nBPHP10kpNNcFDmhjvjCokBQFzKs4MfPPtwh' // 'key=YOUR_SERVER_KEY'
+        'key=AAAAllq7gd8:APA91bH3Z_rJ4PD24EjcVwiTZ0dUJJtgDwhvxsQHI-LkD5KCwkBpKExjWGKMLrrpodarTnQI7NvF4hRIZ-5ycn9u74uEp5gKt0gd_lA-nBPHP10kpNNcFDmhjvjCokBQFzKs4MfPPtwh'
+    // 'key=YOUR_SERVER_KEY'
   };
 
   final response = await http.post(Uri.parse(postUrl),

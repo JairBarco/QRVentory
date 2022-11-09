@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-class UserModel{
+class UserModel {
   String? phone;
   String? name;
   String? id;
@@ -10,7 +10,7 @@ class UserModel{
 
   UserModel({this.phone, this.name, this.id, this.email, this.date});
 
-  UserModel.fromSnapshot(DataSnapshot snap){
+  UserModel.fromSnapshot(DataSnapshot snap) {
     phone = (snap.value as dynamic)["phone"];
     name = (snap.value as dynamic)["name"];
     id = snap.key;
@@ -18,7 +18,7 @@ class UserModel{
     email = (snap.value as dynamic)["email"];
   }
 
-  factory UserModel.fromJson(DocumentSnapshot snapshot){
+  factory UserModel.fromJson(DocumentSnapshot snapshot) {
     return UserModel(
       email: snapshot['email'],
       name: snapshot['name'],

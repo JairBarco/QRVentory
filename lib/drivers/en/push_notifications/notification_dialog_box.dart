@@ -11,6 +11,7 @@ import 'package:restart_app/restart_app.dart';
 
 class NotificationDialogBox extends StatefulWidget {
   UserRideRequestInformation? userRideRequestDetails;
+
   NotificationDialogBox({this.userRideRequestDetails});
 
   @override
@@ -36,61 +37,61 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            
-            const SizedBox(height: 14,),
-
+            const SizedBox(
+              height: 14,
+            ),
             Image.asset(
-                "img/car_logo.png",
+              "img/car_logo.png",
               width: 160,
             ),
-
-            const SizedBox(height: 10,),
-
+            const SizedBox(
+              height: 10,
+            ),
             Text(
               AppLocalization.of(context)!.newRide,
               style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 22,
-                color: Colors.grey
-              ),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22,
+                  color: Colors.grey),
             ),
-
-            const SizedBox(height: 10.0,),
-
+            const SizedBox(
+              height: 10.0,
+            ),
             const Divider(
               height: 3,
               thickness: 3,
             ),
-
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 children: [
                   Row(
                     children: [
-                      const SizedBox(height: 14,),
+                      const SizedBox(
+                        height: 14,
+                      ),
                       Image.asset(
                         "img/origin.png",
                         width: 30,
                         height: 30,
                       ),
-                      const SizedBox(width: 14,),
+                      const SizedBox(
+                        width: 14,
+                      ),
                       Expanded(
                         child: Container(
                           child: Text(
                             widget.userRideRequestDetails!.originAddress!,
                             style: const TextStyle(
-                              fontSize: 16,
-                                color: Colors.grey
-                            ),
+                                fontSize: 16, color: Colors.grey),
                           ),
                         ),
                       )
                     ],
                   ),
-
-                  const SizedBox(height: 20,),
-
+                  const SizedBox(
+                    height: 20,
+                  ),
                   Row(
                     children: [
                       Image.asset(
@@ -98,15 +99,15 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
                         width: 30,
                         height: 30,
                       ),
-                      const SizedBox(width: 14,),
+                      const SizedBox(
+                        width: 14,
+                      ),
                       Expanded(
                         child: Container(
                           child: Text(
                             widget.userRideRequestDetails!.destinationAddress!,
                             style: const TextStyle(
-                                fontSize: 16,
-                                color: Colors.grey
-                            ),
+                                fontSize: 16, color: Colors.grey),
                           ),
                         ),
                       ),
@@ -115,54 +116,66 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
                 ],
               ),
             ),
-
             const Divider(
               height: 3,
               thickness: 3,
             ),
-
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.red,
-                    ),
-                      onPressed: (){
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.red,
+                      ),
+                      onPressed: () {
                         audioPlayer.pause();
                         audioPlayer.stop();
                         audioPlayer = AssetsAudioPlayer();
 
                         //Cancel the ride request
-                        FirebaseDatabase.instance.ref().child("All Ride Requests")
-                            .child(widget.userRideRequestDetails!.rideRequestId!).remove().then((value) {
-                              FirebaseDatabase.instance.ref().child("drivers").child(currentFirebaseDriver!.uid).child("newRideStatus").set("idle");
+                        FirebaseDatabase.instance
+                            .ref()
+                            .child("All Ride Requests")
+                            .child(
+                                widget.userRideRequestDetails!.rideRequestId!)
+                            .remove()
+                            .then((value) {
+                          FirebaseDatabase.instance
+                              .ref()
+                              .child("drivers")
+                              .child(currentFirebaseDriver!.uid)
+                              .child("newRideStatus")
+                              .set("idle");
                         }).then((value) {
-                          FirebaseDatabase.instance.ref().child("drivers")
-                              .child(currentFirebaseDriver!.uid).child("tripsHistory")
-                              .child(widget.userRideRequestDetails!.rideRequestId!).remove();
+                          FirebaseDatabase.instance
+                              .ref()
+                              .child("drivers")
+                              .child(currentFirebaseDriver!.uid)
+                              .child("tripsHistory")
+                              .child(
+                                  widget.userRideRequestDetails!.rideRequestId!)
+                              .remove();
                         }).then((value) {
-                          Fluttertoast.showToast(msg: "Viaje Cancelado Exitosamente. Recargando la Aplicación...");
+                          Fluttertoast.showToast(
+                              msg:
+                                  "Viaje Cancelado Exitosamente. Recargando la Aplicación...");
                         });
                         Restart.restartApp();
                       },
                       child: Text(
                         AppLocalization.of(context)!.cancel.toUpperCase(),
-                        style: const TextStyle(
-                            fontSize: 14.0
-                        ),
-                      )
+                        style: const TextStyle(fontSize: 14.0),
+                      )),
+                  const SizedBox(
+                    width: 25,
                   ),
-
-                  const SizedBox(width: 25,),
-
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         primary: Colors.green,
                       ),
-                      onPressed: (){
+                      onPressed: () {
                         audioPlayer.pause();
                         audioPlayer.stop();
                         audioPlayer = AssetsAudioPlayer();
@@ -171,11 +184,8 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
                       },
                       child: Text(
                         AppLocalization.of(context)!.accept.toUpperCase(),
-                        style: const TextStyle(
-                            fontSize: 14.0
-                        ),
-                      )
-                  ),
+                        style: const TextStyle(fontSize: 14.0),
+                      )),
                 ],
               ),
             ),
@@ -184,21 +194,37 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
       ),
     );
   }
-  acceptRideRequest(BuildContext context){
+
+  acceptRideRequest(BuildContext context) {
     String getRideRequestId = "";
-    FirebaseDatabase.instance.ref().child("drivers").child(currentFirebaseDriver!.uid).child("newRideStatus").once().then((snap) {
-      if(snap.snapshot.value != null){
+    FirebaseDatabase.instance
+        .ref()
+        .child("drivers")
+        .child(currentFirebaseDriver!.uid)
+        .child("newRideStatus")
+        .once()
+        .then((snap) {
+      if (snap.snapshot.value != null) {
         getRideRequestId = snap.snapshot.value.toString();
-      } else{
+      } else {
         Fluttertoast.showToast(msg: "This ride request do not exists.");
       }
 
-      if(getRideRequestId == widget.userRideRequestDetails!.rideRequestId){
-        FirebaseDatabase.instance.ref().child("drivers").child(currentFirebaseDriver!.uid).child("newRideStatus").set("accepted");
+      if (getRideRequestId == widget.userRideRequestDetails!.rideRequestId) {
+        FirebaseDatabase.instance
+            .ref()
+            .child("drivers")
+            .child(currentFirebaseDriver!.uid)
+            .child("newRideStatus")
+            .set("accepted");
         AssistantMethods.pauseLiveLocationUpdate();
         //send driver to newRide Screen
-        Navigator.push(context,MaterialPageRoute(builder: (c)=> NewTripScreen(userRideRequestDetails: widget.userRideRequestDetails)));
-      } else{
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (c) => NewTripScreen(
+                    userRideRequestDetails: widget.userRideRequestDetails)));
+      } else {
         Fluttertoast.showToast(msg: "This ride request don't exists");
       }
     });

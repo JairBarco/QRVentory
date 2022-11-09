@@ -7,17 +7,16 @@ import '../tabPages/profile_tab.dart';
 import '../tabPages/ratings_tab.dart';
 
 class DriversMainScreen extends StatefulWidget {
-
   @override
   State<DriversMainScreen> createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<DriversMainScreen> with SingleTickerProviderStateMixin{
-
+class _MainScreenState extends State<DriversMainScreen>
+    with SingleTickerProviderStateMixin {
   TabController? tabController;
   int selectedIndex = 0;
 
-  onItemClicked(int index){
+  onItemClicked(int index) {
     setState(() {
       selectedIndex = index;
       tabController!.index = selectedIndex;
@@ -47,30 +46,23 @@ class _MainScreenState extends State<DriversMainScreen> with SingleTickerProvide
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
-            icon: const Icon(Icons.home),
-            label: AppLocalization.of(context)!.home
-          ),
-
+              icon: const Icon(Icons.home),
+              label: AppLocalization.of(context)!.home),
           BottomNavigationBarItem(
               icon: const Icon(Icons.credit_card),
-              label: AppLocalization.of(context)!.earnings
-          ),
-
+              label: AppLocalization.of(context)!.earnings),
           BottomNavigationBarItem(
               icon: const Icon(Icons.star),
-              label: AppLocalization.of(context)!.ratings
-          ),
-
+              label: AppLocalization.of(context)!.ratings),
           BottomNavigationBarItem(
               icon: const Icon(Icons.person),
-              label: AppLocalization.of(context)!.account
-          ),
+              label: AppLocalization.of(context)!.account),
         ],
         unselectedItemColor: Colors.white54,
         selectedItemColor: Colors.white,
         backgroundColor: Colors.black,
         type: BottomNavigationBarType.fixed,
-        selectedLabelStyle: const TextStyle(fontSize:14),
+        selectedLabelStyle: const TextStyle(fontSize: 14),
         showSelectedLabels: true,
         currentIndex: selectedIndex,
         onTap: onItemClicked,

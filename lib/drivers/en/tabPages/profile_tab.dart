@@ -15,36 +15,29 @@ class ProfileTabPage extends StatefulWidget {
 class _ProfileTabPageState extends State<ProfileTabPage> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children:[
-        ElevatedButton(
-          child: Text(
-              AppLocalization.of(context)!.logOut
-          ),
-          onPressed: (){
-            fAuth.signOut();
-            Navigator.push(context, MaterialPageRoute(builder: (c)=> const DriversSplashScreen()));
-          },
-        ),
-        ElevatedButton(
-          child: Text(
-              AppLocalization.of(context)!.language
-          ),
-          onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (c)=> DriversLanguageScreen()));
-          },
-        ),
-
-        ElevatedButton(
-          child: Text(
-              AppLocalization().messages
-          ),
-          onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (c)=> ChatsHomeScreen()));
-          },
-        ),
-      ]
-    );
+    return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+      ElevatedButton(
+        child: Text(AppLocalization.of(context)!.logOut),
+        onPressed: () {
+          fAuth.signOut();
+          Navigator.push(context,
+              MaterialPageRoute(builder: (c) => const DriversSplashScreen()));
+        },
+      ),
+      ElevatedButton(
+        child: Text(AppLocalization.of(context)!.language),
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (c) => DriversLanguageScreen()));
+        },
+      ),
+      ElevatedButton(
+        child: Text(AppLocalization().messages),
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (c) => ChatsHomeScreen()));
+        },
+      ),
+    ]);
   }
 }

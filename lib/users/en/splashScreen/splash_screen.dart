@@ -19,33 +19,40 @@ class _MySplashScreenState extends State<MySplashScreen> {
   final ref = FirebaseDatabase.instance.ref();
   LocationPermission? _locationPermission;
 
-  checkIfPermissionLocationAllowed() async{
+  checkIfPermissionLocationAllowed() async {
     _locationPermission = await Geolocator.requestPermission();
 
-    if(_locationPermission == LocationPermission.denied){
+    if (_locationPermission == LocationPermission.denied) {
       _locationPermission = await Geolocator.requestPermission();
     }
   }
 
-  startTimer(){
-    Timer(const Duration(seconds:3),() async {
+  startTimer() {
+    Timer(const Duration(seconds: 3), () async {
       if (fAuthUser.currentUser != null) {
-        final snapshot = await ref.child('users/${fAuthUser.currentUser!.uid}/id').get();
-        final snapshotDriver = await ref.child('drivers/${fAuthUser.currentUser!.uid}/id').get();
+        final snapshot =
+            await ref.child('users/${fAuthUser.currentUser!.uid}/id').get();
+        final snapshotDriver =
+            await ref.child('drivers/${fAuthUser.currentUser!.uid}/id').get();
 
         if (snapshot.exists != false) {
-          fAuthUser.currentUser != null ? AssistantMethods.readCurrentOnlineUserInfo() : null;
+          fAuthUser.currentUser != null
+              ? AssistantMethods.readCurrentOnlineUserInfo()
+              : null;
 
           currentFirebaseUser = fAuthUser.currentUser;
-          Navigator.push(context, MaterialPageRoute(builder: (c) => MainScreen()));
+          Navigator.push(
+              context, MaterialPageRoute(builder: (c) => MainScreen()));
           //Navigator.push(context, MaterialPageRoute(builder: (c)=> DriversMainScreen()));
         } else if (snapshotDriver.exists != false) {
-          Navigator.push(context, MaterialPageRoute(builder: (c) => DriversMainScreen()));
+          Navigator.push(
+              context, MaterialPageRoute(builder: (c) => DriversMainScreen()));
         }
       } else {
-          //send user to main screen
-          Navigator.push(context, MaterialPageRoute(builder: (c) => LoginScreen()));
-        }
+        //send user to main screen
+        Navigator.push(
+            context, MaterialPageRoute(builder: (c) => LoginScreen()));
+      }
     });
   }
 
@@ -63,22 +70,22 @@ class _MySplashScreenState extends State<MySplashScreen> {
       child: Container(
         color: Colors.black,
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset("img/logo.png"),
-              const SizedBox(height: 10,),
-              const Text(
-                "Ship Driver",
-                style: TextStyle(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset("img/logo.png"),
+            const SizedBox(
+              height: 10,
+            ),
+            const Text(
+              "Ship Driver",
+              style: TextStyle(
                   fontSize: 30,
                   color: Colors.white,
-                  fontWeight: FontWeight.bold
-                ),
-              )
-            ],
-          )
-        ),
+                  fontWeight: FontWeight.bold),
+            )
+          ],
+        )),
       ),
     );
   }

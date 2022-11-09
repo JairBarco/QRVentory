@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:restart_app/restart_app.dart';
-import 'package:users_app/drivers/en/global/global.dart';
 
-class FareAmountCollectionDialog extends StatefulWidget {
-  double? totalFareAmount;
+class PayFareAmountCollectionDialog extends StatefulWidget {
+  double? fareAmount;
 
-  FareAmountCollectionDialog({this.totalFareAmount});
+  PayFareAmountCollectionDialog({this.fareAmount});
 
   @override
-  State<FareAmountCollectionDialog> createState() =>
-      _FareAmountCollectionDialogState();
+  State<PayFareAmountCollectionDialog> createState() =>
+      _PayFareAmountCollectionDialogState();
 }
 
-class _FareAmountCollectionDialogState
-    extends State<FareAmountCollectionDialog> {
+class _PayFareAmountCollectionDialogState
+    extends State<PayFareAmountCollectionDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -35,7 +34,7 @@ class _FareAmountCollectionDialogState
               height: 20,
             ),
             Text(
-              "Costo del viaje" + "(" + driverVehicleType! + ")",
+              "Costo del viaje",
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.grey,
@@ -52,7 +51,7 @@ class _FareAmountCollectionDialogState
               height: 16,
             ),
             Text(
-              widget.totalFareAmount.toString(),
+              widget.fareAmount.toString(),
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.grey,
@@ -62,7 +61,7 @@ class _FareAmountCollectionDialogState
               height: 10,
             ),
             Text(
-              "Costo del viaje",
+              "Total del viaje",
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.grey),
             ),
@@ -75,6 +74,7 @@ class _FareAmountCollectionDialogState
                 style: ElevatedButton.styleFrom(primary: Colors.green),
                 onPressed: () {
                   Future.delayed(const Duration(milliseconds: 2000), () {
+                    Navigator.pop(context, "cashPayed");
                     Restart.restartApp();
                   });
                 },
@@ -84,7 +84,7 @@ class _FareAmountCollectionDialogState
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        "Recolectar efectivo",
+                        "Pagar",
                         style: TextStyle(
                           fontSize: 15,
                           color: Colors.white,
@@ -93,7 +93,7 @@ class _FareAmountCollectionDialogState
                       ),
                     ),
                     Text(
-                      "\$" + widget.totalFareAmount!.toString(),
+                      "\$" + widget.fareAmount!.toString(),
                       style: TextStyle(
                         fontSize: 15,
                         color: Colors.white,

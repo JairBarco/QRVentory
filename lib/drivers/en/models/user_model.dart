@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-class DriverModel{
+class DriverModel {
   String? phone;
   String? name;
   String? id;
@@ -10,7 +10,7 @@ class DriverModel{
 
   DriverModel({this.phone, this.name, this.id, this.email, this.date});
 
-  DriverModel.fromSnapshot(DataSnapshot snap){
+  DriverModel.fromSnapshot(DataSnapshot snap) {
     phone = (snap.value as dynamic)["phone"];
     name = (snap.value as dynamic)["name"];
     id = snap.key;
@@ -18,7 +18,7 @@ class DriverModel{
     email = (snap.value as dynamic)["email"];
   }
 
-  factory DriverModel.fromJson(DocumentSnapshot snapshot){
+  factory DriverModel.fromJson(DocumentSnapshot snapshot) {
     return DriverModel(
       email: snapshot['email'],
       name: snapshot['name'],

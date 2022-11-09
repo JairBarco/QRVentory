@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ProgressDialog extends StatelessWidget {
-
   String? message;
+
   ProgressDialog({this.message});
 
   @override
@@ -18,12 +18,15 @@ class ProgressDialog extends StatelessWidget {
           padding: const EdgeInsets.all(18.0),
           child: Row(
             children: [
-              const SizedBox(width: 6.0,),
+              const SizedBox(
+                width: 6.0,
+              ),
               const CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.indigoAccent),
               ),
-
-              const SizedBox(width: 6.0,),
+              const SizedBox(
+                width: 6.0,
+              ),
               Text(
                 message!,
                 style: const TextStyle(
@@ -38,4 +41,3 @@ class ProgressDialog extends StatelessWidget {
     );
   }
 }
-

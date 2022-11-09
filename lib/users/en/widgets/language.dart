@@ -21,8 +21,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
             height: MediaQuery.of(context).size.height * .40,
             decoration: const BoxDecoration(
               color: Colors.black54,
-              boxShadow:
-              [
+              boxShadow: [
                 BoxShadow(
                   color: Colors.white54,
                   blurRadius: 8,
@@ -38,11 +37,13 @@ class _LanguageScreenState extends State<LanguageScreen> {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  const SizedBox(height: 60.0,),
+                  const SizedBox(
+                    height: 60.0,
+                  ),
                   Stack(
                     children: [
                       GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           Navigator.pop(context);
                         },
                         child: const Icon(
@@ -50,48 +51,45 @@ class _LanguageScreenState extends State<LanguageScreen> {
                           color: Colors.grey,
                         ),
                       ),
-
                       Center(
                         child: Text(
                           AppLocalization.of(context)!.languageSettings,
                           style: const TextStyle(
                               fontSize: 18.0,
                               color: Colors.grey,
-                              fontWeight: FontWeight.bold
-                          ),
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],
                   ),
-
                   const SizedBox(height: 10.0),
-
                   Row(
                     children: [
                       const Icon(
                         Icons.language,
                         color: Colors.grey,
                       ),
-
                       const SizedBox(height: 16.0),
-
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: ElevatedButton(
-                            onPressed: (){
+                            onPressed: () {
                               setState(() {
                                 AppLocalization.load(const Locale('es', 'MX'));
-                                Navigator.push(context, MaterialPageRoute(builder: (c)=> const MySplashScreen()));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (c) =>
+                                            const MySplashScreen()));
                               });
                             },
                             style: ElevatedButton.styleFrom(
                               primary: Colors.indigo,
-                              textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                              textStyle: const TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
                             ),
-                            child: const Text(
-                                "Español"
-                            ),
+                            child: const Text("Español"),
                           ),
                         ),
                       ),
@@ -103,26 +101,27 @@ class _LanguageScreenState extends State<LanguageScreen> {
                         Icons.language,
                         color: Colors.grey,
                       ),
-
                       const SizedBox(height: 16.0),
-
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: ElevatedButton(
-                            onPressed: (){
+                            onPressed: () {
                               setState(() {
                                 AppLocalization.load(const Locale('en', 'US'));
-                                Navigator.push(context, MaterialPageRoute(builder: (c)=> const MySplashScreen()));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (c) =>
+                                            const MySplashScreen()));
                               });
                             },
                             style: ElevatedButton.styleFrom(
                               primary: Colors.indigo,
-                              textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                              textStyle: const TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
                             ),
-                            child: const Text(
-                                "English"
-                            ),
+                            child: const Text("English"),
                           ),
                         ),
                       ),
@@ -134,26 +133,27 @@ class _LanguageScreenState extends State<LanguageScreen> {
                         Icons.language,
                         color: Colors.grey,
                       ),
-
                       const SizedBox(height: 16.0),
-
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: ElevatedButton(
-                            onPressed: (){
+                            onPressed: () {
                               setState(() {
                                 AppLocalization.load(const Locale('de', ''));
-                                Navigator.push(context, MaterialPageRoute(builder: (c)=> const MySplashScreen()));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (c) =>
+                                            const MySplashScreen()));
                               });
                             },
                             style: ElevatedButton.styleFrom(
                               primary: Colors.indigo,
-                              textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                              textStyle: const TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
                             ),
-                            child: const Text(
-                                "Deutsch"
-                            ),
+                            child: const Text("Deutsch"),
                           ),
                         ),
                       ),
@@ -163,7 +163,6 @@ class _LanguageScreenState extends State<LanguageScreen> {
               ),
             ),
           ),
-
         ],
       ),
     );

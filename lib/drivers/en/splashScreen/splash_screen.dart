@@ -1,10 +1,8 @@
 import 'dart:async';
 
-
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import '../../../drivers/en/global/global.dart';
-import '../../../users/en/global/global.dart';
 import '../authentication/login_screen.dart';
 import '../mainScreens/main_screen.dart';
 
@@ -16,25 +14,26 @@ class DriversSplashScreen extends StatefulWidget {
 }
 
 class _DriversSplashScreenState extends State<DriversSplashScreen> {
-
   LocationPermission? _locationPermission;
 
-  checkIfPermissionLocationAllowed() async{
+  checkIfPermissionLocationAllowed() async {
     _locationPermission = await Geolocator.requestPermission();
 
-    if(_locationPermission == LocationPermission.denied){
+    if (_locationPermission == LocationPermission.denied) {
       _locationPermission = await Geolocator.requestPermission();
     }
   }
 
-  startTimer(){
-    Timer(const Duration(seconds:3),() async {
-      if(fAuth.currentUser !=null){
+  startTimer() {
+    Timer(const Duration(seconds: 3), () async {
+      if (fAuth.currentUser != null) {
         currentFirebaseDriver = fAuth.currentUser;
-        Navigator.push(context, MaterialPageRoute(builder: (c)=> DriversMainScreen()));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (c) => DriversMainScreen()));
       } else {
         //send user to main screen
-        Navigator.push(context, MaterialPageRoute(builder: (c)=> DriversLoginScreen()));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (c) => DriversLoginScreen()));
       }
     });
   }
@@ -53,22 +52,22 @@ class _DriversSplashScreenState extends State<DriversSplashScreen> {
       child: Container(
         color: Colors.black,
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset("img/logo1.png"),
-              const SizedBox(height: 10,),
-              const Text(
-                "Ship Driver",
-                style: TextStyle(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset("img/logo1.png"),
+            const SizedBox(
+              height: 10,
+            ),
+            const Text(
+              "Ship Driver",
+              style: TextStyle(
                   fontSize: 30,
                   color: Colors.white,
-                  fontWeight: FontWeight.bold
-                ),
-              )
-            ],
-          )
-        ),
+                  fontWeight: FontWeight.bold),
+            )
+          ],
+        )),
       ),
     );
   }

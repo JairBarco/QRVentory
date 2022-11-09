@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-
 class Messages extends StatefulWidget {
   final List messages;
+
   const Messages({Key? key, required this.messages}) : super(key: key);
 
   @override

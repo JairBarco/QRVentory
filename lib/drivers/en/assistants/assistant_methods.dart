@@ -12,11 +12,10 @@ import 'package:users_app/drivers/en/models/directions.dart';
 import 'package:users_app/drivers/en/models/user_model.dart';
 
 class AssistantMethods {
-  static Future<String> searchAddressForGeographicCoOrdinates(Position position,
-      context) async
-  {
-    String apiUrl = "https://maps.googleapis.com/maps/api/geocode/json?latlng=${position
-        .latitude},${position.longitude}&key=$mapKeyAndroid";
+  static Future<String> searchAddressForGeographicCoOrdinates(
+      Position position, context) async {
+    String apiUrl =
+        "https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.latitude},${position.longitude}&key=$mapKeyAndroid";
     String humanReadableAddress = "";
 
     var requestResponse = await RequestAssistant.receiveRequest(apiUrl);
@@ -29,8 +28,8 @@ class AssistantMethods {
       userPickUpAddress.locationLongitude = position.longitude;
       userPickUpAddress.locationName = humanReadableAddress;
 
-      Provider.of<AppInfo>(context, listen: false).updatePickUpLocationAddress(
-          userPickUpAddress);
+      Provider.of<AppInfo>(context, listen: false)
+          .updatePickUpLocationAddress(userPickUpAddress);
     }
 
     return humanReadableAddress;
@@ -38,7 +37,8 @@ class AssistantMethods {
 
   static void readCurrentOnlineUserInfo() async {
     currentFirebaseDriver = fAuth.currentUser;
-    DatabaseReference userRef = FirebaseDatabase.instance.ref()
+    DatabaseReference userRef = FirebaseDatabase.instance
+        .ref()
         .child("drivers")
         .child(currentFirebaseDriver!.uid);
     userRef.once().then((snap) {
@@ -48,12 +48,11 @@ class AssistantMethods {
     });
   }
 
-  static Future<
-      DirectionDetailsInfo?> obtainOriginToDestinationDirectionDetails(
-      LatLng originPosition, LatLng destinationPosition) async {
-    String urlOriginToDestinationDirectionDetails = "https://maps.googleapis.com/maps/api/directions/json?origin=${originPosition
-        .latitude},${originPosition.longitude}&destination=${destinationPosition
-        .latitude},${destinationPosition.longitude}&key=$mapKeyAndroid";
+  static Future<DirectionDetailsInfo?>
+      obtainOriginToDestinationDirectionDetails(
+          LatLng originPosition, LatLng destinationPosition) async {
+    String urlOriginToDestinationDirectionDetails =
+        "https://maps.googleapis.com/maps/api/directions/json?origin=${originPosition.latitude},${originPosition.longitude}&destination=${destinationPosition.latitude},${destinationPosition.longitude}&key=$mapKeyAndroid";
 
     var responseDirectionApi = await RequestAssistant.receiveRequest(
         urlOriginToDestinationDirectionDetails);
@@ -64,17 +63,17 @@ class AssistantMethods {
 
     DirectionDetailsInfo directionDetailsInfo = DirectionDetailsInfo();
     directionDetailsInfo.e_points =
-    responseDirectionApi["routes"][0]["overview_polyline"]["points"];
+        responseDirectionApi["routes"][0]["overview_polyline"]["points"];
 
     directionDetailsInfo.distance_text =
-    responseDirectionApi["routes"][0]["legs"][0]["distance"]["text"];
+        responseDirectionApi["routes"][0]["legs"][0]["distance"]["text"];
     directionDetailsInfo.distance_value =
-    responseDirectionApi["routes"][0]["legs"][0]["distance"]["value"];
+        responseDirectionApi["routes"][0]["legs"][0]["distance"]["value"];
 
     directionDetailsInfo.duration_text =
-    responseDirectionApi["routes"][0]["legs"][0]["duration"]["text"];
+        responseDirectionApi["routes"][0]["legs"][0]["duration"]["text"];
     directionDetailsInfo.duration_value =
-    responseDirectionApi["routes"][0]["legs"][0]["duration"]["value"];
+        responseDirectionApi["routes"][0]["legs"][0]["duration"]["value"];
 
     return directionDetailsInfo;
   }
@@ -86,15 +85,19 @@ class AssistantMethods {
 
   static startLiveLocationUpdate() {
     streamSubscriptionPosition!.resume();
-    Geofire.setLocation(
-        currentFirebaseDriver!.uid, driverCurrentPosition!.latitude
-        , driverCurrentPosition!.longitude);
+    Geofire.setLocation(currentFirebaseDriver!.uid,
+        driverCurrentPosition!.latitude, driverCurrentPosition!.longitude);
   }
 
-  static double calculateFareAmountFromOriginToDestination(DirectionDetailsInfo directionDetailsInfo) {
-    double timeTraveledFareAmountPerMinute = (directionDetailsInfo.duration_value! / 60) * 0.1;
-    double distanceTraveledFareAmountPerKilometer = (directionDetailsInfo.duration_value! / 1000) * 0.1;
-    double totalFareAmount = (timeTraveledFareAmountPerMinute + distanceTraveledFareAmountPerKilometer) * 20.00;
+  static double calculateFareAmountFromOriginToDestination(
+      DirectionDetailsInfo directionDetailsInfo) {
+    double timeTraveledFareAmountPerMinute =
+        (directionDetailsInfo.duration_value! / 60) * 0.1;
+    double distanceTraveledFareAmountPerKilometer =
+        (directionDetailsInfo.duration_value! / 1000) * 0.1;
+    double totalFareAmount = (timeTraveledFareAmountPerMinute +
+            distanceTraveledFareAmountPerKilometer) *
+        20.00;
 
     if (driverVehicleType == "Bike") {
       double resultFareAmount = (totalFareAmount.truncate()) / 2.0;
@@ -104,8 +107,7 @@ class AssistantMethods {
     } else if (driverVehicleType == "Uber-Black") {
       double resultFareAmount = (totalFareAmount.truncate()) * 2.0;
       return resultFareAmount;
-    }
-    else{
+    } else {
       return totalFareAmount.truncate().toDouble();
     }
   }

@@ -16,36 +16,43 @@ class PlacePredictionTileDesign extends StatefulWidget {
   PlacePredictionTileDesign({this.predictedPlaces});
 
   @override
-  State<PlacePredictionTileDesign> createState() => _PlacePredictionTileDesignState();
+  State<PlacePredictionTileDesign> createState() =>
+      _PlacePredictionTileDesignState();
 }
 
 class _PlacePredictionTileDesignState extends State<PlacePredictionTileDesign> {
-  getPlaceDirectionDetails(String? placeId, context) async{
+  getPlaceDirectionDetails(String? placeId, context) async {
     showDialog(
         context: context,
         builder: (BuildContext context) => ProgressDialog(
-          message: AppLocalization.of(context)!.progressDialog,
-        ));
+              message: AppLocalization.of(context)!.progressDialog,
+            ));
 
-    String placeDirectionDetails = "https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=$mapKeyAndroid";
+    String placeDirectionDetails =
+        "https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=$mapKeyAndroid";
 
-    var responseAPI = await RequestAssistant.receiveRequest(placeDirectionDetails);
+    var responseAPI =
+        await RequestAssistant.receiveRequest(placeDirectionDetails);
 
     Navigator.pop(context);
 
-    if(responseAPI == "Error Occurred, Failed. No Response."){
+    if (responseAPI == "Error Occurred, Failed. No Response.") {
       return;
     }
 
-    if(responseAPI["status"] == "OK"){
+    if (responseAPI["status"] == "OK") {
       Directions directions = Directions();
       directions.locationName = responseAPI["result"]["name"];
-      directions.humanReadableAddress = responseAPI["result"]["formatted_address"];
+      directions.humanReadableAddress =
+          responseAPI["result"]["formatted_address"];
       directions.locationId = placeId;
-      directions.locationLatitude =  responseAPI["result"]["geometry"]["location"]["lat"];
-      directions.locationLongitude =  responseAPI["result"]["geometry"]["location"]["lng"];
+      directions.locationLatitude =
+          responseAPI["result"]["geometry"]["location"]["lat"];
+      directions.locationLongitude =
+          responseAPI["result"]["geometry"]["location"]["lng"];
 
-      Provider.of<AppInfo>(context, listen: false).updateDropOffLocationAddress(directions);
+      Provider.of<AppInfo>(context, listen: false)
+          .updateDropOffLocationAddress(directions);
 
       setState(() {
         userDropOffAddress = directions.locationName!;
@@ -58,7 +65,7 @@ class _PlacePredictionTileDesignState extends State<PlacePredictionTileDesign> {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: (){
+      onPressed: () {
         getPlaceDirectionDetails(widget.predictedPlaces!.place_id, context);
       },
       style: ElevatedButton.styleFrom(
@@ -68,13 +75,20 @@ class _PlacePredictionTileDesignState extends State<PlacePredictionTileDesign> {
         padding: const EdgeInsets.all(4.0),
         child: Row(
           children: [
-            const Icon(Icons.add_location, color: Colors.grey,),
-            const SizedBox(width: 14.0,),
+            const Icon(
+              Icons.add_location,
+              color: Colors.grey,
+            ),
+            const SizedBox(
+              width: 14.0,
+            ),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 8.0,),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
                   Text(
                     widget.predictedPlaces!.main_text!,
                     overflow: TextOverflow.ellipsis,
@@ -83,8 +97,9 @@ class _PlacePredictionTileDesignState extends State<PlacePredictionTileDesign> {
                       color: Colors.white54,
                     ),
                   ),
-                  const SizedBox(height: 2.0,),
-
+                  const SizedBox(
+                    height: 2.0,
+                  ),
                   Text(
                     widget.predictedPlaces!.secondary_text!,
                     overflow: TextOverflow.ellipsis,
@@ -93,8 +108,9 @@ class _PlacePredictionTileDesignState extends State<PlacePredictionTileDesign> {
                       color: Colors.white54,
                     ),
                   ),
-
-                  const SizedBox(height: 4.0,),
+                  const SizedBox(
+                    height: 4.0,
+                  ),
                 ],
               ),
             ),

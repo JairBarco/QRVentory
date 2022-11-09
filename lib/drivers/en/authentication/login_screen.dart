@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +11,6 @@ import '../splashScreen/splash_screen.dart';
 import '../widgets/language.dart';
 
 class DriversLoginScreen extends StatefulWidget {
-
   @override
   State<DriversLoginScreen> createState() => _DriversLoginScreenState();
 }
@@ -21,65 +19,75 @@ class _DriversLoginScreenState extends State<DriversLoginScreen> {
   TextEditingController emailTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
 
-  validateForm(){
+  validateForm() {
     validateEmail(String value) {
       String pattern =
           r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
       RegExp regExp = RegExp(pattern);
       if (value.isEmpty) {
-        Fluttertoast.showToast(msg: AppLocalization.of(context)!.emailMandatory);
+        Fluttertoast.showToast(
+            msg: AppLocalization.of(context)!.emailMandatory);
       } else if (!regExp.hasMatch(value)) {
         Fluttertoast.showToast(msg: AppLocalization.of(context)!.emailNotValid);
       }
     }
 
-    if(!emailTextEditingController.text.contains("@") || emailTextEditingController.text.isEmpty){
+    if (!emailTextEditingController.text.contains("@") ||
+        emailTextEditingController.text.isEmpty) {
       validateEmail(emailTextEditingController.text);
     }
-    if(passwordTextEditingController.text.isEmpty){
-      Fluttertoast.showToast(msg: AppLocalization.of(context)!.passwordIsRequired);
-    }else{
+    if (passwordTextEditingController.text.isEmpty) {
+      Fluttertoast.showToast(
+          msg: AppLocalization.of(context)!.passwordIsRequired);
+    } else {
       loginDriverNow();
     }
   }
 
   loginDriverNow() async {
     final navigator = Navigator.of(context);
-    final navigatorPush = Navigator.push(context, MaterialPageRoute(builder: (c) =>const DriversSplashScreen()));
+    final navigatorPush = Navigator.push(context,
+        MaterialPageRoute(builder: (c) => const DriversSplashScreen()));
 
     showDialog(
         context: context,
         barrierDismissible: false,
-        builder: (BuildContext c){
-          return ProgressDialog(message: AppLocalization.of(context)!.progressDialog,);
-        }
-    );
+        builder: (BuildContext c) {
+          return ProgressDialog(
+            message: AppLocalization.of(context)!.progressDialog,
+          );
+        });
 
-    final User? firebaseDriver = (
-        await fAuth.signInWithEmailAndPassword(
-          email: emailTextEditingController.text.trim(),
-          password: passwordTextEditingController.text.trim(),
-        ).catchError((msg){
-          Navigator.pop(context);
-          Fluttertoast.showToast(msg: "Error:  ${msg.toString()}");
-        })
-    ).user;
+    final User? firebaseDriver = (await fAuth
+            .signInWithEmailAndPassword(
+      email: emailTextEditingController.text.trim(),
+      password: passwordTextEditingController.text.trim(),
+    )
+            .catchError((msg) {
+      Navigator.pop(context);
+      Fluttertoast.showToast(msg: "Error:  ${msg.toString()}");
+    }))
+        .user;
 
-    if(firebaseDriver !=null){
-      DatabaseReference driversRef = FirebaseDatabase.instance.ref().child("users");
+    if (firebaseDriver != null) {
+      DatabaseReference driversRef =
+          FirebaseDatabase.instance.ref().child("users");
       driversRef.child(firebaseDriver.uid).once().then((driverKey) {
         final snap = driverKey.snapshot;
-        if(firebaseDriver.emailVerified == true){
-          if(snap.value != null){
+        if (firebaseDriver.emailVerified == true) {
+          if (snap.value != null) {
             currentFirebaseDriver = firebaseDriver;
-            Fluttertoast.showToast(msg: AppLocalization.of(context)!.loginSuccessful);
+            Fluttertoast.showToast(
+                msg: AppLocalization.of(context)!.loginSuccessful);
             navigatorPush;
           }
-        } else if(firebaseDriver.emailVerified == false){
-          Fluttertoast.showToast(msg: AppLocalization.of(context)!.emailNotVerified);
+        } else if (firebaseDriver.emailVerified == false) {
+          Fluttertoast.showToast(
+              msg: AppLocalization.of(context)!.emailNotVerified);
 
-          if(snap.value == null){
-            Fluttertoast.showToast(msg: AppLocalization.of(context)!.noRecordExistsWithThisEmail);
+          if (snap.value == null) {
+            Fluttertoast.showToast(
+                msg: AppLocalization.of(context)!.noRecordExistsWithThisEmail);
             fAuth.signOut();
             navigatorPush;
           }
@@ -90,7 +98,8 @@ class _DriversLoginScreenState extends State<DriversLoginScreen> {
     } else {
       navigator.pop();
       if (!mounted) return;
-      Fluttertoast.showToast(msg: AppLocalization.of(context)!.errorDuringLogin);
+      Fluttertoast.showToast(
+          msg: AppLocalization.of(context)!.errorDuringLogin);
     }
   }
 
@@ -103,34 +112,35 @@ class _DriversLoginScreenState extends State<DriversLoginScreen> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Image.asset("img/logo1.png"),
               ),
-
-              const SizedBox(height: 10,),
-              Text(AppLocalization.of(context)!.login, style: const TextStyle(
-                fontSize: 24,
-                color: Colors.grey,
-                fontWeight: FontWeight.bold,
-              ),),
-
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                AppLocalization.of(context)!.login,
+                style: const TextStyle(
+                  fontSize: 24,
+                  color: Colors.grey,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               TextField(
                 controller: emailTextEditingController,
                 keyboardType: TextInputType.emailAddress,
-                style: const TextStyle(
-                    color:Colors.grey
-                ),
+                style: const TextStyle(color: Colors.grey),
                 decoration: InputDecoration(
                   labelText: AppLocalization.of(context)!.email,
                   hintText: AppLocalization.of(context)!.email,
                   enabledBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)
-                  ),
+                      borderSide: BorderSide(color: Colors.grey)),
                   focusedBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)
-                  ),
+                      borderSide: BorderSide(color: Colors.grey)),
                   hintStyle: const TextStyle(
                     color: Colors.grey,
                     fontSize: 10,
@@ -141,24 +151,18 @@ class _DriversLoginScreenState extends State<DriversLoginScreen> {
                   ),
                 ),
               ),
-
               TextField(
                 controller: passwordTextEditingController,
                 keyboardType: TextInputType.text,
                 obscureText: true,
-
-                style: const TextStyle(
-                    color:Colors.grey
-                ),
+                style: const TextStyle(color: Colors.grey),
                 decoration: InputDecoration(
                   labelText: AppLocalization.of(context)!.password,
                   hintText: AppLocalization.of(context)!.password,
                   enabledBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)
-                  ),
+                      borderSide: BorderSide(color: Colors.grey)),
                   focusedBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)
-                  ),
+                      borderSide: BorderSide(color: Colors.grey)),
                   hintStyle: const TextStyle(
                     color: Colors.grey,
                     fontSize: 10,
@@ -169,11 +173,11 @@ class _DriversLoginScreenState extends State<DriversLoginScreen> {
                   ),
                 ),
               ),
-
-              const SizedBox(height: 20,),
-
+              const SizedBox(
+                height: 20,
+              ),
               ElevatedButton(
-                onPressed: (){
+                onPressed: () {
                   validateForm();
                 },
                 style: ElevatedButton.styleFrom(
@@ -181,37 +185,42 @@ class _DriversLoginScreenState extends State<DriversLoginScreen> {
                 ),
                 child: Text(
                   AppLocalization.of(context)!.loginButton,
-                  style: const TextStyle(
-                      color: Colors.white70,
-                      fontSize: 18
-                  ),
+                  style: const TextStyle(color: Colors.white70, fontSize: 18),
                 ),
               ),
-
-               TextButton(
-                child: Text(AppLocalization.of(context)!.register,
-                style: const TextStyle(color: Colors.grey),
-                ),
-                 onPressed: (){
-                   Navigator.push(context, MaterialPageRoute(builder: (c) => const DriversSignUpScreen()));
-                 },
-              ),
-
               TextButton(
-                child: Text(AppLocalization.of(context)!.loginAsUser,
+                child: Text(
+                  AppLocalization.of(context)!.register,
                   style: const TextStyle(color: Colors.grey),
                 ),
-                onPressed: (){
-                  fAuth.signOut();
-                  Navigator.push(context, MaterialPageRoute(builder: (c) => LoginScreen()));
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (c) => const DriversSignUpScreen()));
                 },
               ),
               TextButton(
-                child: Text(AppLocalization.of(context)!.language,
+                child: Text(
+                  AppLocalization.of(context)!.loginAsUser,
                   style: const TextStyle(color: Colors.grey),
                 ),
-                onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (c) => DriversLanguageScreen()));
+                onPressed: () {
+                  fAuth.signOut();
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (c) => LoginScreen()));
+                },
+              ),
+              TextButton(
+                child: Text(
+                  AppLocalization.of(context)!.language,
+                  style: const TextStyle(color: Colors.grey),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (c) => DriversLanguageScreen()));
                 },
               ),
             ],
