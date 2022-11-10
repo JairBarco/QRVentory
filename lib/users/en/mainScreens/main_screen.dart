@@ -61,7 +61,7 @@ class _MainScreenState extends State<MainScreen> {
   List<ActiveNearbyAvailableDrivers> onlineNearbyAvailableDriversList = [];
 
   DatabaseReference? referenceRideRequest;
-  String driverRideStatus = "Driver is coming";
+  String driverRideStatus = "Conductor en camino";
   StreamSubscription<DatabaseEvent>? tripRideRequestInfoStreamSubscription;
 
   String userRideRequestStatus = "";

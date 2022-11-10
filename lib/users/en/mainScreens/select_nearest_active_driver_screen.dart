@@ -21,27 +21,21 @@ class _SelectNearestActiveDriversScreenState
     extends State<SelectNearestActiveDriversScreen> {
   String fareAmount = "";
 
-  getFareAmountAccordingToVehicleType(int index) {
-    if (tripDirectionDetailsInfo != null) {
-      if (dList[index]["car_details"]["type"].toString() == "Bike") {
-        fareAmount =
-            (AssistantMethods.calculateFareAmountFromOriginToDestination(
-                        tripDirectionDetailsInfo!) /
-                    2)
-                .toStringAsFixed(2);
+  getFareAmountAccordingToVehicleType(int index)
+  {
+    if(tripDirectionDetailsInfo != null)
+    {
+      if(dList[index]["car_details"]["type"].toString() == "Bike")
+      {
+        fareAmount = (AssistantMethods.calculateFareAmountFromOriginToDestination(tripDirectionDetailsInfo!) / 2).toStringAsFixed(1);
       }
-      if (dList[index]["car_details"]["type"].toString() == "Uber-Black") {
-        fareAmount =
-            (AssistantMethods.calculateFareAmountFromOriginToDestination(
-                        tripDirectionDetailsInfo!) *
-                    2)
-                .toStringAsFixed(2);
+      if(dList[index]["car_details"]["type"].toString() == "Uber-Black") //means executive type of car - more comfortable pro level
+          {
+        fareAmount = (AssistantMethods.calculateFareAmountFromOriginToDestination(tripDirectionDetailsInfo!) * 2).toStringAsFixed(1);
       }
-      if (dList[index]["car_details"]["type"].toString() == "Uber-X") {
-        fareAmount =
-            (AssistantMethods.calculateFareAmountFromOriginToDestination(
-                    tripDirectionDetailsInfo!))
-                .toString();
+      if(dList[index]["car_details"]["type"].toString() == "Uber-X") // non - executive car - comfortable
+          {
+        fareAmount = (AssistantMethods.calculateFareAmountFromOriginToDestination(tripDirectionDetailsInfo!)).toString();
       }
     }
     return fareAmount;
@@ -75,9 +69,11 @@ class _SelectNearestActiveDriversScreenState
       ),
       body: ListView.builder(
         itemCount: dList.length,
-        itemBuilder: (BuildContext context, int index) {
+        itemBuilder: (BuildContext context, int index)
+        {
           return GestureDetector(
-            onTap: () {
+            onTap: ()
+            {
               setState(() {
                 chosenDriverId = dList[index]["id"].toString();
               });
@@ -90,9 +86,9 @@ class _SelectNearestActiveDriversScreenState
               margin: const EdgeInsets.all(8),
               child: ListTile(
                 leading: Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
+                  padding: const EdgeInsets.only(top: 2.0),
                   child: Image.asset(
-                    "img/${(dList[index]["car_details"]["type"]).toString()}.png",
+                    "img/" + dList[index]["car_details"]["type"].toString() + ".png",
                     width: 70,
                   ),
                 ),
@@ -101,13 +97,17 @@ class _SelectNearestActiveDriversScreenState
                   children: [
                     Text(
                       dList[index]["name"],
-                      style:
-                          const TextStyle(fontSize: 14, color: Colors.black54),
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.black54,
+                      ),
                     ),
                     Text(
                       dList[index]["car_details"]["car_model"],
-                      style:
-                          const TextStyle(fontSize: 12, color: Colors.white54),
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Colors.white54,
+                      ),
                     ),
                     SmoothStarRating(
                       rating: 3.5,
@@ -123,34 +123,28 @@ class _SelectNearestActiveDriversScreenState
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "${getFareAmountAccordingToVehicleType(index)}",
+                      "\$ " + getFareAmountAccordingToVehicleType(index),
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(
-                      height: 2,
-                    ),
+                    const SizedBox(height: 2,),
                     Text(
-                      tripDirectionDetailsInfo != null
-                          ? tripDirectionDetailsInfo!.duration_text!
-                          : "",
+                      tripDirectionDetailsInfo != null ? tripDirectionDetailsInfo!.duration_text! : "",
                       style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.black54,
-                          fontSize: 12),
+                          fontSize: 12
+                      ),
                     ),
-                    const SizedBox(
-                      height: 2,
-                    ),
+                    const SizedBox(height: 2,),
                     Text(
-                      tripDirectionDetailsInfo != null
-                          ? tripDirectionDetailsInfo!.distance_text!
-                          : "",
+                      tripDirectionDetailsInfo != null ? tripDirectionDetailsInfo!.distance_text! : "",
                       style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.black54,
-                          fontSize: 12),
+                          fontSize: 12
+                      ),
                     ),
                   ],
                 ),
