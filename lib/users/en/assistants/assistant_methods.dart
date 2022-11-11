@@ -3,6 +3,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:users_app/users/en/assistants/request_assistant.dart';
+import 'package:users_app/users/en/models/trips_history_model.dart';
 import '../global/global.dart';
 import '../global/map_key.dart';
 import '../infoHandler/app_info.dart';
@@ -126,5 +127,45 @@ class AssistantMethods {
       headers: headerNotification,
       body: jsonEncode(officialNotificationFormat),
     );
+  }
+
+  static void readTripsKeyForOnlineUser(context) {
+    FirebaseDatabase.instance
+        .ref()
+        .child("All Ride Requests")
+        .orderByChild("userName")
+        .equalTo(userModelCurrentInfo!.name)
+        .once()
+        .then((snap) {
+      if (snap.snapshot.value != null) {
+        Map keysTripsId = snap.snapshot.value as Map;
+        int overallTripsCounter = keysTripsId.length;
+
+        Provider.of<AppInfo>(context, listen: false)
+            .updateOverallTripsCounter(overallTripsCounter);
+
+        List<String> tripsKeyList = [];
+        keysTripsId.forEach((key, value) {
+          tripsKeyList.add(key);
+        });
+        Provider.of<AppInfo>(context, listen: false)
+            .updateAllTripsKeys(tripsKeyList);
+
+        //Get trips data
+        readTripsHistoryInformation(context);
+      }
+    });
+  }
+
+  static void readTripsHistoryInformation(context) {
+    var tripsAllKeys =
+        Provider.of<AppInfo>(context, listen: false).historyTripsList;
+
+    for (String eachKey in tripsAllKeys) {
+      FirebaseDatabase.instance.ref().child("All Ride Requests").child(eachKey).once().then((snap) {
+        var eachTripHistory = TripsHistoryModel.fromSnapshot(snap.snapshot);
+        Provider.of<AppInfo>(context, listen: false).updateOverallTripsHistoryInformation(eachTripHistory);
+      });
+    }
   }
 }
