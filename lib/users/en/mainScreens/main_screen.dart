@@ -254,6 +254,8 @@ class _MainScreenState extends State<MainScreen> {
     print("Address = $humanReadableAddress");
 
     initializeGeoFireListener();
+
+    AssistantMethods.readTripsKeyForOnlineUser(context);
   }
 
   @override

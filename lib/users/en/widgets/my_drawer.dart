@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:users_app/drivers/en/splashScreen/splash_screen.dart';
 import 'package:users_app/users/en/app_localization/app_localization.dart';
 import 'package:users_app/users/en/chats/screens/home_screen.dart';
+import 'package:users_app/users/en/mainScreens/history_screen.dart';
 import 'package:users_app/users/en/widgets/language.dart';
 import '../global/global.dart';
 import '../splashScreen/splash_screen.dart';
@@ -72,7 +73,10 @@ class _MyDrawerState extends State<MyDrawer> {
 
           //drawer body
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              MaterialPageRoute(
+                  builder: (c) => const TripsHistoryScreen());
+            },
             child: ListTile(
               leading: const Icon(
                 Icons.history,
