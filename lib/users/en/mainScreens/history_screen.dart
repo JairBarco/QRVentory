@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:restart_app/restart_app.dart';
 import 'package:users_app/users/en/widgets/history_design_ui.dart';
 
 import '../../../users/en/infoHandler/app_info.dart';
@@ -25,7 +24,7 @@ class _TripsHistoryScreenState extends State<TripsHistoryScreen> {
         leading: IconButton(
           icon: Icon(Icons.close),
           onPressed: (){
-            Restart.restartApp();
+            Navigator.pop(context);
           },
         ),
       ),
@@ -44,7 +43,7 @@ class _TripsHistoryScreenState extends State<TripsHistoryScreen> {
               ),
             );
           },
-        itemCount: Provider.of<AppInfo>(context, listen: false).countTotalTrips,
+        itemCount: Provider.of<AppInfo>(context, listen: false).allTripsHistoryInformationList.length,
         physics: ClampingScrollPhysics(),
         shrinkWrap: true,
       ),

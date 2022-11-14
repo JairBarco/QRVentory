@@ -3,6 +3,7 @@ import 'package:users_app/drivers/en/splashScreen/splash_screen.dart';
 import 'package:users_app/users/en/app_localization/app_localization.dart';
 import 'package:users_app/users/en/chats/screens/home_screen.dart';
 import 'package:users_app/users/en/mainScreens/history_screen.dart';
+import 'package:users_app/users/en/mainScreens/profle_screen.dart';
 import 'package:users_app/users/en/widgets/language.dart';
 import '../global/global.dart';
 import '../splashScreen/splash_screen.dart';
@@ -74,8 +75,10 @@ class _MyDrawerState extends State<MyDrawer> {
           //drawer body
           GestureDetector(
             onTap: () {
-              MaterialPageRoute(
-                  builder: (c) => const TripsHistoryScreen());
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (c) => TripsHistoryScreen()));
             },
             child: ListTile(
               leading: const Icon(
@@ -92,7 +95,12 @@ class _MyDrawerState extends State<MyDrawer> {
           ),
 
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (c) => ProfileScreen()));
+            },
             child: ListTile(
               leading: const Icon(
                 Icons.person,

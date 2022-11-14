@@ -57,7 +57,9 @@ class _HistoryDesignUIWidgetState extends State<HistoryDesignUIWidget> {
               ],
             ),
 
-            SizedBox(height: 2,),
+            SizedBox(
+              height: 2,
+            ),
 
             //Car details
             Row(
@@ -81,7 +83,9 @@ class _HistoryDesignUIWidgetState extends State<HistoryDesignUIWidget> {
               ],
             ),
 
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
 
             //Pickup address
             Row(
@@ -101,6 +105,7 @@ class _HistoryDesignUIWidgetState extends State<HistoryDesignUIWidget> {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: 16,
+                        color: Colors.white60
                       ),
                     ),
                   ),
@@ -108,7 +113,9 @@ class _HistoryDesignUIWidgetState extends State<HistoryDesignUIWidget> {
               ],
             ),
 
-            SizedBox(height: 14,),
+            SizedBox(
+              height: 14,
+            ),
 
             //DropOff address
             Row(
@@ -128,6 +135,7 @@ class _HistoryDesignUIWidgetState extends State<HistoryDesignUIWidget> {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: 16,
+                        color: Colors.white60,
                       ),
                     ),
                   ),
@@ -135,7 +143,9 @@ class _HistoryDesignUIWidgetState extends State<HistoryDesignUIWidget> {
               ],
             ),
 
-            SizedBox(height: 14,),
+            SizedBox(
+              height: 14,
+            ),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -144,12 +154,13 @@ class _HistoryDesignUIWidgetState extends State<HistoryDesignUIWidget> {
                 Text(
                   formatDateAndTime(widget.tripsHistoryModel!.time!),
                   style: TextStyle(color: Colors.grey),
-
                 ),
               ],
             ),
 
-            SizedBox(height: 2,),
+            SizedBox(
+              height: 2,
+            ),
           ],
         ),
       ),
