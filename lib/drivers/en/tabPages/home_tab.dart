@@ -6,6 +6,7 @@ import 'package:flutter_geofire/flutter_geofire.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:users_app/drivers/en/assistants/assistant_methods.dart';
 import 'package:users_app/drivers/en/global/global.dart';
 import 'package:users_app/drivers/en/push_notifications/push_notification_system.dart';
 import 'package:users_app/users/en/app_localization/app_localization.dart';
@@ -74,16 +75,16 @@ class _HomeTabPageState extends State<HomeTabPage> {
         onlineDriverData.car_number =
             (snap.snapshot.value as Map)["car_details"]["car_number"];
         driverVehicleType = (snap.snapshot.value as Map)["car_details"]["type"];
-
-        print("//////////////////////////////");
-        print(onlineDriverData.car_color);
-        print("//////////////////////////////");
       }
     });
 
     PushNotificationSystem pushNotificationSystem = PushNotificationSystem();
     pushNotificationSystem.initializeCloudMessaging(context);
     pushNotificationSystem.generateAndGetToken();
+    AssistantMethods.readDriverEarnings(context);
+    print("/////////////////////////////////////////////");
+    print(context.toString());
+    print("/////////////////////////////////////////////");
   }
 
   @override
@@ -95,6 +96,7 @@ class _HomeTabPageState extends State<HomeTabPage> {
 
   @override
   Widget build(BuildContext context) {
+
     return Stack(
       children: [
         GoogleMap(

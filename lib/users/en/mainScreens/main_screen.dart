@@ -426,8 +426,7 @@ class _MainScreenState extends State<MainScreen> {
           Provider.of<AppInfo>(context, listen: false).userDropOffLocation;
       LatLng userDestinationPosition = LatLng(
           dropOffLocation!.locationLatitude!,
-          // ignore: unnecessary_non_null_assertion
-          dropOffLocation!.locationLongitude!);
+          dropOffLocation.locationLongitude!);
 
       var directionDetailsInfo =
           await AssistantMethods.obtainOriginToDestinationDirectionDetails(
