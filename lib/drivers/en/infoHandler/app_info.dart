@@ -4,10 +4,11 @@ import 'package:users_app/drivers/en/models/trips_history_model.dart';
 
 class AppInfo extends ChangeNotifier {
   Directions? userPickUpLocation, userDropOffLocation;
+  String driverTotalEarnings = "0";
+  String driverAverageRatings = "0";
   int countTotalTrips = 0;
   List<String> historyTripsList = [];
   List<TripsHistoryModel> allTripsHistoryInformationList = [];
-  String driverTotalEarnings = "0";
 
   void updatePickUpLocationAddress(Directions userPickUpAddress) {
     userPickUpLocation = userPickUpAddress;
@@ -33,5 +34,9 @@ class AppInfo extends ChangeNotifier {
 
   updateDriverTotalEarnings(String driverEarnings){
     driverTotalEarnings = driverEarnings;
+  }
+
+  updateDriverAverageRatings(String driverRatings){
+    driverAverageRatings = driverRatings;
   }
 }

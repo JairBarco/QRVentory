@@ -1,14 +1,18 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:async';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_geofire/flutter_geofire.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:restart_app/restart_app.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'package:users_app/users/en/app_localization/app_localization.dart';
 import 'package:users_app/users/en/assistants/geofire_assistant.dart';
 import 'package:users_app/users/en/mainScreens/rate_driver_screen.dart';
@@ -22,6 +26,9 @@ import '../infoHandler/app_info.dart';
 import '../widgets/my_drawer.dart';
 import '../widgets/progress_dialog.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+// ignore: unused_import
+import 'package:url_launcher/url_launcher.dart';
+
 
 class MainScreen extends StatefulWidget {
   @override
@@ -66,6 +73,7 @@ class _MainScreenState extends State<MainScreen> {
 
   String userRideRequestStatus = "";
   bool requestPositionInfo = true;
+  String _phoneNumber = "911";
 
   blackThemeGoogleMap() {
     createActiveNearbyDriverIcon();
@@ -460,7 +468,7 @@ class _MainScreenState extends State<MainScreen> {
         pLineCoordinatesList.clear();
       });
 
-      Fluttertoast.showToast(msg: "No Online Drivers Available");
+      Fluttertoast.showToast(msg: AppLocalization().notDriversAvailable);
 
       Future.delayed(const Duration(milliseconds: 3000), () {
         Navigator.push(
@@ -515,7 +523,7 @@ class _MainScreenState extends State<MainScreen> {
             }
           });
         } else {
-          Fluttertoast.showToast(msg: "This driver do not exist. Try again.");
+          Fluttertoast.showToast(msg: AppLocalization().driverNotExists);
         }
       });
     }
@@ -559,9 +567,9 @@ class _MainScreenState extends State<MainScreen> {
         //Send notification now
         AssistantMethods.sendNotificationToDriverNow(deviceRegistrationToken,
             referenceRideRequest!.key.toString(), context);
-        Fluttertoast.showToast(msg: "Notificación Enviada Exitosamente");
+        Fluttertoast.showToast(msg: AppLocalization().notificationSent);
       } else {
-        Fluttertoast.showToast(msg: "Por favor selecciona otro conductor");
+        Fluttertoast.showToast(msg: AppLocalization().selectOtherDriver);
         return;
       }
     });
@@ -597,159 +605,110 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 
+  callDriver() async{
+    bool? res = await FlutterPhoneDirectCaller.callNumber(driverPhone);
+  }
+
+  emergencyCall() async{
+    const number = '911';
+    bool? res = await FlutterPhoneDirectCaller.callNumber(number);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: sKey,
-      drawer: Container(
-        width: 265,
-        child: Theme(
-          data: Theme.of(context).copyWith(
-            canvasColor: Colors.black,
-          ),
-          child: MyDrawer(
-            name: userModelCurrentInfo != null
-                ? userModelCurrentInfo!.name
-                : AppLocalization.of(context)!.yourName,
-            email: userModelCurrentInfo != null
-                ? userModelCurrentInfo!.email
-                : AppLocalization.of(context)!.yourEmail,
+    return ChangeNotifierProvider(
+      create: (context) => AppInfo(),
+      child: Scaffold(
+        key: sKey,
+        drawer: Container(
+          width: 265,
+          child: Theme(
+            data: Theme.of(context).copyWith(
+              canvasColor: Colors.black,
+            ),
+            child: MyDrawer(
+              name: userModelCurrentInfo != null
+                  ? userModelCurrentInfo!.name
+                  : AppLocalization.of(context)!.yourName,
+              email: userModelCurrentInfo != null
+                  ? userModelCurrentInfo!.email
+                  : AppLocalization.of(context)!.yourEmail,
+            ),
           ),
         ),
-      ),
-      body: Stack(
-        children: [
-          GoogleMap(
-            padding: EdgeInsets.only(
-                top: topPaddingOfMap, bottom: bottomPaddingOfMap),
-            mapType: MapType.normal,
-            myLocationEnabled: true,
-            zoomControlsEnabled: false,
-            zoomGesturesEnabled: true,
-            initialCameraPosition: _kGooglePlex,
-            polylines: polyLineSet,
-            markers: markersSet,
-            onMapCreated: (GoogleMapController controller) {
-              _controllerGoogleMap.complete(controller);
-              newGoogleMapController = controller;
-              //Black theme Google Map
-              blackThemeGoogleMap();
+        body: Stack(
+          children: [
+            GoogleMap(
+              padding: EdgeInsets.only(
+                  top: topPaddingOfMap, bottom: bottomPaddingOfMap),
+              mapType: MapType.normal,
+              myLocationEnabled: true,
+              zoomControlsEnabled: false,
+              zoomGesturesEnabled: true,
+              initialCameraPosition: _kGooglePlex,
+              polylines: polyLineSet,
+              markers: markersSet,
+              onMapCreated: (GoogleMapController controller) {
+                _controllerGoogleMap.complete(controller);
+                newGoogleMapController = controller;
+                //Black theme Google Map
+                blackThemeGoogleMap();
 
-              setState(() {
-                topPaddingOfMap = 60;
-                bottomPaddingOfMap = 220;
-              });
+                setState(() {
+                  topPaddingOfMap = 60;
+                  bottomPaddingOfMap = 220;
+                });
 
-              locateUserPosition();
-            },
-          ),
-          //Custom hamburger button
-          Positioned(
-            top: 70,
-            left: 18,
-            child: GestureDetector(
-              onTap: () {
-                if (openNavigationDrawer) {
-                  sKey.currentState!.openDrawer();
-                } else {
-                  //Refresh app automatically
-                  Restart.restartApp();
-                }
+                locateUserPosition();
               },
-              child: CircleAvatar(
-                backgroundColor: Colors.black54,
-                child: Icon(
-                  openNavigationDrawer ? Icons.menu : Icons.close,
-                  color: Colors.white,
-                  size: 33,
+            ),
+            //Custom hamburger button
+            Positioned(
+              top: 70,
+              left: 18,
+              child: GestureDetector(
+                onTap: () {
+                  if (openNavigationDrawer) {
+                    sKey.currentState!.openDrawer();
+                  } else {
+                    //Refresh app automatically
+                    Restart.restartApp();
+                  }
+                },
+                child: CircleAvatar(
+                  backgroundColor: Colors.black54,
+                  child: Icon(
+                    openNavigationDrawer ? Icons.menu : Icons.close,
+                    color: Colors.white,
+                    size: 33,
+                  ),
                 ),
               ),
             ),
-          ),
-          //UI search location
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: AnimatedSize(
-              curve: Curves.easeIn,
-              duration: const Duration(milliseconds: 120),
-              child: Container(
-                height: searchLocationContainerHeight,
-                decoration: const BoxDecoration(
-                  color: Colors.black87,
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(20),
-                    topLeft: Radius.circular(20),
+            //UI search location
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: AnimatedSize(
+                curve: Curves.easeIn,
+                duration: const Duration(milliseconds: 120),
+                child: Container(
+                  height: searchLocationContainerHeight,
+                  decoration: const BoxDecoration(
+                    color: Colors.black87,
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(20),
+                      topLeft: Radius.circular(20),
+                    ),
                   ),
-                ),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
-                  child: Column(
-                    children: [
-                      //Origin Location
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.add_location_alt_outlined,
-                            color: Colors.grey,
-                          ),
-                          const SizedBox(
-                            width: 12.0,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                AppLocalization.of(context)!.from,
-                                style: const TextStyle(
-                                    color: Colors.grey, fontSize: 14),
-                              ),
-                              Text(
-                                Provider.of<AppInfo>(context)
-                                            .userPickUpLocation !=
-                                        null
-                                    ? "${(Provider.of<AppInfo>(context).userPickUpLocation!.locationName!).substring(0, 35)}..."
-                                    : AppLocalization.of(context)!
-                                        .notGettingAddressWarning,
-                                style: const TextStyle(
-                                    color: Colors.grey, fontSize: 16),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(
-                        height: 10.0,
-                      ),
-                      const Divider(
-                        height: 1,
-                        thickness: 1,
-                        color: Colors.grey,
-                      ),
-                      const SizedBox(
-                        height: 16.0,
-                      ),
-
-                      //Destination Location
-                      GestureDetector(
-                        onTap: () async {
-                          var responseFromSearchScreen = await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (c) => SearchPlacesScreen()));
-
-                          if (responseFromSearchScreen == "obtainedDropOff") {
-                            setState(() {
-                              openNavigationDrawer = false;
-                            });
-                            //Draw routes - draw polyline
-                            await drawPolylineFromOriginToDestination();
-                          }
-                        },
-                        child: Row(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 18),
+                    child: Column(
+                      children: [
+                        //Origin Location
+                        Row(
                           children: [
                             const Icon(
                               Icons.add_location_alt_outlined,
@@ -762,17 +721,17 @@ class _MainScreenState extends State<MainScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  AppLocalization.of(context)!.to,
+                                  AppLocalization.of(context)!.from,
                                   style: const TextStyle(
                                       color: Colors.grey, fontSize: 14),
                                 ),
                                 Text(
                                   Provider.of<AppInfo>(context)
-                                              .userDropOffLocation !=
+                                              .userPickUpLocation !=
                                           null
-                                      ? "${Provider.of<AppInfo>(context).userDropOffLocation!.humanReadableAddress!.substring(0, 35)}..."
+                                      ? "${(Provider.of<AppInfo>(context).userPickUpLocation!.locationName!).substring(0, 35)}..."
                                       : AppLocalization.of(context)!
-                                          .dropOffLocation,
+                                          .notGettingAddressWarning,
                                   style: const TextStyle(
                                       color: Colors.grey, fontSize: 16),
                                 ),
@@ -780,198 +739,286 @@ class _MainScreenState extends State<MainScreen> {
                             ),
                           ],
                         ),
-                      ),
 
-                      const SizedBox(
-                        height: 10.0,
-                      ),
-                      const Divider(
-                        height: 1,
-                        thickness: 1,
-                        color: Colors.grey,
-                      ),
-                      const SizedBox(
-                        height: 16.0,
-                      ),
-
-                      ElevatedButton(
-                        onPressed: () {
-                          if (Provider.of<AppInfo>(context, listen: false)
-                                  .userDropOffLocation !=
-                              null) {
-                            saveRideRequestInformation();
-                          } else {
-                            Fluttertoast.showToast(
-                                msg: "Please select a destination");
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.indigo,
-                          textStyle: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
+                        const SizedBox(
+                          height: 10.0,
                         ),
+                        const Divider(
+                          height: 1,
+                          thickness: 1,
+                          color: Colors.grey,
+                        ),
+                        const SizedBox(
+                          height: 16.0,
+                        ),
+
+                        //Destination Location
+                        GestureDetector(
+                          onTap: () async {
+                            var responseFromSearchScreen = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (c) => SearchPlacesScreen()));
+
+                            if (responseFromSearchScreen == "obtainedDropOff") {
+                              setState(() {
+                                openNavigationDrawer = false;
+                              });
+                              //Draw routes - draw polyline
+                              await drawPolylineFromOriginToDestination();
+                            }
+                          },
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.add_location_alt_outlined,
+                                color: Colors.grey,
+                              ),
+                              const SizedBox(
+                                width: 12.0,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    AppLocalization.of(context)!.to,
+                                    style: const TextStyle(
+                                        color: Colors.grey, fontSize: 14),
+                                  ),
+                                  Text(
+                                    Provider.of<AppInfo>(context)
+                                                .userDropOffLocation !=
+                                            null
+                                        ? "${Provider.of<AppInfo>(context).userDropOffLocation!.humanReadableAddress!.substring(0, 35)}..."
+                                        : AppLocalization.of(context)!
+                                            .dropOffLocation,
+                                    style: const TextStyle(
+                                        color: Colors.grey, fontSize: 16),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        const SizedBox(
+                          height: 10.0,
+                        ),
+                        const Divider(
+                          height: 1,
+                          thickness: 1,
+                          color: Colors.grey,
+                        ),
+                        const SizedBox(
+                          height: 16.0,
+                        ),
+
+                        ElevatedButton(
+                          onPressed: () {
+                            if (Provider.of<AppInfo>(context, listen: false)
+                                    .userDropOffLocation !=
+                                null) {
+                              saveRideRequestInformation();
+                            } else {
+                              Fluttertoast.showToast(
+                                  msg: AppLocalization().pleaseSelectDestination);
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.indigo,
+                            textStyle: const TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          child: Text(
+                              AppLocalization.of(context)!.requestRideButton),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            //UI waiting response from driver
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                height: waitingResponseFromDriverContainerHeight,
+                decoration: const BoxDecoration(
+                  color: Colors.black87,
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(20),
+                    topLeft: Radius.circular(20),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Center(
+                    child: AnimatedTextKit(
+                      animatedTexts: [
+                        FadeAnimatedText(
+                          AppLocalization().waitingDriversConfirmation,
+                          duration: Duration(seconds: 6),
+                          textAlign: TextAlign.center,
+                          textStyle: TextStyle(
+                              fontSize: 30.0,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        ScaleAnimatedText(
+                          AppLocalization().pleaseWait,
+                          duration: Duration(seconds: 10),
+                          textAlign: TextAlign.center,
+                          textStyle: TextStyle(
+                              fontSize: 35.0,
+                              color: Colors.white,
+                              fontFamily: 'Canterbury'),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            //UI for display driver information
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                height: assignedDriverInfoContainerHeight,
+                decoration: const BoxDecoration(
+                  color: Colors.black87,
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(20),
+                    topLeft: Radius.circular(20),
+                  ),
+                ),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      //Ride status
+                      Center(
                         child: Text(
-                            AppLocalization.of(context)!.requestRideButton),
+                          driverRideStatus,
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.white54,
+                          ),
+                        ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-          //UI waiting response from driver
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              height: waitingResponseFromDriverContainerHeight,
-              decoration: const BoxDecoration(
-                color: Colors.black87,
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(20),
-                  topLeft: Radius.circular(20),
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Center(
-                  child: AnimatedTextKit(
-                    animatedTexts: [
-                      FadeAnimatedText(
-                        'Esperando confirmación del conductor...',
-                        duration: Duration(seconds: 6),
+
+                      const SizedBox(
+                        height: 20,
+                      ),
+
+                      Divider(
+                        height: 2,
+                        thickness: 2,
+                        color: Colors.white54,
+                      ),
+
+                      const SizedBox(
+                        height: 20,
+                      ),
+
+                      //Driver name
+                      Text(
+                        driverName,
                         textAlign: TextAlign.center,
-                        textStyle: TextStyle(
-                            fontSize: 30.0,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      ScaleAnimatedText(
-                        'Espere por favor...',
-                        duration: Duration(seconds: 10),
-                        textAlign: TextAlign.center,
-                        textStyle: TextStyle(
-                            fontSize: 35.0,
-                            color: Colors.white,
-                            fontFamily: 'Canterbury'),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-          //UI for display driver information
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              height: assignedDriverInfoContainerHeight,
-              decoration: const BoxDecoration(
-                color: Colors.black87,
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(20),
-                  topLeft: Radius.circular(20),
-                ),
-              ),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    //Ride status
-                    Center(
-                      child: Text(
-                        driverRideStatus,
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
                           color: Colors.white54,
                         ),
                       ),
-                    ),
 
-                    const SizedBox(
-                      height: 20,
-                    ),
+                      const SizedBox(
+                        height: 2,
+                      ),
 
-                    Divider(
-                      height: 2,
-                      thickness: 2,
-                      color: Colors.white54,
-                    ),
+                      //Driver vehicle details
+                      Text(
+                        driverCarDetails,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white54,
+                        ),
+                      ),
 
-                    const SizedBox(
-                      height: 20,
-                    ),
+                      const SizedBox(
+                        height: 20,
+                      ),
 
-                    //Driver name
-                    Text(
-                      driverName,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
+                      Divider(
+                        height: 2,
+                        thickness: 2,
                         color: Colors.white54,
                       ),
-                    ),
 
-                    const SizedBox(
-                      height: 2,
-                    ),
-
-                    //Driver vehicle details
-                    Text(
-                      driverCarDetails,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white54,
+                      const SizedBox(
+                        height: 20,
                       ),
-                    ),
 
-                    const SizedBox(
-                      height: 20,
-                    ),
+                      //Call driver button
+                      Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            ElevatedButton.icon(
+                              onPressed: () {
+                                callDriver();
+                              },
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.green,
+                              ),
+                              icon: Icon(
+                                Icons.phone_android,
+                                color: Colors.black54,
+                                size: 22,
+                              ),
+                              label: Text(
+                                AppLocalization().callDriver,
+                                style: TextStyle(
+                                    color: Colors.black54,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
 
-                    Divider(
-                      height: 2,
-                      thickness: 2,
-                      color: Colors.white54,
-                    ),
-
-                    const SizedBox(
-                      height: 20,
-                    ),
-
-                    //Call driver button
-                    Center(
-                      child: ElevatedButton.icon(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.green,
-                        ),
-                        icon: Icon(
-                          Icons.phone_android,
-                          color: Colors.black54,
-                          size: 22,
-                        ),
-                        label: Text(
-                          "Llamar al conductor",
-                          style: TextStyle(
-                              color: Colors.black54,
-                              fontWeight: FontWeight.bold),
+                            ElevatedButton.icon(
+                              onPressed: () {
+                                launchUrlString('tel://$_phoneNumber');
+                              },
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.green,
+                              ),
+                              icon: Icon(
+                                Icons.local_police_rounded,
+                                color: Colors.black54,
+                                size: 22,
+                              ),
+                              label: Text(
+                                AppLocalization().emergencyCall,
+                                style: TextStyle(
+                                    color: Colors.black54,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

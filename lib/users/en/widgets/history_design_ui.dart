@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:users_app/users/en/app_localization/app_localization.dart';
 
 import '../models/trips_history_model.dart';
 
@@ -37,7 +38,7 @@ class _HistoryDesignUIWidgetState extends State<HistoryDesignUIWidget> {
                 Padding(
                   padding: const EdgeInsets.only(left: 6.0),
                   child: Text(
-                    "Conductor: " + widget.tripsHistoryModel!.driverName!,
+                    AppLocalization().driver + ": " + widget.tripsHistoryModel!.driverName!,
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,

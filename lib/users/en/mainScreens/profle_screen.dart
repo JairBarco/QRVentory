@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:users_app/users/en/app_localization/app_localization.dart';
 import 'package:users_app/users/en/global/global.dart';
 import 'package:users_app/users/en/widgets/info_design_ui.dart';
 
@@ -49,7 +50,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               },
               style: ElevatedButton.styleFrom(primary: Colors.indigo),
               child: Text(
-                "Cerrar",
+                AppLocalization().close,
                 style: TextStyle(color: Colors.white),
               ),
             ),

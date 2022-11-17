@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:restart_app/restart_app.dart';
+import 'package:users_app/users/en/app_localization/app_localization.dart';
 
 class PayFareAmountCollectionDialog extends StatefulWidget {
   double? fareAmount;
@@ -34,7 +34,7 @@ class _PayFareAmountCollectionDialogState
               height: 20,
             ),
             Text(
-              "Costo del viaje",
+              AppLocalization().tripFareAmount,
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.grey,
@@ -61,7 +61,7 @@ class _PayFareAmountCollectionDialogState
               height: 10,
             ),
             Text(
-              "Total del viaje",
+              AppLocalization().totalTripAmount,
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.grey),
             ),
@@ -75,7 +75,6 @@ class _PayFareAmountCollectionDialogState
                 onPressed: () {
                   Future.delayed(const Duration(milliseconds: 2000), () {
                     Navigator.pop(context, "cashPayed");
-                    Restart.restartApp();
                   });
                 },
                 child: Row(
@@ -84,7 +83,7 @@ class _PayFareAmountCollectionDialogState
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        "Pagar",
+                        AppLocalization().pay,
                         style: TextStyle(
                           fontSize: 15,
                           color: Colors.white,

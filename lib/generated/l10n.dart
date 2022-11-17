@@ -729,6 +729,256 @@ class S {
       args: [],
     );
   }
+
+  /// `No Drivers Available`
+  String get notDriversAvailable {
+    return Intl.message(
+      'No Drivers Available',
+      name: 'notDriversAvailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Driver do not exists`
+  String get driverNotExists {
+    return Intl.message(
+      'Driver do not exists',
+      name: 'driverNotExists',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notification Sent`
+  String get notificationSent {
+    return Intl.message(
+      'Notification Sent',
+      name: 'notificationSent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select Another Driver`
+  String get selectOtherDriver {
+    return Intl.message(
+      'Select Another Driver',
+      name: 'selectOtherDriver',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please Select a Destination`
+  String get pleaseSelectDestination {
+    return Intl.message(
+      'Please Select a Destination',
+      name: 'pleaseSelectDestination',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User`
+  String get user {
+    return Intl.message(
+      'User',
+      name: 'user',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Trip Fare Amount`
+  String get tripFareAmount {
+    return Intl.message(
+      'Trip Fare Amount',
+      name: 'tripFareAmount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total Trip Amount`
+  String get totalTripAmount {
+    return Intl.message(
+      'Total Trip Amount',
+      name: 'totalTripAmount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Collect Cash`
+  String get collectCash {
+    return Intl.message(
+      'Collect Cash',
+      name: 'collectCash',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pay`
+  String get pay {
+    return Intl.message(
+      'Pay',
+      name: 'pay',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total Earnings`
+  String get totalEarnings {
+    return Intl.message(
+      'Total Earnings',
+      name: 'totalEarnings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Trips Completed`
+  String get tripsCompleted {
+    return Intl.message(
+      'Trips Completed',
+      name: 'tripsCompleted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Trip Cancelled. Restarting the App...`
+  String get tripCancelled {
+    return Intl.message(
+      'Trip Cancelled. Restarting the App...',
+      name: 'tripCancelled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Trips History`
+  String get tripsHistory {
+    return Intl.message(
+      'Trips History',
+      name: 'tripsHistory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `I Arrived`
+  String get arrived {
+    return Intl.message(
+      'I Arrived',
+      name: 'arrived',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please Wait...`
+  String get pleaseWait {
+    return Intl.message(
+      'Please Wait...',
+      name: 'pleaseWait',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Start Trip`
+  String get startTrip {
+    return Intl.message(
+      'Start Trip',
+      name: 'startTrip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `End Trip`
+  String get endTrip {
+    return Intl.message(
+      'End Trip',
+      name: 'endTrip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Waiting Driver's Confirmation...`
+  String get waitingDriversConfirmation {
+    return Intl.message(
+      'Waiting Driver\'s Confirmation...',
+      name: 'waitingDriversConfirmation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Call Driver`
+  String get callDriver {
+    return Intl.message(
+      'Call Driver',
+      name: 'callDriver',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Emergency Call`
+  String get emergencyCall {
+    return Intl.message(
+      'Emergency Call',
+      name: 'emergencyCall',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Close`
+  String get close {
+    return Intl.message(
+      'Close',
+      name: 'close',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rate Trip`
+  String get rateTrip {
+    return Intl.message(
+      'Rate Trip',
+      name: 'rateTrip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send`
+  String get send {
+    return Intl.message(
+      'Send',
+      name: 'send',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Average Rating`
+  String get averageRating {
+    return Intl.message(
+      'Average Rating',
+      name: 'averageRating',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

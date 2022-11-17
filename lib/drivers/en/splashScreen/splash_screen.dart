@@ -1,10 +1,9 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:users_app/drivers/en/mainScreens/main_screen.dart';
 import 'package:geolocator/geolocator.dart';
 import '../../../drivers/en/global/global.dart';
 import '../authentication/login_screen.dart';
-import '../mainScreens/main_screen.dart';
 
 class DriversSplashScreen extends StatefulWidget {
   const DriversSplashScreen({Key? key}) : super(key: key);
@@ -53,21 +52,21 @@ class _DriversSplashScreenState extends State<DriversSplashScreen> {
         color: Colors.black,
         child: Center(
             child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset("img/logo1.png"),
-            const SizedBox(
-              height: 10,
-            ),
-            const Text(
-              "Ship Driver",
-              style: TextStyle(
-                  fontSize: 30,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold),
-            )
-          ],
-        )),
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset("img/logo1.png"),
+                const SizedBox(
+                  height: 10,
+                ),
+                const Text(
+                  "Ship Driver",
+                  style: TextStyle(
+                      fontSize: 30,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                )
+              ],
+            )),
       ),
     );
   }

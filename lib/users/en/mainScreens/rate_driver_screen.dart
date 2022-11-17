@@ -2,6 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:restart_app/restart_app.dart';
 import 'package:smooth_star_rating_nsafe/smooth_star_rating.dart';
+import 'package:users_app/users/en/app_localization/app_localization.dart';
 import 'package:users_app/users/en/global/global.dart';
 
 class RateDriverScreen extends StatefulWidget {
@@ -35,7 +36,7 @@ class _RateDriverScreenState extends State<RateDriverScreen> {
                 height: 22.0,
               ),
               Text(
-                "Calificar viaje",
+                AppLocalization().rateTrip,
                 style: TextStyle(
                   fontSize: 22,
                   letterSpacing: 2,
@@ -132,7 +133,7 @@ class _RateDriverScreenState extends State<RateDriverScreen> {
                     primary: Colors.green,
                     padding: EdgeInsets.symmetric(horizontal: 75)),
                 child: Text(
-                  "Enviar",
+                  AppLocalization().send,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,

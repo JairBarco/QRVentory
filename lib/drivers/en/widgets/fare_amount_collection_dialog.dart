@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:restart_app/restart_app.dart';
 import 'package:users_app/drivers/en/global/global.dart';
+import 'package:users_app/users/en/app_localization/app_localization.dart';
 
 class FareAmountCollectionDialog extends StatefulWidget {
   double? totalFareAmount;
@@ -35,7 +36,7 @@ class _FareAmountCollectionDialogState
               height: 20,
             ),
             Text(
-              "Costo del viaje" + "(" + driverVehicleType! + ")",
+              AppLocalization().tripFareAmount + "(" + driverVehicleType! + ")",
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.grey,
@@ -62,7 +63,7 @@ class _FareAmountCollectionDialogState
               height: 10,
             ),
             Text(
-              "Costo del viaje",
+              AppLocalization().totalTripAmount,
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.grey),
             ),
@@ -84,7 +85,7 @@ class _FareAmountCollectionDialogState
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        "Recolectar efectivo",
+                        AppLocalization().collectCash,
                         style: TextStyle(
                           fontSize: 15,
                           color: Colors.white,

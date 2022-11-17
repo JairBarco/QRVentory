@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:users_app/users/en/app_localization/app_localization.dart';
 import 'package:users_app/users/en/widgets/history_design_ui.dart';
 
 import '../../../users/en/infoHandler/app_info.dart';
@@ -19,7 +20,7 @@ class _TripsHistoryScreenState extends State<TripsHistoryScreen> {
       appBar: AppBar(
         backgroundColor: Colors.indigo,
         title: Text(
-          "Historial de Viajes",
+          AppLocalization().tripsHistory,
         ),
         leading: IconButton(
           icon: Icon(Icons.close),

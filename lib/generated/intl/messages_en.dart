@@ -30,16 +30,23 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Account has been created"),
         "accountNotCreated": MessageLookupByLibrary.simpleMessage(
             "Account has not been created"),
+        "arrived": MessageLookupByLibrary.simpleMessage("I Arrived"),
+        "averageRating": MessageLookupByLibrary.simpleMessage("Average Rating"),
+        "callDriver": MessageLookupByLibrary.simpleMessage("Call Driver"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "cancelRideRequest":
             MessageLookupByLibrary.simpleMessage("Ride Request Cancelled"),
         "carDetailsSaved": MessageLookupByLibrary.simpleMessage(
             "Car details successfully saved"),
+        "close": MessageLookupByLibrary.simpleMessage("Close"),
+        "collectCash": MessageLookupByLibrary.simpleMessage("Collect Cash"),
         "confirmPassword":
             MessageLookupByLibrary.simpleMessage("Confirm Password"),
         "createAccountButton":
             MessageLookupByLibrary.simpleMessage("Create Account"),
         "driver": MessageLookupByLibrary.simpleMessage("Driver"),
+        "driverNotExists":
+            MessageLookupByLibrary.simpleMessage("Driver do not exists"),
         "dropOffLocation":
             MessageLookupByLibrary.simpleMessage("Search DropOff Locations"),
         "earnings": MessageLookupByLibrary.simpleMessage("Earnings"),
@@ -50,6 +57,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Email is not valid"),
         "emailNotVerified":
             MessageLookupByLibrary.simpleMessage("Email not verified"),
+        "emergencyCall": MessageLookupByLibrary.simpleMessage("Emergency Call"),
+        "endTrip": MessageLookupByLibrary.simpleMessage("End Trip"),
         "errorDuringLogin":
             MessageLookupByLibrary.simpleMessage("Error occurred during Login"),
         "friends": MessageLookupByLibrary.simpleMessage("Friends"),
@@ -84,8 +93,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("No Friends Added Yet"),
         "noRecordExistsWithThisEmail": MessageLookupByLibrary.simpleMessage(
             "No record exists with this email"),
+        "notDriversAvailable":
+            MessageLookupByLibrary.simpleMessage("No Drivers Available"),
         "notGettingAddressWarning":
             MessageLookupByLibrary.simpleMessage("Not Getting Address"),
+        "notificationSent":
+            MessageLookupByLibrary.simpleMessage("Notification Sent"),
         "nowOffline": MessageLookupByLibrary.simpleMessage("Now Offline"),
         "nowOfflineMessage":
             MessageLookupByLibrary.simpleMessage("You Are Offline Now"),
@@ -101,12 +114,17 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Password is required"),
         "passwordsNotMatch":
             MessageLookupByLibrary.simpleMessage("Passwords do not match"),
+        "pay": MessageLookupByLibrary.simpleMessage("Pay"),
         "phone": MessageLookupByLibrary.simpleMessage("Phone"),
         "phoneNotValid":
             MessageLookupByLibrary.simpleMessage("Phone number is not valid"),
+        "pleaseSelectDestination":
+            MessageLookupByLibrary.simpleMessage("Please Select a Destination"),
+        "pleaseWait": MessageLookupByLibrary.simpleMessage("Please Wait..."),
         "profile": MessageLookupByLibrary.simpleMessage("Profile"),
         "progressDialog":
             MessageLookupByLibrary.simpleMessage("Please Wait..."),
+        "rateTrip": MessageLookupByLibrary.simpleMessage("Rate Trip"),
         "ratings": MessageLookupByLibrary.simpleMessage("Ratings"),
         "register": MessageLookupByLibrary.simpleMessage(
             "Don\'t have an account? SignUp Here"),
@@ -118,10 +136,27 @@ class MessageLookup extends MessageLookupByLibrary {
         "search": MessageLookupByLibrary.simpleMessage("Search Here..."),
         "searchHeader": MessageLookupByLibrary.simpleMessage(
             "Search & Set Drop off Location"),
+        "selectOtherDriver":
+            MessageLookupByLibrary.simpleMessage("Select Another Driver"),
+        "send": MessageLookupByLibrary.simpleMessage("Send"),
+        "startTrip": MessageLookupByLibrary.simpleMessage("Start Trip"),
+        "totalEarnings": MessageLookupByLibrary.simpleMessage("Total Earnings"),
+        "totalTripAmount":
+            MessageLookupByLibrary.simpleMessage("Total Trip Amount"),
+        "tripCancelled": MessageLookupByLibrary.simpleMessage(
+            "Trip Cancelled. Restarting the App..."),
+        "tripFareAmount":
+            MessageLookupByLibrary.simpleMessage("Trip Fare Amount"),
+        "tripsCompleted":
+            MessageLookupByLibrary.simpleMessage("Trips Completed"),
+        "tripsHistory": MessageLookupByLibrary.simpleMessage("Trips History"),
         "typeUsername": MessageLookupByLibrary.simpleMessage("Type Username"),
+        "user": MessageLookupByLibrary.simpleMessage("User"),
         "videoCall": MessageLookupByLibrary.simpleMessage("Video Call"),
         "waitUserToJoin":
             MessageLookupByLibrary.simpleMessage("Wait for a user to join"),
+        "waitingDriversConfirmation": MessageLookupByLibrary.simpleMessage(
+            "Waiting Driver\'s Confirmation..."),
         "yourEmail": MessageLookupByLibrary.simpleMessage("Your e-mail"),
         "yourName": MessageLookupByLibrary.simpleMessage("Your Name")
       };

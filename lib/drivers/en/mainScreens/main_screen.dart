@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:users_app/drivers/en/infoHandler/app_info.dart';
 import 'package:users_app/users/en/app_localization/app_localization.dart';
 
 import '../tabPages/earning_tab.dart';
@@ -32,40 +34,43 @@ class _MainScreenState extends State<DriversMainScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: TabBarView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: tabController,
-        children: const [
-          HomeTabPage(),
-          EarningsTabPage(),
-          RatingsTabPage(),
-          ProfileTabPage(),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-              icon: const Icon(Icons.home),
-              label: AppLocalization.of(context)!.home),
-          BottomNavigationBarItem(
-              icon: const Icon(Icons.credit_card),
-              label: AppLocalization.of(context)!.earnings),
-          BottomNavigationBarItem(
-              icon: const Icon(Icons.star),
-              label: AppLocalization.of(context)!.ratings),
-          BottomNavigationBarItem(
-              icon: const Icon(Icons.person),
-              label: AppLocalization.of(context)!.account),
-        ],
-        unselectedItemColor: Colors.white54,
-        selectedItemColor: Colors.white,
-        backgroundColor: Colors.black,
-        type: BottomNavigationBarType.fixed,
-        selectedLabelStyle: const TextStyle(fontSize: 14),
-        showSelectedLabels: true,
-        currentIndex: selectedIndex,
-        onTap: onItemClicked,
+    return ChangeNotifierProvider(
+      create: (context) => AppInfo(),
+      child: Scaffold(
+        body: TabBarView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: tabController,
+          children: const [
+            HomeTabPage(),
+            EarningsTabPage(),
+            RatingsTabPage(),
+            ProfileTabPage(),
+          ],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: [
+            BottomNavigationBarItem(
+                icon: const Icon(Icons.home),
+                label: AppLocalization.of(context)!.home),
+            BottomNavigationBarItem(
+                icon: const Icon(Icons.credit_card),
+                label: AppLocalization.of(context)!.earnings),
+            BottomNavigationBarItem(
+                icon: const Icon(Icons.star),
+                label: AppLocalization.of(context)!.ratings),
+            BottomNavigationBarItem(
+                icon: const Icon(Icons.person),
+                label: AppLocalization.of(context)!.account),
+          ],
+          unselectedItemColor: Colors.white54,
+          selectedItemColor: Colors.white,
+          backgroundColor: Colors.black,
+          type: BottomNavigationBarType.fixed,
+          selectedLabelStyle: const TextStyle(fontSize: 14),
+          showSelectedLabels: true,
+          currentIndex: selectedIndex,
+          onTap: onItemClicked,
+        ),
       ),
     );
   }

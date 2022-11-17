@@ -6,8 +6,10 @@ import 'package:flutter_geofire/flutter_geofire.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:users_app/drivers/en/assistants/assistant_methods.dart';
 import 'package:users_app/drivers/en/global/global.dart';
+import 'package:users_app/drivers/en/infoHandler/app_info.dart';
 import 'package:users_app/drivers/en/push_notifications/push_notification_system.dart';
 import 'package:users_app/users/en/app_localization/app_localization.dart';
 
@@ -30,15 +32,9 @@ class _HomeTabPageState extends State<HomeTabPage> {
   );
 
   var geoLocator = Geolocator();
-
-  Color buttonColor = Colors.red;
   bool isDriverActive = false;
-
   double topPaddingOfMap = 0.0;
   double bottomPaddingOfMap = 0.0;
-
-  String statusText = AppLocalization().nowOffline;
-  String statusTextOnline = AppLocalization().nowOnline;
 
   locateDriverPosition() async {
     Position cPosition = await Geolocator.getCurrentPosition(
@@ -51,6 +47,8 @@ class _HomeTabPageState extends State<HomeTabPage> {
         CameraPosition(target: latLngPosition, zoom: 14.4746);
     newGoogleMapController!
         .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+
+    AssistantMethods.readDriverRatings(context);
   }
 
   readCurrentDriverInformation() {
@@ -82,9 +80,6 @@ class _HomeTabPageState extends State<HomeTabPage> {
     pushNotificationSystem.initializeCloudMessaging(context);
     pushNotificationSystem.generateAndGetToken();
     AssistantMethods.readDriverEarnings(context);
-    print("/////////////////////////////////////////////");
-    print(context.toString());
-    print("/////////////////////////////////////////////");
   }
 
   @override
@@ -96,7 +91,8 @@ class _HomeTabPageState extends State<HomeTabPage> {
 
   @override
   Widget build(BuildContext context) {
-
+    Provider.of<AppInfo>(context, listen: false)
+        .allTripsHistoryInformationList.clear();
     return Stack(
       children: [
         GoogleMap(
@@ -142,6 +138,12 @@ class _HomeTabPageState extends State<HomeTabPage> {
             children: [
               ElevatedButton(
                 onPressed: () {
+                  print("////////////////////////////");
+                  print("////////////////////////////");
+                  print(isDriverActive.toString());
+                  print("////////////////////////////");
+                  print("////////////////////////////");
+
                   if (isDriverActive != true) //offline
                   {
                     driverIsOnlineNow();
@@ -161,9 +163,10 @@ class _HomeTabPageState extends State<HomeTabPage> {
                     driverIsOfflineNow();
 
                     setState(() {
+                      statusText = AppLocalization().nowOffline;
                       statusText = statusText;
                       isDriverActive = false;
-                      buttonColor = Colors.grey;
+                      buttonColor = Colors.red;
                     });
 
                     //display Toast

@@ -344,6 +344,107 @@ class AppLocalization {
   String get waitUserToJoin {
     return Intl.message("Waiting for user to join", name: 'waitUserToJoin');
   }
+
+  //Widgets
+  String get notDriversAvailable {
+    return Intl.message("No Drivers Available", name: 'notDriversAvailable');
+  }
+
+  String get driverNotExists {
+    return Intl.message("Driver do not exists", name: 'driverNotExists');
+  }
+
+  String get notificationSent {
+    return Intl.message("Notification Sent", name: 'notificationSent');
+  }
+
+  String get selectOtherDriver {
+    return Intl.message("Select Another Driver", name: 'selectOtherDriver');
+  }
+
+  String get pleaseSelectDestination {
+    return Intl.message("Please Select a Destination", name: 'pleaseSelectDestination');
+  }
+
+  String get user {
+    return Intl.message("User", name: 'user');
+  }
+
+  String get tripFareAmount {
+    return Intl.message("Trip Fare Amount", name: 'tripFareAmount');
+  }
+
+  String get totalTripAmount {
+    return Intl.message("Total Trip Amount", name: 'totalTripAmount');
+  }
+
+  String get collectCash {
+    return Intl.message("Collect Cash", name: 'collectCash');
+  }
+
+  String get pay {
+    return Intl.message("Pay", name: 'pay');
+  }
+
+  //Earnings
+  String get totalEarnings {
+    return Intl.message("Total Earnings", name: 'totalEarnings');
+  }
+  String get tripsCompleted {
+    return Intl.message("Trips Completed", name: 'tripsCompleted');
+  }
+
+  //Push Notifications
+  String get tripCancelled {
+    return Intl.message("Trip Cancelled. Restarting the App...", name: 'tripCancelled');
+  }
+
+  //History Screen
+  String get tripsHistory {
+    return Intl.message("Trips History", name: 'tripsHistory');
+  }
+
+  //Trip Screen
+  String get arrived {
+    return Intl.message("I Arrived", name: 'arrived');
+  }
+  String get pleaseWait {
+    return Intl.message("Please Wait...", name: 'pleaseWait');
+  }
+  String get startTrip {
+    return Intl.message("Start Trip", name: 'startTrip');
+  }
+  String get endTrip {
+    return Intl.message("End Trip", name: 'endTrip');
+  }
+
+  //Main Screen user
+  String get waitingDriversConfirmation {
+    return Intl.message("Waiting Driver's Confirmation...", name: 'waitingDriversConfirmation');
+  }
+
+  String get callDriver {
+    return Intl.message("Call Driver", name: 'callDriver');
+  }
+
+  String get emergencyCall {
+    return Intl.message("Emergency Call", name: 'emergencyCall');
+  }
+
+  String get close {
+    return Intl.message("Close", name: 'close');
+  }
+
+  //Rate Screen
+  String get rateTrip {
+    return Intl.message("Rate Trip", name: 'rateTrip');
+  }
+  String get send {
+    return Intl.message("Send", name: 'send');
+  }
+  String get averageRating {
+    return Intl.message("Average Rating", name: 'averageRating');
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalization> {

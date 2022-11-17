@@ -33,7 +33,7 @@ class _NewTripScreenState extends State<NewTripScreen> {
     zoom: 14.4746,
   );
 
-  String? buttonTitle = "He llegado";
+  String? buttonTitle = AppLocalization().arrived;
   Color? buttonColor = Colors.green;
 
   Set<Marker> setOfMarkers = Set<Marker>();
@@ -66,7 +66,7 @@ class _NewTripScreenState extends State<NewTripScreen> {
     showDialog(
       context: context,
       builder: (BuildContext context) => ProgressDialog(
-        message: "Please wait...",
+        message: AppLocalization().pleaseWait,
       ),
     );
 
@@ -476,7 +476,7 @@ class _NewTripScreenState extends State<NewTripScreen> {
                               .set(rideRequestStatus);
 
                           setState(() {
-                            buttonTitle = "Comenzar Viaje"; //start the trip
+                            buttonTitle = AppLocalization().startTrip; //start the trip
                             buttonColor = Colors.lightGreen;
                           });
 
@@ -508,7 +508,7 @@ class _NewTripScreenState extends State<NewTripScreen> {
                               .set(rideRequestStatus);
 
                           setState(() {
-                            buttonTitle = "Terminar Viaje"; //end the trip
+                            buttonTitle = AppLocalization().endTrip; //end the trip
                             buttonColor = Colors.redAccent;
                           });
                         }

@@ -2,10 +2,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:users_app/users/en/app_localization/app_localization.dart';
-import 'package:users_app/drivers/en/infoHandler/app_info.dart';
+import 'package:users_app/users/en/infoHandler/app_info.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
-import 'drivers/en/splashScreen/splash_screen.dart';
+import 'package:users_app/users/en/splashScreen/splash_screen.dart';
 
 void main() async {
   AppLocalizationDelegate _localeOverrideDelegate =
@@ -34,7 +33,7 @@ void main() async {
             Locale('es', ''),//Spanish, no country code
             Locale('de', ''),// German, no country code
           ],
-          home: const DriversSplashScreen(),
+          home: const MySplashScreen(),
           debugShowCheckedModeBanner: false,
         ),
       ),

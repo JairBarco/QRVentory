@@ -176,7 +176,7 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
       if (snap.snapshot.value != null) {
         getRideRequestId = snap.snapshot.value.toString();
       } else {
-        Fluttertoast.showToast(msg: "This ride request do not exists.");
+        Fluttertoast.showToast(msg: AppLocalization().rideNotExists);
       }
 
       if (getRideRequestId == widget.userRideRequestDetails!.rideRequestId) {
@@ -188,7 +188,7 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
             .set("accepted");
         //send driver to newRide Screen
       } else {
-        Fluttertoast.showToast(msg: "This ride request don't exists");
+        Fluttertoast.showToast(msg: AppLocalization().rideNotExists);
       }
     });
   }

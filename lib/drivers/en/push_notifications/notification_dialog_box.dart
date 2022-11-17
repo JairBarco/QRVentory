@@ -160,7 +160,7 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
                         }).then((value) {
                           Fluttertoast.showToast(
                               msg:
-                                  "Viaje Cancelado Exitosamente. Recargando la Aplicación...");
+                                  AppLocalization().tripCancelled);
                         });
                         Restart.restartApp();
                       },
@@ -207,7 +207,7 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
       if (snap.snapshot.value != null) {
         getRideRequestId = snap.snapshot.value.toString();
       } else {
-        Fluttertoast.showToast(msg: "This ride request do not exists.");
+        Fluttertoast.showToast(msg: AppLocalization().rideNotExists);
       }
 
       if (getRideRequestId == widget.userRideRequestDetails!.rideRequestId) {
@@ -225,7 +225,7 @@ class _NotificationDialogBoxState extends State<NotificationDialogBox> {
                 builder: (c) => NewTripScreen(
                     userRideRequestDetails: widget.userRideRequestDetails)));
       } else {
-        Fluttertoast.showToast(msg: "This ride request don't exists");
+        Fluttertoast.showToast(msg: AppLocalization().rideNotExists);
       }
     });
   }

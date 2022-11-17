@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:users_app/drivers/en/models/trips_history_model.dart';
+import 'package:users_app/users/en/app_localization/app_localization.dart';
 
 class HistoryDesignUIWidget extends StatefulWidget {
   TripsHistoryModel? tripsHistoryModel;
@@ -36,7 +37,7 @@ class _HistoryDesignUIWidgetState extends State<HistoryDesignUIWidget> {
                 Padding(
                   padding: const EdgeInsets.only(left: 6.0),
                   child: Text(
-                    "Usuario: " + widget.tripsHistoryModel!.userName!,
+                    AppLocalization().user + ": " + widget.tripsHistoryModel!.userName!,
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
