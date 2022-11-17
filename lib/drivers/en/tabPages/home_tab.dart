@@ -87,12 +87,12 @@ class _HomeTabPageState extends State<HomeTabPage> {
     super.initState();
     readCurrentDriverInformation();
     FirebaseMessaging.instance.subscribeToTopic("chats");
+    Provider.of<AppInfo>(context, listen: false)
+        .allTripsHistoryInformationList.clear();
   }
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<AppInfo>(context, listen: false)
-        .allTripsHistoryInformationList.clear();
     return Stack(
       children: [
         GoogleMap(
