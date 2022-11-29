@@ -980,7 +980,7 @@ class _MainScreenState extends State<MainScreen> {
                               icon: Icon(
                                 Icons.phone_android,
                                 color: Colors.black54,
-                                size: 22,
+                                size: 15,
                               ),
                               label: Text(
                                 AppLocalization().callDriver,
@@ -995,12 +995,12 @@ class _MainScreenState extends State<MainScreen> {
                                 launchUrlString('tel://$_phoneNumber');
                               },
                               style: ElevatedButton.styleFrom(
-                                primary: Colors.green,
+                                primary: Colors.red,
                               ),
                               icon: Icon(
                                 Icons.local_police_rounded,
                                 color: Colors.black54,
-                                size: 22,
+                                size: 15,
                               ),
                               label: Text(
                                 AppLocalization().emergencyCall,

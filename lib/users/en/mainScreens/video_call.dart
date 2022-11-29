@@ -14,7 +14,7 @@ class VideoCall extends StatefulWidget {
 
 const appId = "c34cbe9c50bb4f1ab95bcdc2a96a1a99";
 const token =
-    "007eJxTYMgxaMu5Pd3/Pfv6WWevPhSf9eDizX/H+OcFxNv3bar0lU9VYEg2NklOSrVMNjVISjJJM0xMsjRNSk5JNkq0NEs0TLS0bDxgnPxL0DRZP0WIhZEBAkF8dobkjMS8vNQcBgYAfagjyA==";
+    "007eJxTYPDJlUn77z6B/6vu78iSN3O/t9kvc7p37fNJUdv/b5+k3ypTYEg2NklOSrVMNjVISjJJM0xMsjRNSk5JNkq0NEs0TLS0PBXdltwQyMjwZ7snCyMDBIL47AzJGYl5eak5DAwAzxwk/w==";
 
 class _VideoCallState extends State<VideoCall> {
   int? _remoteUid;
