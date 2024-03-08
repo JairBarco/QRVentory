@@ -2,10 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:users_app/drivers/en/authentication/login_screen.dart';
-import 'package:users_app/users/en/app_localization/app_localization.dart';
 import 'package:users_app/users/en/authentication/signup_screen.dart';
-import 'package:users_app/users/en/widgets/language.dart';
 import '../global/global.dart';
 import '../splashScreen/splash_screen.dart';
 import '../widgets/progress_dialog.dart';
@@ -19,88 +16,53 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
 
-  validateForm() {
-    validateEmail(String value) {
-      String pattern =
-          r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-      RegExp regExp = RegExp(pattern);
-      if (value.isEmpty) {
-        Fluttertoast.showToast(
-            msg: AppLocalization.of(context)!.emailMandatory);
-      } else if (!regExp.hasMatch(value)) {
-        Fluttertoast.showToast(msg: AppLocalization.of(context)!.emailNotValid);
-      }
-    }
-
-    if (!emailTextEditingController.text.contains("@") ||
-        emailTextEditingController.text.isEmpty) {
-      validateEmail(emailTextEditingController.text);
-    }
-    if (passwordTextEditingController.text.isEmpty) {
-      Fluttertoast.showToast(
-          msg: AppLocalization.of(context)!.passwordIsRequired);
-    } else {
-      loginUserNow();
-    }
-  }
-
-  loginUserNow() async {
-    final navigator = Navigator.of(context);
-    final navigatorPush = Navigator.push(
-        context, MaterialPageRoute(builder: (c) => const MySplashScreen()));
-
+  Future<bool> loginUserNow() async {
     showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext c) {
-          return ProgressDialog(
-            message: AppLocalization.of(context)!.progressDialog,
-          );
-        });
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext c) {
+        return ProgressDialog(
+          message: "Por favor, espere...",
+        );
+      },
+    );
 
-    final User? firebaseUser = (await fAuthUser
-            .signInWithEmailAndPassword(
-      email: emailTextEditingController.text.trim(),
-      password: passwordTextEditingController.text.trim(),
-    )
-            .catchError((msg) {
-      Navigator.pop(context);
-      Fluttertoast.showToast(msg: "Error:  ${msg.toString()}");
-    }))
-        .user;
+    try {
+      final UserCredential userCredential = await fAuthUser.signInWithEmailAndPassword(
+        email: emailTextEditingController.text.trim(),
+        password: passwordTextEditingController.text.trim(),
+      );
 
-    if (firebaseUser != null) {
-      DatabaseReference driversRef =
-          FirebaseDatabase.instance.ref().child("users");
-      driversRef.child(firebaseUser.uid).once().then((driverKey) {
+      final User? firebaseUser = userCredential.user;
+      if (firebaseUser != null) {
+        DatabaseReference driversRef = FirebaseDatabase.instance.ref().child("users");
+        final driverKey = await driversRef.child(firebaseUser.uid).once();
         final snap = driverKey.snapshot;
+
         if (firebaseUser.emailVerified == true) {
           if (snap.value != null) {
             currentFirebaseUser = firebaseUser;
-            Fluttertoast.showToast(
-                msg: AppLocalization.of(context)!.loginSuccessful);
-            navigatorPush;
+            Fluttertoast.showToast(msg: "Inicio de sesión exitoso");
+            return true;
           }
-        } else if (firebaseUser.emailVerified == false) {
-          Fluttertoast.showToast(
-              msg: AppLocalization.of(context)!.emailNotVerified);
+        } else {
+          Fluttertoast.showToast(msg: "Correo electrónico no verificado");
 
           if (snap.value == null) {
-            Fluttertoast.showToast(
-                msg: AppLocalization.of(context)!.noRecordExistsWithThisEmail);
+            Fluttertoast.showToast(msg: "Correo electrónico no registrado");
             fAuthUser.signOut();
-            navigatorPush;
           }
-          fAuthUser.signOut();
-          navigatorPush;
         }
-      });
-    } else {
-      navigator.pop();
-      if (!mounted) return;
-      Fluttertoast.showToast(
-          msg: AppLocalization.of(context)!.errorDuringLogin);
+      } else {
+        Fluttertoast.showToast(msg: "Ocurrió un error durante el inicio de sesión");
+      }
+    } catch (error) {
+      Fluttertoast.showToast(msg: "Error: $error");
+    } finally {
+      Navigator.pop(context);
     }
+
+    return false;
   }
 
   @override
@@ -123,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 10,
               ),
               Text(
-                AppLocalization.of(context)!.login,
+                "Iniciar sesión",
                 style: const TextStyle(
                   fontSize: 24,
                   color: Colors.grey,
@@ -135,8 +97,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 keyboardType: TextInputType.emailAddress,
                 style: const TextStyle(color: Colors.grey),
                 decoration: InputDecoration(
-                  labelText: AppLocalization.of(context)!.email,
-                  hintText: AppLocalization.of(context)!.email,
+                  labelText: "Correo electrónico",
+                  hintText: "Correo electrónico",
                   enabledBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey)),
                   focusedBorder: const UnderlineInputBorder(
@@ -157,8 +119,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 obscureText: true,
                 style: const TextStyle(color: Colors.grey),
                 decoration: InputDecoration(
-                  labelText: AppLocalization.of(context)!.password,
-                  hintText: AppLocalization.of(context)!.password,
+                  labelText: "Contraseña",
+                  hintText: "Contraseña",
                   enabledBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey)),
                   focusedBorder: const UnderlineInputBorder(
@@ -178,45 +140,31 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  validateForm();
+                  loginUserNow().then((success) {
+                    if (success) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (c) => const MySplashScreen()),
+                      );
+                    }
+                  });
                 },
                 style: ElevatedButton.styleFrom(
                   primary: Colors.indigo,
                 ),
                 child: Text(
-                  AppLocalization.of(context)!.loginButton,
+                  "Iniciar Sesión",
                   style: const TextStyle(color: Colors.white70, fontSize: 18),
                 ),
               ),
               TextButton(
                 child: Text(
-                  AppLocalization.of(context)!.register,
+                  "Registrarse",
                   style: const TextStyle(color: Colors.grey),
                 ),
                 onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (c) => const SignUpScreen()));
-                },
-              ),
-              TextButton(
-                child: Text(
-                  AppLocalization.of(context)!.logInAsDriver,
-                  style: const TextStyle(color: Colors.grey),
-                ),
-                onPressed: () {
-                  fAuthUser.signOut();
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (c) => DriversLoginScreen()));
-                },
-              ),
-              TextButton(
-                child: Text(
-                  AppLocalization.of(context)!.language,
-                  style: const TextStyle(color: Colors.grey),
-                ),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (c) => LanguageScreen()));
                 },
               ),
             ],

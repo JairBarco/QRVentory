@@ -1,200 +1,90 @@
 import 'package:flutter/material.dart';
-import 'package:users_app/drivers/en/splashScreen/splash_screen.dart';
-import 'package:users_app/users/en/app_localization/app_localization.dart';
-import 'package:users_app/users/en/chats/screens/home_screen.dart';
-import 'package:users_app/users/en/mainScreens/history_screen.dart';
-import 'package:users_app/users/en/mainScreens/profle_screen.dart';
-import 'package:users_app/users/en/widgets/language.dart';
 import '../global/global.dart';
 import '../splashScreen/splash_screen.dart';
 
-class MyDrawer extends StatefulWidget {
-  String? name;
-  String? email;
+class MyDrawer extends StatelessWidget {
+  final String? name;
+  final String? email;
 
   MyDrawer({this.name, this.email});
 
   @override
-  State<MyDrawer> createState() => _MyDrawerState();
-}
-
-class _MyDrawerState extends State<MyDrawer> {
-  @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: ListView(
-        children: [
-          //drawer header
-          Container(
-            height: 165,
-            color: Colors.grey,
-            child: DrawerHeader(
-              decoration: const BoxDecoration(color: Colors.black),
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.person,
-                    size: 80,
-                    color: Colors.grey,
-                  ),
-                  const SizedBox(
-                    width: 25,
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        widget.name.toString(),
-                        style: const TextStyle(
-                          fontSize: 13,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold,
-                        ),
+      backgroundColor: Colors.black,
+      child: Container(
+        width: 265,
+        child: Theme(
+          data: Theme.of(context).copyWith(
+            canvasColor: Colors.black,
+            iconTheme:
+                IconThemeData(color: Colors.white), // Color de los iconos
+            textTheme: TextTheme(
+              bodyLarge: TextStyle(color: Colors.white), // Color del texto
+            ),
+          ),
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              Container(
+                height: 150,
+                decoration: BoxDecoration(
+                  color: Colors.indigo,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      name != null ? name! : '',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
-                      const SizedBox(
-                        height: 10,
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      email != null ? email! : '',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
                       ),
-                      Text(
-                        widget.email.toString(),
-                        style: const TextStyle(
-                          fontSize: 11,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ),
-
-          const SizedBox(
-            height: 16,
-          ),
-
-          //drawer body
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (c) => TripsHistoryScreen()));
-            },
-            child: ListTile(
-              leading: const Icon(
-                Icons.history,
-                color: Colors.white54,
-              ),
-              title: Text(
-                AppLocalization.of(context)!.history,
-                style: const TextStyle(
-                  color: Colors.white54,
+                    ),
+                  ],
                 ),
               ),
-            ),
-          ),
-
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (c) => ProfileScreen()));
-            },
-            child: ListTile(
-              leading: const Icon(
-                Icons.person,
-                color: Colors.white54,
-              ),
-              title: Text(
-                AppLocalization.of(context)!.profile,
-                style: const TextStyle(
+              ListTile(
+                leading: Icon(
+                  Icons.person,
                   color: Colors.white54,
                 ),
+                title: Text('Perfil'),
+                onTap: () {
+                  // Acción para ir a la pantalla de perfil
+                },
               ),
-            ),
-          ),
-
-          GestureDetector(
-            onTap: () {
-              fAuthUser.signOut();
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (c) => const DriversSplashScreen()));
-            },
-            child: ListTile(
-              leading: const Icon(
-                Icons.drive_eta,
-                color: Colors.white54,
-              ),
-              title: Text(
-                AppLocalization.of(context)!.driver,
-                style: const TextStyle(
+              ListTile(
+                leading: Icon(
+                  Icons.exit_to_app,
                   color: Colors.white54,
                 ),
+                title: Text('Cerrar Sesión'),
+                onTap: () async {
+                  try {
+                    await fAuthUser.signOut();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (c) => const MySplashScreen()),
+                    );
+                  } catch (error) {
+                    print("Error al cerrar sesión: $error");
+                    // Manejar errores aquí si es necesario
+                  }
+                },
               ),
-            ),
+            ],
           ),
-
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (c) => LanguageScreen()));
-            },
-            child: ListTile(
-              leading: const Icon(
-                Icons.language,
-                color: Colors.white54,
-              ),
-              title: Text(
-                AppLocalization.of(context)!.language,
-                style: const TextStyle(
-                  color: Colors.white54,
-                ),
-              ),
-            ),
-          ),
-
-          GestureDetector(
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (c) => ChatsHomeScreen()));
-            },
-            child: ListTile(
-              leading: const Icon(
-                Icons.message_rounded,
-                color: Colors.white54,
-              ),
-              title: Text(
-                AppLocalization.of(context)!.messaging,
-                style: const TextStyle(
-                  color: Colors.white54,
-                ),
-              ),
-            ),
-          ),
-
-          GestureDetector(
-            onTap: () {
-              fAuthUser.signOut();
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (c) => const MySplashScreen()));
-            },
-            child: ListTile(
-              leading: const Icon(
-                Icons.logout,
-                color: Colors.white54,
-              ),
-              title: Text(
-                AppLocalization.of(context)!.logOut,
-                style: const TextStyle(
-                  color: Colors.white54,
-                ),
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

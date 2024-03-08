@@ -1,33 +1,13 @@
-import 'package:flutter/widgets.dart';
-import 'package:users_app/users/en/models/trips_history_model.dart';
+import 'package:flutter/material.dart';
+import '../models/user_model.dart';
 
-import '../models/directions.dart';
+class UserProvider extends ChangeNotifier {
+  UserModel? _userModel;
 
-class AppInfo extends ChangeNotifier {
-  Directions? userPickUpLocation, userDropOffLocation;
-  int countTotalTrips = 0;
-  List<String> historyTripsList = [];
-  List<TripsHistoryModel> allTripsHistoryInformationList = [];
+  UserModel? get userModel => _userModel;
 
-  void updatePickUpLocationAddress(Directions userPickUpAddress) {
-    userPickUpLocation = userPickUpAddress;
+  void setUserModel(UserModel userModel) {
+    _userModel = userModel;
     notifyListeners();
-  }
-
-  void updateDropOffLocationAddress(Directions userDropLocation) {
-    userDropOffLocation = userDropLocation;
-    notifyListeners();
-  }
-
-  updateOverallTripsCounter(int overallTripsCounter){
-   countTotalTrips = overallTripsCounter;
-  }
-
-  updateAllTripsKeys(List<String> tripsLeyList){
-    historyTripsList = tripsLeyList;
-  }
-
-  updateOverallTripsHistoryInformation(TripsHistoryModel eachTripHistory){
-    allTripsHistoryInformationList.add(eachTripHistory);
   }
 }
