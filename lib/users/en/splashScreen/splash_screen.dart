@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'package:firebase_database/firebase_database.dart';
+
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
-import '../../../drivers/en/mainScreens/main_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import '../assistants/assistant_methods.dart';
 import '../authentication/login_screen.dart';
 import '../global/global.dart';
@@ -17,51 +17,29 @@ class MySplashScreen extends StatefulWidget {
 
 class _MySplashScreenState extends State<MySplashScreen> {
   final ref = FirebaseDatabase.instance.ref();
-  LocationPermission? _locationPermission;
-
-  checkIfPermissionLocationAllowed() async {
-    _locationPermission = await Geolocator.requestPermission();
-
-    if (_locationPermission == LocationPermission.denied) {
-      _locationPermission = await Geolocator.requestPermission();
-    }
-  }
-
-  startTimer() {
-    Timer(const Duration(seconds: 3), () async {
-      if (fAuthUser.currentUser != null) {
-        final snapshot =
-            await ref.child('users/${fAuthUser.currentUser!.uid}/id').get();
-        final snapshotDriver =
-            await ref.child('drivers/${fAuthUser.currentUser!.uid}/id').get();
-
-        if (snapshot.exists != false) {
-          fAuthUser.currentUser != null
-              ? AssistantMethods.readCurrentOnlineUserInfo()
-              : null;
-
-          currentFirebaseUser = fAuthUser.currentUser;
-          Navigator.push(
-              context, MaterialPageRoute(builder: (c) => MainScreen()));
-          //Navigator.push(context, MaterialPageRoute(builder: (c)=> DriversMainScreen()));
-        } else if (snapshotDriver.exists != false) {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (c) => DriversMainScreen()));
-        }
-      } else {
-        //send user to main screen
-        Navigator.push(
-            context, MaterialPageRoute(builder: (c) => LoginScreen()));
-      }
-    });
-  }
 
   @override
   void initState() {
-    // TODO: implement initState
-    checkIfPermissionLocationAllowed();
     super.initState();
-    startTimer();
+    Timer(Duration(seconds: 1), _redirectUser);
+  }
+
+  Future<void> _redirectUser() async {
+    await FirebaseAuth.instance.authStateChanges().first;
+
+    if (fAuthUser.currentUser != null) {
+      final snapshot = await ref.child('users/${fAuthUser.currentUser!.uid}/id').get();
+
+      if (snapshot.exists != false) {
+        await AssistantMethods.readCurrentOnlineUserInfo();
+        currentFirebaseUser = fAuthUser.currentUser;
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (c) => MainScreen()));
+      } else {
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (c) => LoginScreen()));
+      }
+    } else {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (c) => LoginScreen()));
+    }
   }
 
   @override
@@ -70,22 +48,16 @@ class _MySplashScreenState extends State<MySplashScreen> {
       child: Container(
         color: Colors.black,
         child: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset("img/logo.png"),
-            const SizedBox(
-              height: 10,
-            ),
-            const Text(
-              "Ship Driver",
-              style: TextStyle(
-                  fontSize: 30,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold),
-            )
-          ],
-        )),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset("img/logo.png"),
+              const SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

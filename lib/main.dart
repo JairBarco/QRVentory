@@ -1,43 +1,22 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:users_app/users/en/app_localization/app_localization.dart';
-import 'package:users_app/users/en/infoHandler/app_info.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:users_app/users/en/splashScreen/splash_screen.dart';
 
 void main() async {
-  AppLocalizationDelegate _localeOverrideDelegate =
-  const AppLocalizationDelegate(Locale('en', 'US'));
 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(
     MyApp(
-      child: ChangeNotifierProvider(
-        create: (context) => AppInfo(),
-
         child: MaterialApp(
-          title: 'Ship Driver',
+          title: 'QRVentory',
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          localizationsDelegates: [
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            DefaultWidgetsLocalizations.delegate,
-            _localeOverrideDelegate
-          ],
-          supportedLocales: const[
-            Locale('en', ''), // English, no country code
-            Locale('es', ''),//Spanish, no country code
-            Locale('de', ''),// German, no country code
-          ],
           home: const MySplashScreen(),
           debugShowCheckedModeBanner: false,
         ),
       ),
-    ),
   );
 }
 

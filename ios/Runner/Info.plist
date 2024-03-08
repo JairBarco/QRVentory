@@ -57,5 +57,7 @@
     		<string>es_MX</string>
     		<string>de</string>
     	</array>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
 </dict>
 </plist>
