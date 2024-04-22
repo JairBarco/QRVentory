@@ -60,6 +60,9 @@ dependencies:
   animated_text_kit: ^4.2.2
   dependencies:
   url_launcher: ^6.1.6
+  qr_flutter:
+    git:
+      url: https://github.com/theyakka/qr.flutter.git
 
 dev_dependencies:
   flutter_test:

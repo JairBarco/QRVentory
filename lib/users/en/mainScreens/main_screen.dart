@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:users_app/users/en/mainScreens/qr_screen.dart';
 import '../global/global.dart';
 import '../widgets/my_drawer.dart';
 
@@ -27,7 +27,8 @@ class MainScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.add),
             onPressed: () {
-              // Acción para agregar nuevo producto
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (c) => QRScreen()));
             },
           ),
         ],
