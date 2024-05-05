@@ -61,6 +61,8 @@ dependencies:
   qr_flutter:
     git:
       url: https://github.com/theyakka/qr.flutter.git
+  qr_code_scanner: ^1.0.1
+  share_plus: ^7.2.2
 
 dev_dependencies:
   flutter_test:

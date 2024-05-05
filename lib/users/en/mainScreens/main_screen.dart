@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:users_app/users/en/mainScreens/qr_camera_screen.dart'; // Importa la nueva pantalla QRCameraScreen
 import 'package:users_app/users/en/mainScreens/qr_screen.dart';
 import 'package:users_app/users/en/mainScreens/qr_view_screen.dart';
 import '../global/global.dart';
@@ -31,6 +32,42 @@ class _MainScreenState extends State<MainScreen> {
         backgroundColor: Colors.indigo,
         title: Text("Main Screen"),
         actions: [
+          IconButton(
+            icon: Icon(Icons.camera_alt),
+            onPressed: () async {
+              final qrData = await Navigator.push(
+                context,
+                MaterialPageRoute(builder: (c) => QRCameraScreen()),
+              );
+              if (qrData != null) {
+                final index = itemList.indexWhere((item) => item.contains(qrData));
+                if (index != -1) {
+                  // El artículo existe en la lista, navegar a QRViewScreen
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => QRViewScreen(qrData: itemList[index]),
+                    ),
+                  );
+                } else {
+                  // El artículo no existe en la lista, mostrar un mensaje de error
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: Text('Artículo no encontrado'),
+                      content: Text('El artículo escaneado no se encuentra en la lista.'),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: Text('Aceptar'),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+              }
+            },
+          ),
           IconButton(
             icon: Icon(Icons.add),
             onPressed: () async {
@@ -77,9 +114,9 @@ class _MainScreenState extends State<MainScreen> {
                     : ListView.builder(
                   itemCount: itemList.length,
                   itemBuilder: (context, index) {
+                    final article = itemList[index].split('\n\n')[0].split(':')[1].trim();
                     return GestureDetector(
                       onTap: () {
-                        // En el lugar donde se llama a QRViewScreen desde MainScreen
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -88,11 +125,11 @@ class _MainScreenState extends State<MainScreen> {
                         ).then((value) {
                           if (value == 'delete') {
                             setState(() {
-                              itemList.removeAt(index); // Elimina el artículo de la lista
+                              itemList.removeAt(index);
                             });
-                          }else if (value != null) {
+                          } else if (value != null) {
                             setState(() {
-                              itemList[index] = value; // Actualiza el artículo editado
+                              itemList[index] = value;
                             });
                           }
                         });
@@ -100,7 +137,7 @@ class _MainScreenState extends State<MainScreen> {
                       child: Container(
                         child: ListTile(
                           title: Text(
-                            itemList[index],
+                            article,
                             style: TextStyle(
                               color: Colors.white,
                             ),
@@ -118,4 +155,3 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 }
-

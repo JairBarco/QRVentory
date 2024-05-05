@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:users_app/users/en/mainScreens/edit_qr_screen.dart';
+import 'package:share_plus/share_plus.dart';
+import 'dart:io';
 
 class QRViewScreen extends StatelessWidget {
   final String qrData;
-
   QRViewScreen({required this.qrData});
 
   @override
@@ -16,12 +18,42 @@ class QRViewScreen extends StatelessWidget {
         title: Text('QR Code'),
         actions: [
           IconButton(
+            icon: Icon(Icons.download), // Icono de descarga
+            onPressed: () async {
+              final tempDir = await getTemporaryDirectory();
+              final file = await File('${tempDir.path}/qr_code.png').create();
+              final qrImage = await QrPainter(
+                data: qrData,
+                version: QrVersions.auto,
+                eyeStyle: const QrEyeStyle(
+                  eyeShape: QrEyeShape.square,
+                  color: Colors.white,
+                ),
+                dataModuleStyle: const QrDataModuleStyle(
+                  dataModuleShape: QrDataModuleShape.square,
+                  color: Colors.white,
+                ),
+              ).toImage(300);
+              await file.writeAsBytes((await qrImage.toByteData())!.buffer.asUint8List());
+              await Share.shareXFiles([XFile(file.path)], subject: 'QR Code');
+              // Función para exportar el código QR como imagen
+              //await Share.shareXFiles(
+              //[XFile.fromData(await QrPainter().toImageData(Container(child: QrImage(data: qrData))))],
+              //subject: 'QR Code',
+              //);
+            },
+          ),
+          IconButton(
             icon: Icon(Icons.more_vert),
             onPressed: () {
               showMenu(
                 context: context,
                 position: RelativeRect.fromLTRB(
-                    MediaQuery.of(context).size.width - 64, 48, 16, 0), // Posición del menú contextual en el lado derecho
+                  MediaQuery.of(context).size.width - 64,
+                  48,
+                  16,
+                  0,
+                ),
                 items: [
                   PopupMenuItem(
                     child: Text('Editar'),
@@ -33,9 +65,7 @@ class QRViewScreen extends StatelessWidget {
                   ),
                 ],
               ).then((value) {
-                // Maneja las acciones de editar o eliminar
                 if (value == 'edit') {
-                  // Navega a la pantalla de edición del QR
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -43,15 +73,11 @@ class QRViewScreen extends StatelessWidget {
                     ),
                   ).then((editedQRData) {
                     if (editedQRData != null) {
-                      // Actualiza el QR en la lista de artículos en MainScreen
-                      Navigator.pop(context, editedQRData); // Devuelve los datos editados a MainScreen
+                      Navigator.pop(context, editedQRData);
                     }
                   });
                 } else if (value == 'delete') {
-                  // Elimina el QR de la lista de artículos
-                  // Eliminar el artículo y volver a MainScreen
-                  Navigator.pop(context, 'delete'); // Devuelve 'delete' como resultado
-                  //Navigator.pop(context); // Cierra la pantalla QRViewScreen
+                  Navigator.pop(context, 'delete');
                 }
               });
             },
