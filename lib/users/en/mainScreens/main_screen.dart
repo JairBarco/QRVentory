@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:users_app/users/en/mainScreens/qr_camera_screen.dart'; // Importa la nueva pantalla QRCameraScreen
 import 'package:users_app/users/en/mainScreens/qr_screen.dart';
@@ -22,6 +23,25 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   List<String> itemList = [];
+  List<String> productIdList = [];
+  final DatabaseReference productsRef = FirebaseDatabase.instance.ref().child("products");
+
+  @override
+  void initState() {
+    super.initState();
+    productsRef.onValue.listen((event) {
+      var snapshot = event.snapshot;
+      if (snapshot.value != null) {
+        var data = snapshot.value as Map<dynamic, dynamic>;
+        var items = data.values.toList();
+        var keys = data.keys.toList(); // Obtiene las keys de los productos
+        setState(() {
+          itemList = items.map((item) => item['qrData'] as String).toList();
+          productIdList = keys.map((key) => key as String).toList(); // Almacena las keys en productIdList
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,15 +62,13 @@ class _MainScreenState extends State<MainScreen> {
               if (qrData != null) {
                 final index = itemList.indexWhere((item) => item.contains(qrData));
                 if (index != -1) {
-                  // El artículo existe en la lista, navegar a QRViewScreen
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => QRViewScreen(qrData: itemList[index]),
+                      builder: (context) => QRViewScreen(qrData: itemList[index], productId: productIdList[index],),
                     ),
                   );
                 } else {
-                  // El artículo no existe en la lista, mostrar un mensaje de error
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
@@ -115,12 +133,16 @@ class _MainScreenState extends State<MainScreen> {
                   itemCount: itemList.length,
                   itemBuilder: (context, index) {
                     final article = itemList[index].split('\n\n')[0].split(':')[1].trim();
+                    final expirationDateStr = itemList[index].split('\n\n')[2].split(':')[1].trim();
+                    final expirationDate = DateTime.parse(expirationDateStr);
+                    final daysUntilExpiration = expirationDate.difference(DateTime.now()).inDays;
+
                     return GestureDetector(
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => QRViewScreen(qrData: itemList[index]),
+                            builder: (context) => QRViewScreen(qrData: itemList[index], productId: productIdList[index]),
                           ),
                         ).then((value) {
                           if (value == 'delete') {
@@ -139,7 +161,7 @@ class _MainScreenState extends State<MainScreen> {
                           title: Text(
                             article,
                             style: TextStyle(
-                              color: Colors.white,
+                              color: daysUntilExpiration <= 3 ? Colors.red : Colors.white,
                             ),
                           ),
                         ),

@@ -1,13 +1,14 @@
+import 'dart:ui';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:users_app/users/en/mainScreens/edit_qr_screen.dart';
-import 'package:share_plus/share_plus.dart';
-import 'dart:io';
 
 class QRViewScreen extends StatelessWidget {
   final String qrData;
-  QRViewScreen({required this.qrData});
+  final String productId;
+  QRViewScreen({required this.qrData, required this.productId});
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +21,6 @@ class QRViewScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.download), // Icono de descarga
             onPressed: () async {
-              final tempDir = await getTemporaryDirectory();
-              final file = await File('${tempDir.path}/qr_code.png').create();
               final qrImage = await QrPainter(
                 data: qrData,
                 version: QrVersions.auto,
@@ -34,13 +33,17 @@ class QRViewScreen extends StatelessWidget {
                   color: Colors.white,
                 ),
               ).toImage(300);
-              await file.writeAsBytes((await qrImage.toByteData())!.buffer.asUint8List());
-              await Share.shareXFiles([XFile(file.path)], subject: 'QR Code');
-              // Función para exportar el código QR como imagen
-              //await Share.shareXFiles(
-              //[XFile.fromData(await QrPainter().toImageData(Container(child: QrImage(data: qrData))))],
-              //subject: 'QR Code',
-              //);
+              final qrImageData = await qrImage.toByteData(format: ImageByteFormat.png);
+              if (qrImageData != null) {
+                final result = await ImageGallerySaver.saveImage(qrImageData.buffer.asUint8List());
+                if (result['isSuccess']) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('QR Code saved to gallery')));
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to save QR Code')));
+                }
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to generate QR Code image data')));
+              }
             },
           ),
           IconButton(
@@ -64,12 +67,12 @@ class QRViewScreen extends StatelessWidget {
                     value: 'delete',
                   ),
                 ],
-              ).then((value) {
+              ).then((value) async {
                 if (value == 'edit') {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => EditQRScreen(initialQRData: qrData),
+                      builder: (context) => EditQRScreen(initialQRData: qrData, productId: productId,),
                     ),
                   ).then((editedQRData) {
                     if (editedQRData != null) {
@@ -77,6 +80,7 @@ class QRViewScreen extends StatelessWidget {
                     }
                   });
                 } else if (value == 'delete') {
+                  await FirebaseDatabase.instance.ref().child("products").child(productId).remove();
                   Navigator.pop(context, 'delete');
                 }
               });

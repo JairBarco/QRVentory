@@ -1,31 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class EditQRScreen extends StatefulWidget {
   final String initialQRData;
-  EditQRScreen({required this.initialQRData});
+  final String productId;
+  EditQRScreen({required this.initialQRData, required this.productId});
 
   @override
   _EditQRScreenState createState() => _EditQRScreenState();
 }
 
 class _EditQRScreenState extends State<EditQRScreen> {
-  late TextEditingController _articleController;
-  late TextEditingController _descriptionController;
+  final TextEditingController _articleController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
   DateTime? _expirationDate;
+  final DatabaseReference productRef = FirebaseDatabase.instance.ref().child("products");
 
   @override
   void initState() {
     super.initState();
-    final qrData = widget.initialQRData.split('\n\n');
-    final article = qrData[0].split(':')[1].trim();
-    final description = qrData[1].split(':')[1].trim();
-    final expirationDate = qrData[2].split(':')[1].trim();
+    _initializeProductData();
+  }
 
-    _articleController = TextEditingController(text: article);
-    _descriptionController = TextEditingController(text: description);
-    _expirationDate = expirationDate.isNotEmpty
-        ? DateTime.parse(expirationDate)
-        : null;
+  void _initializeProductData() {
+    productRef.child(widget.productId).onValue.listen((event) {
+      var snapshot = event.snapshot;
+      if (snapshot.value != null) {
+        var data = snapshot.value as Map<dynamic, dynamic>;
+        setState(() {
+          _articleController.text = data['article'];
+          _descriptionController.text = data['description'];
+          _expirationDate = DateTime.parse(data['expirationDate']);
+        });
+      }
+    });
   }
 
   @override
@@ -110,10 +118,20 @@ class _EditQRScreenState extends State<EditQRScreen> {
                     _expirationDate?.toString().split(' ')[0] ?? '';
                 final editedQRData =
                     'Artículo:\n$editedArticle\n\nDescripción:\n$editedDescription\n\nFecha de caducidad:\n$editedExpirationDate';
+
+                final productMap = {
+                  "article": editedArticle,
+                  "description": editedDescription,
+                  "expirationDate": editedExpirationDate,
+                  "qrData": editedQRData,
+                };
+
+                productRef.child(widget.productId).update(productMap);
+
                 Navigator.pop(context, editedQRData);
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.indigo,
+                backgroundColor: Colors.indigo,
               ),
               child: Text('Guardar cambios'),
             ),

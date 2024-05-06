@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
+import '../global/global.dart';
 
 class QRScreen extends StatefulWidget {
   final String? qrData;
@@ -120,13 +122,29 @@ class _QRScreenState extends State<QRScreen> {
                       _expirationDate?.toString().split(' ')[0] ?? '';
                   final qrData =
                       'Artículo:\n$article\n\nDescripción:\n$description\n\nFecha de caducidad:\n$expirationDate';
+
+                  final productMap = {
+                    "id": userModelCurrentInfo!.id,
+                    "name": userModelCurrentInfo!.name,
+                    "article": article,
+                    "description": description,
+                    "expirationDate": expirationDate,
+                    "qrData": qrData,
+                  };
+
+                  DatabaseReference productsRef = FirebaseDatabase.instance.ref().child("products");
+
+                  var newProductRef = productsRef.push();
+                  productsRef.push().set(productMap);
+                  final productId = newProductRef.key;
+
                   setState(() {
                     _qrData = qrData;
                   });
-                  Navigator.pop(context, _qrData);
+                  Navigator.pop(context, {_qrData, productId});
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.indigo,
+                  backgroundColor: Colors.indigo,
                 ),
                 child: Text('Generar Código QR'),
               ),
